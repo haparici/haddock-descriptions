@@ -72,12 +72,20 @@ var referentsPrior = function() {
 
 //threshold prior relativized to the descriptions's relevant comparison class
 var thresholdPriorGivenContext = function(context, description) {
-    
-  var cc = function(context, description){filter(function(rf) {rf[1] == description[2]}, context)}
-  var result = cc(context, description)
-  var min_result = Math.min.apply(null, result)
-  result.push(min_result - 1)
-  return Infer({method: "enumerate"}, function() {var thres = map(function(result) {return result[2]}, result) uniformDraw(thres)})
+
+  var cc = function(context, description){
+  filter(function(rf){
+  rf[1] == description[2]
+  }, context) 
+  };
+  var result = cc(context,description);
+  var min_result = Math.min.apply(null, result);
+  result.push(min_result - 1);
+  result.sort()
+  return Infer({method: "enumerate"}, function() {
+  var thres = map(function(result){ return result[2] }, result )
+  uniformDraw(thres)
+  });
 };
 
 var referentsPriorGivenContext = function(context) {
@@ -228,4 +236,4 @@ var pragmaticListener = function(description) {
 // Main
 marginalize(pragmaticListener(truncatedDescription), "ref")
 
-//TODO: switch vanilla, switch contexts, k+1, pragmaticlistener2
+//TODO: compress 4 models in one single script, add script with pragmaticlistener2 to repository

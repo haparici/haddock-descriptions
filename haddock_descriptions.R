@@ -2,9 +2,6 @@
 require(RJSONIO)
 require("rwebppl")
 
-# Working Directory
-setwd("~/Desktop/is")
-
 ## Visuals Master ##
 refs_json <- '[
   {"Animal": "rabbit", "Container": "bag", "Size": 1}
@@ -116,7 +113,7 @@ truncatedDescriptions <- list(
   c("rabbit", "big", "silence")
   , c("rabbit", "bigger", "silence")
 )
-models <- c("helena.wppl")
+models <- c("bumford_cc.wppl")
 
 # Execute Model
 results <- data.frame()
@@ -140,4 +137,3 @@ colnames(results) <- c(
   , "Adjective"
   , "Condition"
   , "Model")
-print()
