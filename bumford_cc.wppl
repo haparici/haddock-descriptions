@@ -16,7 +16,7 @@ var referents = [r1, r2, r3, r4, r5, rU]
 
 var alpha = 1;
 
-var randomVariable = [["rabbit", "big", "bag"], ["rabbit", "big", "box"]];
+var randomVariable = [["rabbit", "big", "bag"], ["rabbit", "big", "box"]]; //??? 
 
 var refs = {
   "referents": [r1, r2, r3, r4, r5, rU],

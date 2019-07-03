@@ -30,6 +30,7 @@ get_visuals <- function(refs, conds_idx, i){
   visual <- refs[cond_idx, ]
   
   return(visual)
+  
 }
 
 ## Descriptions ##
@@ -148,7 +149,8 @@ results
 
 ## Plots ##
 
-ggplot(results, aes(x=Condition, y=Probability, fill=Adjective)) + 
+bags<-subset(results, Container=="bag")
+ggplot(bags, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +
   scale_fill_manual(values=cbPalette) +
   theme_bw() +
@@ -160,6 +162,6 @@ ggplot(results, aes(x=Condition, y=Probability, fill=Adjective)) +
         legend.text=element_text(size=14)
   )+
   xlab("Display Type") +
-  ylab("Model Output Probability") +
+  ylab("Bag Resolution") +
   facet_grid(. ~ Adjective) +
   labs(fill="Adj. Type")
