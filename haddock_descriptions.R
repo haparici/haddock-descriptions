@@ -125,6 +125,12 @@ for (truncatedDescription in truncatedDescriptions) {
       result$Condition <- cond
       result$Model <- model
       results <- rbind(results, result)
+      print(paste("Processing adjective"
+                  , truncatedDescription[2]
+                  , "on visual"
+                  , cond
+                  , "with model"
+                  , model))
     }
   }
 }
@@ -137,3 +143,23 @@ colnames(results) <- c(
   , "Adjective"
   , "Condition"
   , "Model")
+
+results
+
+## Plots ##
+
+ggplot(results, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  )+
+  xlab("Display Type") +
+  ylab("Model Output Probability") +
+  facet_grid(. ~ Adjective) +
+  labs(fill="Adj. Type")
