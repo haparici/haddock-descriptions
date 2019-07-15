@@ -1,27 +1,32 @@
+// test
 
-// Parameters and Variables
-var randomVariable= model_data[0]
-var visuals = model_data[1]
-var descriptions = model_data[2]
-var cost = model_data[3][0]
-// var contexts = model_data[4]
-
-var r1 = [visuals[0]["Animal"][0], visuals[0]["Container"][0], visuals[0]["Size"][0]]
-var r2 = [visuals[1]["Animal"][0], visuals[1]["Container"][0], visuals[1]["Size"][0]]
-var r3 = [visuals[2]["Animal"][0], visuals[2]["Container"][0], visuals[2]["Size"][0]]
-var r4 = [visuals[3]["Animal"][0], visuals[3]["Container"][0], visuals[3]["Size"][0]]
-var r5 = [visuals[4]["Animal"][0], visuals[4]["Container"][0], visuals[4]["Size"][0]]
+var r1 = ["rabbit", "bag", 1]
+var r2 = ["rabbit", "bag", 2]
+var r3 = ["frog", "basket", 3]
+var r4 = ["frog", "box", 1]
+var r5 = ["rabbit", "box", 2]
 var rU = ["", "", ""]
 
 var referents = [r1, r2, r3, r4, r5, rU]
 
 var alpha = 1;
 
-// var randomVariable = [["rabbit", "big", "bag"], ["rabbit", "big", "box"]];  
+var descriptions = [["rabbit","big","bag"],["rabbit","big","box"],["rabbit","bigger","bag"],["rabbit","bigger","box"],["rabbit","small","bag"],["rabbit","small","box"],["rabbit","smaller","bag"],["rabbit","smaller","box"],["rabbit","empty","bag"],["rabbit","empty","box"],["frog","bigger","box"],["frog","small","box"],["frog","empty","box"],["frog","bigger","basket"],["frog","small","basket"],["frog","empty","basket"],["none","none","none"]];
+
+var randomVariable = [["rabbit","bigger","box"],["rabbit","bigger","bag"]];
+
+var randomVariablePrior = function() {
+   return uniformDraw(randomVariable);
+} // this is not a distribution in webppl. if i want to sample() from this i have to use the infer wrapping here
+
 
 var refs = {
   "referents": [r1, r2, r3, r4, r5, rU],
   "probabilities": [50, 50, 50, 50, 50, 10]
+};
+
+var referentsPrior = function() {
+  return categorical(refs.probabilities, refs.referents);
 };
 
 var contexts =[
@@ -61,6 +66,32 @@ var contexts =[
 
 var thresholds = ["0", "1", "2", "3"]
 
+
+var cost = {
+  "rabbit bigger bag": 1.5,
+  "frog bigger basket": 1.5,
+  "rabbit bigger box": 1.5,
+  "frog bigger box": 1.5,
+  "rabbit smaller bag": 1.5,
+  "frog smaller basket": 1.5,
+  "rabbit smaller box": 1.5,
+  "frog smaller box": 1.5,
+  "rabbit big bag": 1,
+  "frog big basket": 1,
+  "rabbit big box": 1,
+  "frog big box": 1,
+  "rabbit small bag": 1,
+  "frog small basket": 1,
+  "rabbit small box": 1,
+  "frog small box": 1,
+  "rabbit empty bag": 0.5,
+  "frog empty box": 0.5,
+  "frog empty basket": 0.5,
+  "rabbit empty box": 0.5,
+  "none none none": 0,
+};
+
+
 // Functions //
 
 var randomVariablePrior = function() {
@@ -89,6 +120,7 @@ var thresholdPriorGivenContext = function(context, description) {
   });
 };
 
+
 var referentsPriorGivenContext = function(context) {
   return Infer({method: "enumerate"}, function() {
      flip(0.01) ? rU : uniformDraw(context)
@@ -112,6 +144,7 @@ var thresholdsPrior = function() {
 }
 
 
+
 //// Meaning Function ////
 
 // Positive Function
@@ -120,7 +153,6 @@ var positive = function(description, referent, all_referents, theta, context) {
   var innerMatch = function(referent) {
 
     var sameContainer = description[2] == referent[1] ? true : false
-
     return sameContainer == true 
 
   }
@@ -140,6 +172,7 @@ var positive = function(description, referent, all_referents, theta, context) {
 
 }
 
+//return result ? Bernoulli({p: 1.0}) : Bernoulli({p: 0.0})
 
 
 // Comparative Function
@@ -183,7 +216,7 @@ var comparative = function(description, referent, all_referents, theta, context)
 
   }
   
-  return sample(Infer({method: "enumerate"}, function() {flip(0.01) ? thresholdFn(referent, "low") : thresholdFn(referent, "high")}))
+  return sample(Infer({method: "enumerate"}, function() {flip(0.05) ? thresholdFn(referent, "low") : thresholdFn(referent, "high")}))
   
 }
 
@@ -207,19 +240,20 @@ var meaning = function(description, referent, all_referents, theta, context) {
 
 //// End of Meaning Function ////
 
-var literalListener = function(description, context, theta) {
+
+var literalListener = function(description, context, theta) { //pos
     return Infer({method: "enumerate"}, function() {
     var referent = referentsPrior();
     var all_referents = context; 
     condition(meaning(description, referent, all_referents, theta, context))
     return referent;
   });
-}  
+} 
 
 var speaker = function(referent, context, theta) {
   return Infer({method: "enumerate"}, function() {
     var description = descriptionPrior();
-    factor( alpha * literalListener(description, context, theta).score(referent));
+    factor(alpha * literalListener(description, context, theta).score(referent))
     return description;
   });
 }
@@ -229,6 +263,7 @@ var pragmaticListener = function(description) {
     var description = randomVariablePrior();
     var context = contextsPrior(); 
     var referent = sample(referentsPriorGivenContext(context));
+    // display(JSON.stringify(referent))
     var theta = sample(thresholdPriorGivenContext(context,description)); 
     factor(speaker(referent, context, theta).score(description));
     condition(referent[0]=="rabbit")
@@ -236,9 +271,31 @@ var pragmaticListener = function(description) {
   });
 };
 
+
 // Main
-marginalize(pragmaticListener("rabbit","adjective","silence"), "ref")
+
+//problemes: quan settings meanin positive, bigger dona lo mateix q big. Quan setting meanings bigger, big dona igual q bigger a nivell de pragmatic listner
+//lo raro es q si corrs positive or comparative per separat dona true or false de forma correcte. p q quan passes per pragmaticlistener amb nomes comp. or nomes pos. accepta big bigger i no fa cas de container??
+//conclusio: algo passa amb pragmatic listener
+//tampoc peta si randomvariable nomes inclo big o bigger. si que peta si nomes tens positve or comparative i si redueixes random variable a 2 q no quadrin
+//conclusio: random variable ha d ser es parell correct si es positive i ha de ser saltre parell si es comparative. claro aixo es lo q determina ses coses!!
+
+marginalize(pragmaticListener(["boo","boo","silence"]), "ref")
 
 
 
+// positive(["rabbit","big","bag"], r2, [r1,r2,r3], 1, [r1,r2,r3])
+
+// literalListener(["rabbit","big","bag"],[r1,r2,r3,r4,r5],1)
+
+// literalListener(["rabbit","big","box"],[r1,r2,r3,r4,r5],1)
+
+// pragmaticListener(["rabbit","big","box"])
+
+// meaning(["rabbit","big","box"], r2, [r1,r2,r3,r4,r5], 1, [r1,r2,r3,r4,r5]) //this is false with meaning as positive
+
+
+// speaker(r5,[r1,r2,r3,r4,r5],1)
 //TODO: compress 4 models in one single script, add script with pragmaticlistener2 to repository
+
+// viz.table(marginalize(pragmaticListener(["rabbit","bigger","silence"]), "ref"))

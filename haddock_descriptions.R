@@ -1,4 +1,6 @@
 # Import libraries
+require(ggplot2)
+require(rlist)
 require(RJSONIO)
 require("rwebppl")
 
@@ -22,7 +24,7 @@ conds_idx <- list(
   c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
   , c(TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE)
   , c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE)
-  )
+)
 
 get_visuals <- function(refs, conds_idx, i){
   
@@ -56,33 +58,33 @@ get_descriptions <- function(visual, sizes) {
 }
 
 get_costs <- function(descs) {
-
+  
   costs <- list()
   columns <- list()
   
   for (i in 1:length(descs)) {
-  
+    
     desc <- unlist(descs[i])
     desc_str <- paste(desc[1], desc[2], desc[3])
     adjective <- desc[2]
     tail <- substr(adjective, nchar(adjective) - 1, nchar(adjective))
     
     if (tail == "er") {
-    
+      
       cost <- 1.5
-    
+      
     } else if (adjective %in% c("small", "big")) {
-    
+      
       cost <- 1
-    
+      
     } else if (adjective == "empty") {
-    
+      
       cost <- 0.5
-    
+      
     } else {
-    
+      
       cost <- 0
-    
+      
     }
     costs <- list.append(costs, cost)
     columns <- list.append(columns, desc_str)
@@ -93,42 +95,59 @@ get_costs <- function(descs) {
   return(costs)
 }
 
-execute_model <- function(truncatedDescription, cond, model) {
+
+##Random Variable##
+
+pos<-list(c("rabbit", "big", "bag"),c("rabbit", "big", "box"))
+cmp<-list(c("rabbit", "bigger", "bag"),c("rabbit", "bigger", "box"))
+
+randomVariables<-list(pos,cmp)
+
+##Contexts##
+#cont1 <- c("r1","r2","r3","r4","r5")
+#conts2 <-
+#contexts  
+#contexts <- as.data.frame()
+
+
+execute_model <- function(randomVariable, cond, model) {
   
   # Model
   visuals <- get_visuals(refs, conds_idx, cond)
   descs <- get_descriptions(visuals, sizes)
   costs <- get_costs(descs)
-  model_data <- list(truncatedDescription, visuals, descs, costs)
+
+  #contexts 
+  model_data <- list(randomVariable, visuals, descs, costs)
   
   model <- webppl(program_file=model, data = model_data, data_var = "model_data")
-
+  
   return(model)
+  
 }
+
 
 ## Main ##
 
 # Calling Parameters 
 conds <- c(1, 2, 3)
-truncatedDescriptions <- list(
-  c("rabbit", "big", "silence")
-  , c("rabbit", "bigger", "silence")
-)
+
 models <- c("bumford_cc.wppl")
 
 # Execute Model
 results <- data.frame()
-for (truncatedDescription in truncatedDescriptions) {
+
+for (randomVariable in randomVariables) {
   for (cond in conds) {
     for (model in models) {
-      result <- execute_model(truncatedDescription, cond, model)
-      result$Adjective <- truncatedDescription[2]
+      result <- execute_model(randomVariable, cond, model)
+      result$Adjective <- randomVariable[[1]][2]
       result$Condition <- cond
       result$Model <- model
       results <- rbind(results, result)
       print(paste("Processing adjective"
-                  , truncatedDescription[2]
-                  , "on visual"
+                  , randomVariable[[1]][2]
+                  , "for condition"
                   , cond
                   , "with model"
                   , model))
@@ -150,6 +169,9 @@ results
 ## Plots ##
 
 bags<-subset(results, Container=="bag")
+
+cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
+
 ggplot(bags, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +
   scale_fill_manual(values=cbPalette) +
@@ -165,3 +187,4 @@ ggplot(bags, aes(x=Condition, y=Probability, fill=Adjective)) +
   ylab("Bag Resolution") +
   facet_grid(. ~ Adjective) +
   labs(fill="Adj. Type")
+
