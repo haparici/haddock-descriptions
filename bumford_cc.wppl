@@ -4,7 +4,8 @@ var randomVariable= model_data[0]
 var visuals = model_data[1]
 var descriptions = model_data[2]
 var cost = model_data[3][0]
-// var contexts = model_data[4]
+var cont = model_data[4]
+
 
 var r1 = [visuals[0]["Animal"][0], visuals[0]["Container"][0], visuals[0]["Size"][0]]
 var r2 = [visuals[1]["Animal"][0], visuals[1]["Container"][0], visuals[1]["Size"][0]]
@@ -17,14 +18,14 @@ var referents = [r1, r2, r3, r4, r5, rU]
 
 var alpha = 1;
 
-// var randomVariable = [["rabbit", "big", "bag"], ["rabbit", "big", "box"]];  
-
 var refs = {
   "referents": [r1, r2, r3, r4, r5, rU],
   "probabilities": [50, 50, 50, 50, 50, 10]
 };
 
-var contexts =[
+
+var cont1 = [[r1,r2,r3,r4,r5]]
+var cont2 = [
 
     [r1], [r2], [r3], [r4], [r5],
 
@@ -59,7 +60,27 @@ var contexts =[
     [r1,r2,r3,r4,r5]
 ]
 
+
+var conts = function(cont) {
+
+  if (cont == "no-cc") {
+
+    return cont1
+
+  }
+
+  else {
+
+    return cont2
+  }
+}
+
+
+var contexts = conts(cont)
+
+
 var thresholds = ["0", "1", "2", "3"]
+
 
 // Functions //
 
@@ -241,4 +262,4 @@ marginalize(pragmaticListener("rabbit","adjective","silence"), "ref")
 
 
 
-//TODO: compress 4 models in one single script, add script with pragmaticlistener2 to repository
+//TODO: pragmaticlistener2 to repository

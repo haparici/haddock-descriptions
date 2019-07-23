@@ -13,7 +13,7 @@ var alpha = 1;
 
 var descriptions = [["rabbit","big","bag"],["rabbit","big","box"],["rabbit","bigger","bag"],["rabbit","bigger","box"],["rabbit","small","bag"],["rabbit","small","box"],["rabbit","smaller","bag"],["rabbit","smaller","box"],["rabbit","empty","bag"],["rabbit","empty","box"],["frog","bigger","box"],["frog","small","box"],["frog","empty","box"],["frog","bigger","basket"],["frog","small","basket"],["frog","empty","basket"],["none","none","none"]];
 
-var randomVariable = [["rabbit","bigger","box"],["rabbit","bigger","bag"]];
+var randomVariable = [["rabbit","big","box"],["rabbit","big","bag"]];
 
 var randomVariablePrior = function() {
    return uniformDraw(randomVariable);
@@ -29,40 +29,60 @@ var referentsPrior = function() {
   return categorical(refs.probabilities, refs.referents);
 };
 
-var contexts =[
+var cont1 =[[r1,r2,r3,r4,r5]]
+var cont2 =[
+[r1],[r2],[r3],[r4],[r5],
+[r1,r2],
+[r1,r3],
+[r1,r4],
+[r1,r5],
+[r2,r3],
+[r2,r4],
+[r2,r5],
+[r3,r4],
+[r3,r5],
+[r4,r5],
 
-    [r1], [r2], [r3], [r4], [r5],
+[r1,r2,r3],
+[r1,r2,r4],
+[r1,r2,r5],
+[r1,r3,r4],
+[r1,r3,r5],
+[r1,r4,r5],
+[r2,r3,r4],
+[r2,r3,r5],
+[r2,r4,r5],
+[r3,r4,r5],
 
-    [r1, r2],
-    [r1, r3],
-    [r1, r4],
-    [r1, r5],
-    [r2, r3],
-    [r2, r4],
-    [r2, r5],
-    [r3, r4],
-    [r3, r5],
-    [r4, r5],
+[r1,r2,r3,r4],
+[r1,r2,r3,r5],
+[r1,r2,r4,r5],
+[r1,r3,r4,r5],
+[r2,r3,r4,r5],
 
-    [r1, r2, r3],
-    [r1, r2, r4],
-    [r1, r2, r5],
-    [r1, r3, r4],
-    [r1, r3, r5],
-    [r1, r4, r5],
-    [r2, r3, r4],
-    [r2, r3, r5],
-    [r2, r4, r5],
-    [r3, r4, r5],
+[r1,r2,r3,r4,r5]
+              ]
 
-    [r1, r2, r3, r4],
-    [r1, r2, r3, r5],
-    [r1, r2, r4, r5],
-    [r1, r3, r4, r5],
-    [r2, r3, r4, r5],
+var cont = "no-cc"
 
-    [r1,r2,r3,r4,r5]
-]
+
+var conts = function(cont) {
+
+  if (cont == "no-cc") {
+
+    return cont1
+
+  }
+
+  else {
+
+    return cont2
+  }
+}
+
+var contexts = conts("no-cc")
+
+display(contexts)
 
 var thresholds = ["0", "1", "2", "3"]
 
@@ -263,7 +283,6 @@ var pragmaticListener = function(description) {
     var description = randomVariablePrior();
     var context = contextsPrior(); 
     var referent = sample(referentsPriorGivenContext(context));
-    // display(JSON.stringify(referent))
     var theta = sample(thresholdPriorGivenContext(context,description)); 
     factor(speaker(referent, context, theta).score(description));
     condition(referent[0]=="rabbit")
@@ -280,8 +299,7 @@ var pragmaticListener = function(description) {
 //tampoc peta si randomvariable nomes inclo big o bigger. si que peta si nomes tens positve or comparative i si redueixes random variable a 2 q no quadrin
 //conclusio: random variable ha d ser es parell correct si es positive i ha de ser saltre parell si es comparative. claro aixo es lo q determina ses coses!!
 
-marginalize(pragmaticListener(["boo","boo","silence"]), "ref")
-
+// marginalize(pragmaticListener(["boo","boo","silence"]), "ref") //aixo corr!!!
 
 
 // positive(["rabbit","big","bag"], r2, [r1,r2,r3], 1, [r1,r2,r3])
@@ -290,7 +308,7 @@ marginalize(pragmaticListener(["boo","boo","silence"]), "ref")
 
 // literalListener(["rabbit","big","box"],[r1,r2,r3,r4,r5],1)
 
-// pragmaticListener(["rabbit","big","box"])
+pragmaticListener(["rabbit","big","box"])
 
 // meaning(["rabbit","big","box"], r2, [r1,r2,r3,r4,r5], 1, [r1,r2,r3,r4,r5]) //this is false with meaning as positive
 

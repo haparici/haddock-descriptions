@@ -1,4 +1,5 @@
 # Import libraries
+require(ggm)
 require(ggplot2)
 require(rlist)
 require(RJSONIO)
@@ -96,29 +97,24 @@ get_costs <- function(descs) {
 }
 
 
-##Random Variable##
+##Random Variables##
 
 pos<-list(c("rabbit", "big", "bag"),c("rabbit", "big", "box"))
 cmp<-list(c("rabbit", "bigger", "bag"),c("rabbit", "bigger", "box"))
 
 randomVariables<-list(pos,cmp)
 
-##Contexts##
-#cont1 <- c("r1","r2","r3","r4","r5")
-#conts2 <-
-#contexts  
-#contexts <- as.data.frame()
 
 
-execute_model <- function(randomVariable, cond, model) {
+
+execute_model <- function(randomVariable, cond, model,context) {
   
   # Model
   visuals <- get_visuals(refs, conds_idx, cond)
   descs <- get_descriptions(visuals, sizes)
   costs <- get_costs(descs)
 
-  #contexts 
-  model_data <- list(randomVariable, visuals, descs, costs)
+  model_data <- list(randomVariable, visuals, descs, costs, context)
   
   model <- webppl(program_file=model, data = model_data, data_var = "model_data")
   
@@ -126,34 +122,38 @@ execute_model <- function(randomVariable, cond, model) {
   
 }
 
-
 ## Main ##
 
 # Calling Parameters 
 conds <- c(1, 2, 3)
-
+contexts <- c("no-cc","cc")
 models <- c("bumford_cc.wppl")
 
 # Execute Model
 results <- data.frame()
 
+
+for (context in contexts) {
 for (randomVariable in randomVariables) {
   for (cond in conds) {
     for (model in models) {
-      result <- execute_model(randomVariable, cond, model)
+      result <- execute_model(randomVariable, cond, model,context)
       result$Adjective <- randomVariable[[1]][2]
+      result$Context <- context
       result$Condition <- cond
       result$Model <- model
       results <- rbind(results, result)
       print(paste("Processing adjective"
                   , randomVariable[[1]][2]
+                  , "for context"
+                  , context
                   , "for condition"
                   , cond
                   , "with model"
                   , model))
     }
   }
-}
+}}
 
 colnames(results) <- c(
   "Animal"
@@ -161,6 +161,7 @@ colnames(results) <- c(
   , "Size"
   , "Probability"
   , "Adjective"
+  , "Context"
   , "Condition"
   , "Model")
 
@@ -185,6 +186,7 @@ ggplot(bags, aes(x=Condition, y=Probability, fill=Adjective)) +
   )+
   xlab("Display Type") +
   ylab("Bag Resolution") +
-  facet_grid(. ~ Adjective) +
+  facet_grid(Context ~ Adjective) +
   labs(fill="Adj. Type")
+
 
