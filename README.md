@@ -1,2 +1,2 @@
-# hadock_descriptions
+# haddock_descriptions
 In progress
