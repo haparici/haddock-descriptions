@@ -1,6 +1,7 @@
 # Import libraries
 require(ggm)
 require(ggplot2)
+require(ggpubr)
 require(rlist)
 require(RJSONIO)
 require("rwebppl")
@@ -105,16 +106,14 @@ cmp<-list(c("rabbit", "bigger", "bag"),c("rabbit", "bigger", "box"))
 randomVariables<-list(pos,cmp)
 
 
-
-
-execute_model <- function(randomVariable, cond, model,context) {
+execute_model <- function(randomVariable, cond, model, context, posMeaning) {
   
   # Model
   visuals <- get_visuals(refs, conds_idx, cond)
   descs <- get_descriptions(visuals, sizes)
   costs <- get_costs(descs)
 
-  model_data <- list(randomVariable, visuals, descs, costs, context)
+  model_data <- list(randomVariable, visuals, descs, costs, context, posMeaning)
   
   model <- webppl(program_file=model, data = model_data, data_var = "model_data")
   
@@ -125,35 +124,42 @@ execute_model <- function(randomVariable, cond, model,context) {
 ## Main ##
 
 # Calling Parameters 
+ 
 conds <- c(1, 2, 3)
-contexts <- c("no-cc","cc")
-models <- c("bumford_cc.wppl")
+contexts <- c("cc","no-cc")
+posMeanings <- c("bumford", "standard")
+models <- c("pragmatic_listener1.wppl")
 
 # Execute Model
 results <- data.frame()
 
-
-for (context in contexts) {
-for (randomVariable in randomVariables) {
-  for (cond in conds) {
-    for (model in models) {
-      result <- execute_model(randomVariable, cond, model,context)
-      result$Adjective <- randomVariable[[1]][2]
-      result$Context <- context
-      result$Condition <- cond
-      result$Model <- model
-      results <- rbind(results, result)
-      print(paste("Processing adjective"
+for(posMeaning in posMeanings) { 
+  for (context in contexts) {
+    for (randomVariable in randomVariables) {
+      for (cond in conds) {
+        for (model in models) {
+          result <- execute_model(randomVariable, cond, model,context,posMeaning)
+          result$Adjective <- randomVariable[[1]][2]
+          result$posMeaning <- posMeaning
+          result$Context <- context
+          result$Condition <- cond
+          result$Model <- model
+          results <- rbind(results, result)
+          print(paste("Processing adjective"
                   , randomVariable[[1]][2]
                   , "for context"
                   , context
+                  , "for posMeaning"
+                  , posMeaning
                   , "for condition"
                   , cond
                   , "with model"
                   , model))
+        }
+      }
     }
   }
-}}
+}
 
 colnames(results) <- c(
   "Animal"
@@ -161,6 +167,7 @@ colnames(results) <- c(
   , "Size"
   , "Probability"
   , "Adjective"
+  , "posMeaning"
   , "Context"
   , "Condition"
   , "Model")
@@ -169,11 +176,13 @@ results
 
 ## Plots ##
 
-bags<-subset(results, Container=="bag")
+bags.standard<-subset(results, Container=="bag" & posMeaning=="standard")
+bags.bumford<-subset(results, Container=="bag" & posMeaning=="bumford")
+
 
 cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
 
-ggplot(bags, aes(x=Condition, y=Probability, fill=Adjective)) + 
+standard<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +
   scale_fill_manual(values=cbPalette) +
   theme_bw() +
@@ -183,10 +192,34 @@ ggplot(bags, aes(x=Condition, y=Probability, fill=Adjective)) +
         axis.title.y = element_text(size=18),
         legend.title=element_text(size=16), 
         legend.text=element_text(size=14)
-  )+
+  ) +
+  ylim(0,1) +
   xlab("Display Type") +
   ylab("Bag Resolution") +
+  ggtitle("Standard") +
+  facet_grid(. ~ Adjective) +
+  labs(fill="Adj. Type")
+
+bumford<-ggplot(bags.bumford, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Bumford") +
   facet_grid(Context ~ Adjective) +
   labs(fill="Adj. Type")
 
 
+ggarrange(standard, bumford + rremove("x.text"), 
+          heights = c(2, 2.5),
+          #labels = c("A", "B", "C"),
+          ncol = 1, nrow = 2)
