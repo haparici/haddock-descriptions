@@ -2,8 +2,8 @@
 
 var r1 = ["rabbit", "bag", 1]
 var r2 = ["rabbit", "bag", 2]
-var r3 = ["frog", "box", 3]
-var r4 = ["rabbit", "box", 1]
+var r3 = ["frog", "bag", 3]
+var r4 = ["frog", "box", 1]
 var r5 = ["rabbit", "box", 2]
 var rU = ["", "", ""]
 
@@ -11,7 +11,22 @@ var referents = [r1, r2, r3, r4, r5, rU]
 
 var alpha = 1;
 
-var descriptions = [["rabbit","big","bag"],["rabbit","big","box"],["rabbit","bigger","bag"],["rabbit","bigger","box"],["rabbit","small","bag"],["rabbit","small","box"],["rabbit","smaller","bag"],["rabbit","smaller","box"],["rabbit","empty","bag"],["rabbit","empty","box"],["frog","bigger","box"],["frog","small","box"],["frog","empty","box"],["frog","bigger","basket"],["frog","small","basket"],["frog","empty","basket"],["none","none","none"]];
+// var descriptions = [["rabbit","big","bag"],["rabbit","big","box"],["rabbit","bigger","bag"],["rabbit","bigger","box"],["rabbit","small","bag"],["rabbit","small","box"],["rabbit","smaller","bag"],["rabbit","smaller","box"],["rabbit","empty","bag"],["rabbit","empty","box"],["frog","bigger","box"],["frog","small","box"],["frog","empty","box"],["frog","bigger","basket"],["frog","small","basket"],["frog","empty","basket"],["none","none","none"]];
+
+//Removing bigger and smaller and adding a bunch of pos form descriptions
+
+var descriptions = [ 
+["rabbit","smaller","bag"],["rabbit","smaller","box"],["rabbit","bigger","bag"],["rabbit","bigger","box"],
+["frog", "big", "basket"],["frog", "empty", "bag"],["frog", "big", "bag"],["frog", "small", "bag"],["rabbit","big","bag"],["rabbit","big","box"],["rabbit","small","bag"],["rabbit","small","box"],["rabbit","empty","bag"],["rabbit","empty","box"],["frog","small","box"],["frog","empty","box"],["none","none","none"]];
+// ok this gives me right output after removing comparative. Tomorrow check that after including comparative probabilities go down again
+// Could add more baket utterances
+
+
+
+
+// ["frog","bigger","box"],
+// ["frog","bigger","basket"],
+
 
 var randomVariable = [["rabbit","big","box"],["rabbit","big","bag"]];
 
@@ -78,22 +93,32 @@ var conts = function(cont) {
   }
 }
 
-var contexts = conts("no-cc")
+var contexts = conts("cc")
 
 // display(contexts)
 
 var thresholds = ["0", "1", "2", "3"]
 
 
+var thres = {
+  "thresholds": ["0", "1", "2", "3"],
+  "probabilities": [10, 60, 60, 10]
+};
+
+
+var thresholdsPrior = function() {
+    return categorical(thres.probabilities, thres.thresholds)
+}  //make this not uniform
+
 var cost = {
   "rabbit bigger bag": 1.5,
-  "frog bigger basket": 1.5,
+  // "frog bigger basket": 1.5,
   "rabbit bigger box": 1.5,
-  "frog bigger box": 1.5,
+  // "frog bigger box": 1.5,
   "rabbit smaller bag": 1.5,
-  "frog smaller basket": 1.5,
+  // "frog smaller basket": 1.5,
   "rabbit smaller box": 1.5,
-  "frog smaller box": 1.5,
+  // "frog smaller box": 1.5,
   "rabbit big bag": 1,
   "frog big basket": 1,
   "rabbit big box": 1,
@@ -102,9 +127,12 @@ var cost = {
   "frog small basket": 1,
   "rabbit small box": 1,
   "frog small box": 1,
+  "frog small bag": 1,
+  "frog big bag": 1,
   "rabbit empty bag": 0.5,
   "frog empty box": 0.5,
   "frog empty basket": 0.5,
+  "frog empty bag": 0.5,
   "rabbit empty box": 0.5,
   "none none none": 0,
 };
@@ -120,20 +148,21 @@ var referentsPrior = function() {
   return categorical(refs.probabilities, refs.referents);
 };
 
-//threshold prior relativized to the descriptions's relevant comparison class, k+1 thresholds
-var thresholdPriorGivenContext = function(context, description) {
-  var cc = function(context, description){
-  filter(function(rf){
-  rf[1] == description[2]
-  }, context) 
-  };
+var thresholdPriorGivenContext  = function(context,description) {
+    
+    var cc = function(context, description){
+    filter(function(rf){
+    rf[1] == description[2]
+    }, context) 
+    };
   var result = cc(context,description);
-  display(result)
-  var getThres = map(function(result){ return result[2] }, result )
-  getThres.sort()
-  getThres.push(getThres[0] - 1);
-  return Infer({method: "enumerate"}, function() {
-  uniformDraw(getThres)
+    return Infer({method: "enumerate"}, function() {
+      var getThres = map(function(result){ return result[2] }, result )
+      // var extendThres = getThres.slice(0)
+      // extendThres.push(extendThres[0] - 1) 
+      // var addThres = getThres.length == 1 ? extendThres : getThres
+      uniformDraw(getThres)
+
   });
 };
 
@@ -148,12 +177,44 @@ var contextsPrior = function() {
     return uniformDraw(contexts);
 }
 
+var ContextsPriorWeighted  = function() {
+    return Infer({method: "enumerate"}, function() {
+      var ref = referentsPrior(); 
+      var cont1 = contextsPrior(); 
+        var blah = function(ref,cont1) {
+          var includes = find(function(x) { return x == ref }, cont1) 
+          var inclusion = includes == ref ? true : false
+          return  flip(0.9) ? inclusion == true  : false
+        }
+     condition(blah(ref,cont1)==true)
+     return cont1
+  });
+}
+
+
 var descriptionPrior = function() {
   var uttProbs = map(function(u) {
     var uKey = typeof u == "string" ? u : u[0] + " " + u[1] + " " + u[2];
          return Math.exp(-cost[uKey])
   }, descriptions);
     return categorical(uttProbs, descriptions);
+};
+
+
+var pragmaticListenerFullDescription = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var context = contextsPrior(); 
+    var referent = referentsPrior();
+    // var referent = sample(referentsPriorGivenContext(context));
+    var theta = sample(thresholdPriorGivenContext(context,description)); 
+    factor(speaker(referent, context, theta).score(description));
+    // condition(referent[0]=="rabbit")
+    return {thet: theta, cont: context, ref: referent}; 
+  });
+};
+
+var descriptionPrior1 = function() {
+return uniformDraw(descriptions);
 };
 
 var thresholdsPrior = function() {
@@ -167,30 +228,60 @@ var thresholdsPrior = function() {
 // Positive Function
 
 
+// var positiveStand = function(description, referent, all_referents, theta, context) {
+
+//   var innerMatch = function(referent) {
+
+//     var sameContainer = description[2] == referent[1] ? true : false
+//     return sameContainer == true 
+
+//   }
+
+//   var truthFn = function(referent) {
+
+//     var includes = find(function(x) {return x == referent}, context) 
+//     var inclusion = includes == referent ? true : false
+//     var sameNoun = description[0] == referent[0] ? true : false
+//     var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false
+
+//     return inclusion == true && sameNoun == true && threshold == true && innerMatch(referent)== true && sum(map(innerMatch, all_referents))==1
+
+//   }
+
+//   return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
+
+// }
+
 var positiveStand = function(description, referent, all_referents, theta, context) {
-
+    
   var innerMatch = function(referent) {
-
-    var sameContainer = description[2] == referent[1] ? true : false
-    return sameContainer == true 
-
+    var includes = find(function(x) { return x == referent }, context) 
+    // display(includes)
+    var inclusion = includes == referent ? true : false 
+      // display(inclusion)
+    var sameContainer = description[2] == referent[1] ? true : false 
+    // display(sameContainer)
+    var threshold =  description[1] == "empty" ? true : description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false 
+    //       display(threshold)
+    inclusion == true && sameContainer == true && threshold == true
   }
+  
+  var truthFn = function(referent){
 
-  var truthFn = function(referent) {
-
-    var includes = find(function(x) {return x == referent}, context) 
-    var inclusion = includes == referent ? true : false
-    var sameNoun = description[0] == referent[0] ? true : false
-    var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false
-
-    return inclusion == true && sameNoun == true && threshold == true && innerMatch(referent)== true && sum(map(innerMatch, all_referents))==1
-
+      var includes = find(function(x) { return x == referent }, context) 
+      // display(includes)
+      var inclusion = includes == referent ? true : false 
+      // display(inclusion)
+      var sameNoun = description[0] == referent[0]  ? true : false 
+      // display(sameNoun)
+      
+      innerMatch(referent)==true && sum(map(innerMatch, all_referents))==1 && sameNoun == true && inclusion == true
+     
   }
-
+  
   return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
 
 }
-
 
 
 var positiveBum = function(description, referent, all_referents, theta, context) {
@@ -305,19 +396,19 @@ var meaning = function(description, referent, all_referents, theta, context) {
 //// End of Meaning Function ////
 
 
-var literalListener = function(description, context, theta) { //pos
+var literalListener = function(description, context, theta) {
     return Infer({method: "enumerate"}, function() {
     var referent = referentsPrior();
     var all_referents = context; 
     condition(meaning(description, referent, all_referents, theta, context))
     return referent;
   });
-} 
+}
 
 var speaker = function(referent, context, theta) {
   return Infer({method: "enumerate"}, function() {
     var description = descriptionPrior();
-    factor(alpha * literalListener(description, context, theta).score(referent))
+    factor( alpha * literalListener(description, context, theta).score(referent));
     return description;
   });
 }
@@ -325,19 +416,58 @@ var speaker = function(referent, context, theta) {
 var pragmaticListener = function(description) {
   return Infer({method: "enumerate"}, function() {
     var description = randomVariablePrior();
-    var context = contextsPrior(); 
+    var context = sample(ContextsPriorWeighted()); 
     var referent = sample(referentsPriorGivenContext(context));
     var theta = sample(thresholdPriorGivenContext(context,description)); 
     factor(speaker(referent, context, theta).score(description));
     condition(referent[0]=="rabbit")
     return {thet: theta, cont: context, ref: referent}; 
   });
-};
+}
+
+
+var pragmaticListenerFullDescription = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var context = contextsPrior(); 
+    var referent = referentsPrior();
+    // var referent = sample(referentsPriorGivenContext(context));
+    var theta = sample(thresholdPriorGivenContext(context,description)); 
+    factor(speaker(referent, context, theta).score(description));
+    // condition(referent[0]=="rabbit")
+    return {thet: theta, cont: context, ref: referent}; 
+  });
+}
+
+
+var speaker1 = function(referent) {
+  return Infer({method: "enumerate"}, function() {
+    var description = descriptionPrior1();
+    // display(description)
+    factor( alpha * marginalize(pragmaticListenerFullDescription(description),"ref").score(referent));
+    return description;
+  });
+}
+
+
+
+var pragmaticListener2 = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var description = randomVariablePrior();
+    // var context = contextsPrior(); 
+    // var referent = sample(referentsPriorGivenContext(context));
+//     display(JSON.stringify(referent))
+    // var theta = sample(tresholdPriorGivenContext(context,description)); 
+    var referent = referentsPrior();
+    factor(speaker1(referent).score(description));
+    condition(referent[0]=="rabbit")
+    return referent; 
+  });
+}
+
 
 
 // Main
 
-// marginalize(pragmaticListener(["boo","boo","silence"]), "ref") //aixo corr!!!
 
 // thresholdPriorGivenContext([r1,r2,r3,r4,r5], ["rabbit","big","bag"])
 
@@ -352,9 +482,12 @@ var pragmaticListener = function(description) {
 // pragmaticListener(["rabbit","big","bag"]) //for tomorrow check what happens in condition 1 for this instruction. DO I have similations for this??
 
 // meaning(["rabbit","big","box"], r5, [r1,r2,r3,r4,r5], 1, [r1,r2,r3,r4,r5]) 
+// thresholdPriorGivenContext([r1,r2],["rabbit","big","bag"])
 
-
- // speaker(r3,[r1,r2,r3,r4,r5],1)
+// speaker1(r2)
+// 
+// pragmaticListener(["rabbit","big","silence"])
 //TODO: compress 4 models in one single script, add script with pragmaticlistener2 to repository
 
 marginalize(pragmaticListener(["rabbit","big","silence"]), "ref")
+

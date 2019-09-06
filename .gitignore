@@ -27,10 +27,26 @@ vignettes/*.pdf
 # knitr and R markdown default cache directories
 /*_cache/
 /cache/
+/figure/
+
+#custom files and folders
+/files/
 
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+
+
+## Core latex/pdflatex auxiliary files
+*.tex
+*.aux
+*.log
+*.out
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/

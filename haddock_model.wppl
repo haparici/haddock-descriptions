@@ -7,7 +7,7 @@ var cost = model_data[3][0]
 var cont = model_data[4]
 var posMeaning = model_data[5]
 
-
+display(descriptions)
 
 var r1 = [visuals[0]["Animal"][0], visuals[0]["Container"][0], visuals[0]["Size"][0]]
 var r2 = [visuals[1]["Animal"][0], visuals[1]["Container"][0], visuals[1]["Size"][0]]
@@ -63,6 +63,7 @@ var cont2 = [
 ]
 
 
+
 var conts = function(cont) {
 
   if (cont == "no-cc") {
@@ -81,7 +82,20 @@ var conts = function(cont) {
 var contexts = conts(cont)
 
 
+
 var thresholds = ["0", "1", "2", "3"]
+
+
+var thres = {
+  "thresholds": ["0", "1", "2", "3"],
+  "probabilities": [10, 60, 60, 10]
+};
+
+
+var thresholdsPrior = function() {
+    return categorical(thres.probabilities, thres.thresholds)
+}  //make this not uniform
+
 
 
 // Functions //
@@ -95,19 +109,46 @@ var referentsPrior = function() {
 };
 
 
-//threshold prior relativized to the descriptions's relevant comparison class, k+1 thresholds
-var thresholdPriorGivenContext = function(context, description) {
+//threshold prior relativized to the descriptions's relevant comparison class, k+1 thresholds only for singleton contexts
+// var thresholdPriorGivenContext = function(context, description) {
+//   var cc = function(context, description){
+//   filter(function(rf){
+//   rf[1] == description[2]
+//   }, context) 
+//   };
+//   var result = cc(context,description);
+//   display(result)
+//   var getThres = map(function(result){ return result[2] }, result )
+//   // getThres.sort()
+//   // display(getThres)
+//   // var extendThres = getThres.slice(0)
+//   // extendThres.push(extendThres[0] - 1) 
+//   // display(getThres)
+//   // display(getThres.length)
+//   // var addThres = getThres.length == 1 ? extendThres : getThres
+//   // display(addThres)
+//   return Infer({method: "enumerate"}, function() {
+//   uniformDraw(getThres)
+//   });
+// };
+
+
+
+var thresholdPriorGivenContext  = function(context,description) {
+    
   var cc = function(context, description){
-  filter(function(rf){
-  rf[1] == description[2]
-  }, context) 
-  };
+    filter(function(rf){
+    rf[1] == description[2]
+    }, context) 
+    };
   var result = cc(context,description);
-  var getThres = map(function(result){ return result[2] }, result )
-  getThres.sort()
-  getThres.push(getThres[0] - 1); //this line adds k+1 but qualitative results are worse and positive does not run without it. The solution is to add extra threshold only for singleton contexts, i.e. if the cardinality of getThres is 1. If I remove this line the bumford meaning looks like it used to.
-  return Infer({method: "enumerate"}, function() {
-  uniformDraw(getThres)
+    return Infer({method: "enumerate"}, function() {
+      var getThres = map(function(result){ return result[2] }, result )
+      var extendThres = getThres.slice(0)
+      extendThres.push(extendThres[0] - 1) 
+      // var addThres = getThres.length == 1 ? extendThres : getThres
+      uniformDraw(extendThres)
+
   });
 };
 
@@ -121,7 +162,24 @@ var referentsPriorGivenContext = function(context) {
 
 var contextsPrior = function() {
     return uniformDraw(contexts);
+}  
+
+
+var ContextsPriorWeighted  = function() {
+    return Infer({method: "enumerate"}, function() {
+      var ref = referentsPrior(); 
+      var cont1 = contextsPrior(); 
+        var blah = function(ref,cont1) {
+          var includes = find(function(x) { return x == ref }, cont1) 
+          var inclusion = includes == ref ? true : false
+          return  flip(0.9) ? inclusion == true  : false
+        }
+     condition(blah(ref,cont1)==true)
+     return cont1
+  });
 }
+
+
 
 var descriptionPrior = function() {
   var uttProbs = map(function(u) {
@@ -131,39 +189,85 @@ var descriptionPrior = function() {
     return categorical(uttProbs, descriptions);
 };
 
-var thresholdsPrior = function() {
-    return uniformDraw(thresholds);
-}
+// var thresholdsPrior = function() {
+//     return uniformDraw(thrs);
+// }  //make this not uniform
+
+var pragmaticListenerFullDescription = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var context = contextsPrior(); 
+    var referent = referentsPrior();
+    // var referent = sample(referentsPriorGivenContext(context));
+    var theta = sample(thresholdPriorGivenContext(context,description)); 
+    factor(speaker(referent, context, theta).score(description));
+    // condition(referent[0]=="rabbit")
+    return {thet: theta, cont: context, ref: referent}; 
+  });
+};
+
+var descriptionPrior1 = function() {
+return uniformDraw(descriptions);
+};
 
 
 //// Meaning Function ////
 
 // Positive Function
 
+// var positiveStand = function(description, referent, all_referents, theta, context) {
+
+//   var innerMatch = function(referent) {
+
+//     var sameContainer = description[2] == referent[1] ? true : false
+//     return sameContainer == true 
+
+//   }
+
+//   var truthFn = function(referent) {
+
+//     var includes = find(function(x) {return x == referent}, context) 
+//     var inclusion = includes == referent ? true : false
+//     var sameNoun = description[0] == referent[0] ? true : false
+//     var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false
+
+//     return inclusion == true && sameNoun == true && threshold == true && innerMatch(referent)== true && sum(map(innerMatch, all_referents))==1
+
+//   }
+
+//   return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
+
+// }
+
 var positiveStand = function(description, referent, all_referents, theta, context) {
-
+    
   var innerMatch = function(referent) {
-
-    var sameContainer = description[2] == referent[1] ? true : false
-    return sameContainer == true 
-
+    var includes = find(function(x) { return x == referent }, context) 
+    // display(includes)
+    var inclusion = includes == referent ? true : false 
+      // display(inclusion)
+    var sameContainer = description[2] == referent[1] ? true : false 
+    // display(sameContainer)
+    var threshold =  description[1] == "empty" ? true : description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false 
+    //       display(threshold)
+    inclusion == true && sameContainer == true && threshold == true
   }
+  
+  var truthFn = function(referent){
 
-  var truthFn = function(referent) {
-
-    var includes = find(function(x) {return x == referent}, context) 
-    var inclusion = includes == referent ? true : false
-    var sameNoun = description[0] == referent[0] ? true : false
-    var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false
-
-    return inclusion == true && sameNoun == true && threshold == true && innerMatch(referent)== true && sum(map(innerMatch, all_referents))==1
-
+      var includes = find(function(x) { return x == referent }, context) 
+      // display(includes)
+      var inclusion = includes == referent ? true : false 
+      // display(inclusion)
+      var sameNoun = description[0] == referent[0]  ? true : false 
+      // display(sameNoun)
+      
+      innerMatch(referent)==true && sum(map(innerMatch, all_referents))==1 && sameNoun == true && inclusion == true
+     
   }
-
+  
   return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
 
 }
-
 
 var positiveBum = function(description, referent, all_referents, theta, context) {
 
@@ -184,12 +288,11 @@ var positiveBum = function(description, referent, all_referents, theta, context)
 
     return inclusion == true && sameNoun == true && threshold == true && innerMatch(referent)
 
-  }
+   }
 
   return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
 
 }
-
 
 
 
@@ -284,7 +387,7 @@ var literalListener = function(description, context, theta) {
     condition(meaning(description, referent, all_referents, theta, context))
     return referent;
   });
-}  
+}
 
 var speaker = function(referent, context, theta) {
   return Infer({method: "enumerate"}, function() {
@@ -297,19 +400,62 @@ var speaker = function(referent, context, theta) {
 var pragmaticListener = function(description) {
   return Infer({method: "enumerate"}, function() {
     var description = randomVariablePrior();
-    var context = contextsPrior(); 
+    var context = sample(ContextsPriorWeighted()); 
     var referent = sample(referentsPriorGivenContext(context));
     var theta = sample(thresholdPriorGivenContext(context,description)); 
     factor(speaker(referent, context, theta).score(description));
     condition(referent[0]=="rabbit")
     return {thet: theta, cont: context, ref: referent}; 
   });
-};
+}
+
+
+var pragmaticListenerFullDescription = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var context = contextsPrior(); 
+    var referent = referentsPrior();
+    // var referent = sample(referentsPriorGivenContext(context));
+    var theta = sample(thresholdPriorGivenContext(context,description)); 
+    factor(speaker(referent, context, theta).score(description));
+    // condition(referent[0]=="rabbit")
+    return {thet: theta, cont: context, ref: referent}; 
+  });
+}
+
+
+var speaker1 = function(referent) {
+  return Infer({method: "enumerate"}, function() {
+    var description = descriptionPrior1();
+    // display(description)
+    factor( alpha * marginalize(pragmaticListenerFullDescription(description),"ref").score(referent));
+    return description;
+  });
+}
+
+
+
+var pragmaticListener2 = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var description = randomVariablePrior();
+    // var context = contextsPrior(); 
+    // var referent = sample(referentsPriorGivenContext(context));
+//     display(JSON.stringify(referent))
+    // var theta = sample(tresholdPriorGivenContext(context,description)); 
+    var referent = referentsPrior();
+    factor(speaker1(referent).score(description));
+    condition(referent[0]=="rabbit")
+    return referent; 
+  });
+}
+
+
+
+
 
 // Main
 
 marginalize(pragmaticListener("rabbit","adjective","silence"), "ref")
-
+// pragmaticListener2("rabbit","adjective","silence")
 
 
 //TODO: pragmaticlistener2 to repository
