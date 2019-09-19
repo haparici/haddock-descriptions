@@ -3,9 +3,10 @@
 \usepackage{etex}
 \usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
 \geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
-\usepackage{amsfonts, amsmath, amssymb, latexsym, mathrsfs, fancyhdr,theorem,  pifont, setspace, verbatim,  qtree, lscape, tipa, linguex, hyperref, wasysym, stmaryrd, natbib,soul, minibox, lipsum, setspace, amssymb, color, multirow, multicol, soul,geometry,graphicx, wrapfig,gb4e,booktabs}
+\usepackage{amsmath,amsfonts, amssymb, latexsym, mathrsfs, fancyhdr,theorem,  pifont, setspace, verbatim,  qtree, lscape, tipa, linguex, hyperref, wasysym, natbib,soul, minibox, lipsum, setspace, amssymb, color, multirow, multicol, soul,geometry,graphicx, wrapfig,gb4e,booktabs,stmaryrd}
 \usepackage[T1]{fontenc}
 \usepackage{times}
+
 
 
 \geometry{hmargin={1in,1in},vmargin={1in,1in}}
@@ -13,6 +14,22 @@
 \definecolor{Red}{RGB}{255,0,0}
 \newcommand{\red}[1]{\textcolor{Red}{#1}}
 \newcommand{\ha}[1]{\textcolor{Red}{[ha: #1]}} 
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%% Some math symbols used in the text
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Format 
+
+
+\def\>{\rangle}
+\def\<{\langle}
+
+\def\true{1}
+\def\given{\,|\,}
+
+\def\valueof#1{\llbracket #1\rrbracket}
+
 
 \title{Haddock Descriptions}
 \author{Helena, Liz, Roger}
@@ -160,7 +177,7 @@ execute_model <- function(randomVariable, cond, model, context, posMeaning) {
 ## Main ##
 
 # Calling Parameters 
- 
+
 conds <- c(1, 2, 3)
 contexts <- c("cco","no-cc")
 posMeanings <- c("bumford", "standard")
@@ -181,7 +198,7 @@ for(posMeaning in posMeanings) {
           result$Condition <- cond
           result$Model <- model
           results <- rbind(results, result)
-          #print(paste("Processing adjective"
+          # print(paste("Processing adjective"
           #        , randomVariable[[1]][2]
           #        , "for context"
           #        , context
@@ -216,16 +233,19 @@ colnames(results) <- c(
 
 \section{Experiment}
 
+\subsection{Design}
 
 \subsection{Results}
 
-Experimental results are plotted in Figure \ref{results}, which plots for each of the three contexts tested the probability of bag resolution (proportion of clicks to the rabbit in the medium bag vs. clicks on the the rabbit in the medium box). The yellow line corresponds to chance after correcting for responses that did not correspond to any of these two objects (a total of xxxxx).
+{\sc \textbf{this section is outdated}
+
+Experimental results are plotted in Figure XX, which plots for each of the three contexts tested the probability of bag resolution (proportion of clicks to the rabbit in the medium bag vs. clicks on the the rabbit in the medium box). 
+The yellow line corresponds to chance after correcting for responses that did not correspond to any of these two objects (a total of X).
 
 
 %Do we want to regenerate this plot with bootstrap CI's?
 
-
-Data from xx were discarded either because xxx (N) or because the reported not to be native speakers of American English (XX). After xxx a total of XX participants.
+%Data from xx were discarded either because xxx (N) or because the reported not to be native speakers of American English (XX). After xxx a total of XX participants.
 
 
 <<results, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 8, fig.height=4>>=
@@ -234,69 +254,13 @@ require(Rmisc)
 require(ggplot2)
 
 #combined_all3_data.csv
-data<-read.csv("alldata.csv", header=TRUE) #117 unique IDs
+data<-read.csv("haddock_clean_data.csv", header=TRUE) #117 unique IDs
 
-data1<-subset(data, native!="no") 
-data2<-subset(data1, data1$mturkid!="Veron") #113 unique IDs
+data$stim.version<-paste(data$stimnum,data$version,sep="-")
 
-truncatemturkid<-function (str) { substr(str,0,5) }
+data$stim.version<-as.factor(data$stim.version)
 
-truncatemturkid("A34SLWTNACPBMO")
-
-badlisteners <- c("A34SLWTNACPBMO","A1LDGTVB4DC9FN","A1ZD8RU6YB0VEU","AK5AFB4VLBCGK","A35IZHRX8T2Q0T","AV8DKC89G7XML","A2GG7HIO2OIXUR","A2CNSIECB9UP05","ANNV3E6CIVCW4")
-
-badlisteners.short <- sapply(badlisteners,truncatemturkid)
-
-length(badlisteners.short)
-
-data3<-subset(data2, !(mturkid%in%badlisteners.short)) #108
-
-
-unique(data3$mturkid)
-
-#Prolific participants that we want to keep 
-
-setwd("~/Dropbox (MIT)/Haddock-Comparatives/Exp2-PosComp/RealStudy/analysis/prolific1-output")
-
-userinfo1<-read.csv("prolific1-userinfo.csv", header=TRUE)
-
-prolific1Bad<-subset(userinfo1, First.Language!="English") #10
-
-idProlific1Bad<-unique(prolific1Bad$participant_id) #10
-
-setwd("~/Dropbox (MIT)/Haddock-Comparatives/Exp2-PosComp/RealStudy/analysis/prolific2-output")
-
-userinfo2<-read.csv("prolific2-userinfo.csv", header=TRUE)
-
-
-prolific2Bad<-subset(userinfo2, First.Language!="English")#11
-
-idProlific2Bad<-unique(prolific2Bad$participant_id) #11
-
-
-data4<-subset(data3,!(mturkid%in%idProlific1Bad)) #103 some participants were not there already. cheaters?
-
-data5<-subset(data4,!(mturkid%in%idProlific2Bad)) #101 some participants were not there already. cheaters?
-
-
-
-
-
-#prolificparticipantsID<-unique(prolificparticipants$participant_id)
-
-#data3<-subset(data, mturkid%in%prolificparticipantsID) #19 unique IDs
-##there are two participants missing?
-
-
-#data.final<-rbind(data2,data3) #54 unique IDs
-
-
-
-data5$stim.version<-paste(data5$stimnum,data5$version,sep="-")
-
-data5$stim.version<-as.factor(data5$stim.version)
-
-data.summary<-summarySE(data5, measurevar="target", 
+data.summary<-summarySE(data, measurevar="target", 
                         groupvars=c("displaytype","adjtype"))
 
 data.summary$displaytype1[data.summary$displaytype=="abs-rel"]= "Context 1"
@@ -336,7 +300,7 @@ results.plot
 
 
 \noindent
-Type of analysis: results for subset data corresponding to the first two conditions:
+Type of analysis: results for subset of data corresponding to the first two conditions:
 posterior mean estimate and 95$\%$ credible interval: $\beta$ = $-1.25[-2.63, 0.02]$
 
 <<Stats, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
@@ -360,8 +324,8 @@ require(broom)
 
 #remove both-rel condition (context 3)
 
-data.interaction2 = subset(data5, displaytype!="both-rel")
-
+#data.interaction2 = subset(dat, displaytype!="rel-both")
+#data.pos = subset(data.interaction2, adjtype!="cmp")
 
 #Column we are trying to predict data$target1
 #Set reference level to .
@@ -373,16 +337,22 @@ data.interaction2 = subset(data5, displaytype!="both-rel")
 #what analysis do we want to report? maybe first subset the for the relevant interaction
 
 #model1.f<-glmer(
-#  target1~adjtype*displaytype +
-#    (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype|stim.version), 
+#  target~adjtype*displaytype +
+#    (1+adjtype*displaytype | usernum)+(1+adjtype+displaytype|stim.version), 
 #  data=data.interaction2, 
 #  family=binomial,
-#  glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))
+  #glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))
 #) 
-#isSingular(model1.f, tol = 1e-05)
+#isSingular(model1, tol = 1e-05)
 #[1] TRUE
 
-
+# model1<-glmer(
+#   target~displaytype +
+#     (1+displaytype | usernum)+(1+displaytype|stim), 
+#   data=data.pos, 
+#   family=binomial
+#   #glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))
+# ) 
 
 ### Bayesian analysis ###
 #for model comparison loo()
@@ -391,16 +361,31 @@ data.interaction2 = subset(data5, displaytype!="both-rel")
 
 
 
-#  model1.b<- brm(
-#    formula = target1 ~ adjtype*displaytype +
-#      (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype|stim.version),
-#    data = data.interaction2,
-#    family = "bernoulli",
-#    control=list(adapt_delta=0.99),
-#    iter = 8000,
-#   chains = 4,
-#   cores = 4,
-#  )
+#   model1.b<- brm(
+#    formula = target ~ adjtype*displaytype +
+#       (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype|stim.version),
+#     data = data.interaction2,
+#     family = "bernoulli",
+#     #control=list(adapt_delta=0.99),
+#     iter = 2000,
+#    chains = 4,
+#    cores = 4,
+#   )
+# 
+#
+# 
+# model1<- brm(
+#    formula = target ~ displaytype +
+#     (1+displaytype | usernum)+(1+displaytype|stim.version),
+#     data = data.pos,
+#     family = "bernoulli",
+#     #control=list(adapt_delta=0.99),
+#     iter = 2000,
+#    chains = 4,
+#    cores = 4,
+# )
+#   
+
 # 
 # model1.b
 
@@ -408,49 +393,108 @@ data.interaction2 = subset(data5, displaytype!="both-rel")
 
 \section{Semantic Assumptions}
 
+\subsection{Definite Article}
+
+\subsection{Gradable Adjectives}
+
+\subsection{Comparative}
 
 \section{Computational Model}
 
-We implement a one level RSA model where the pragmatic listener jointly infers a referent by reasoning about 1) possible continuations of the truncated utterance; 2) Likely context partitions that satisfy the semantic requirements of the utterance; 3) Possible threshold values for the relative adjective.
+We implement a one level RSA model where the pragmatic listener jointly infers a referent, a threshold and a context, where the latter can be narrowed down to accomodate the semantic requirements of the speaker's utterance.
 
 
 \subsection{Literal Listener}
 
+The Literal Listener infers (assigns posterior probability) a referent $r$ given a description $d$, a context $C$ and a threshold $\theta$ used in the interpretation of the relative adjective {\em big} or its comparative form {\em bigger} (see semantics in the previous section). 
+This is done proportionally to whether the description $d$ is true of $r$ in $C$ for the threshold value $d$ times the prior probability of $r$.
+Put it differently, the literal listener discards potential referents that do not satisfy the semantic requirements of the description, and assigns posterior probability to each remaining regerent that is modulated by its prior probability.
 
-The Literal Listener assigns prior-based probability to every referent $r$ in context $C$ that satisfies the literal semantics of description $d$, assuming threshold $\theta$ for {\em big} (see semantics below).
-
-%$$L_0(r\given d,C,\theta) \propto \llbracket d \rrbracket^{C,\theta}(r)\cdot P(r)$$
-
-%Problem: This distribution is undefinable if there is no referent in $C$ satisfying $d$! Solution: special \textsf{fail} referent, with prior probability $\epsilon$.
-
-%\begin{center} 
-%$P(r) =\epsilon$ if $r = \textsf{fail}$; else uniform among $r\in C$
-%\end{center}
-
-%\paragraph{Speaker:} Assigns probabilities to descriptions $d$ given intended referent $r$, context $C$ and threshold $\theta$ that reflect both the probability of the literal listener picking the referent and the cost (length) of $d$.
-
-%$$S_1(d\given r,C,\theta) \propto L_0(r\given d,C,\theta) - \textsf{cost}(d) $$
-
-%We assume the rationality parameter $\alpha = 1$.
+\begin{equation}
+  L_0(r\given d,C,\theta) \propto \llbracket d \rrbracket^{C,\theta}(r)\cdot P(r) \label{literal-listener}
+\end{equation}
 
 
-%\paragraph{Pragmatic listener:} Assigns probabilities to referents $r$ given (partially masked) description $d$, reflecting the probability of the speaker using (any resolution of) $d$ to describe $r$ in any context $C$ with any threshold $\theta$.
+In this model, both $\theta$ and $C$ are treated as lifted variables. 
+This means that the value of both $\theta$ and $C$, whose value is not resolved at the fist level of the model (i.e., at the Literal Listener level), but rather `lifted' all the way up to the Pragmatic Listener.
 
-%\medskip
+We assume a flat prior over referents.
+However, this distribution is undefinable if there is no referent in $C$ satisfying $d$, i.e., if there is presupposition failure of existence and/or uniqueness. 
 
-%\noindent
-%Marginalizing over $C$, $\theta$, and $N_2$:
+\begin{equation} 
+  P(r) =
+    \begin{cases}
+      \epsilon & \text{if } r = \textsf{fail}\\
+      \text{uniform} & \text{otherwise} 
+      \label{undefined}
+    \end{cases}
+\end{equation}
 
-%\noindent
-%$~~L_1(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto \sum_C \sum_\theta \sum_{N_2} S_1(d=N_1\textnormal{ in the (Adj) }N_2\given r,C,\theta)\cdot P(r\given
-%C)\cdot P(\theta\given C,d)\cdot P(C)$
-
-%\medskip
+Technically, we achieve this effect by posing a special \textsf{fail} referent, with prior probability $\epsilon$ (see \ref{undefined}).
 
 
-%Global context $\mathcal{C} = \{r_1,r_2,r_3,r_4,r_5\}$;
-%$P(C)$ is uniform among $\powerset(\mathcal{C})$.
+\subsection{Speaker}
+The speaker softMax agent chooses a description $d$ given the referent context and threshold that she wishes to convey by maximizing the likelihood of the LIteral Listener inferring the right referent, while minimizing production cost. .
+The former in terms of informativity the latter in terms of production cost
+assigns probabilities to descriptions $d$ given intended referent $r$, context $C$ and threshold $\theta$ that reflect both the probability of the literal listener picking the referent and the cost (length) of $d$.
 
+\begin{equation} 
+  S_1(d\given r,C,\theta) \propto \text{exp}(\alpha \times \text{ln}(L_0(r\given d,C,\theta)) -    \textsf{cost}(d)) 
+  \label{undefined}
+\end{equation} 
+
+
+Utility of $u$ for the Speaker is proportional to its informativity to the literal listener minus the utterance cost cost $C(u)$. 
+
+The utterance cost comparative 1.5, positive 1 and 0.5 if the utterance does not contain an adjective.
+
+Informativity is quantified as negative surprisal (or positive log probability) of the referent in the posterior.
+
+Finally, we assume the rationality parameter $\alpha = 1$. Ensures that the speaker is only quasi-deterministic
+
+\textbf{Questions to consider or to keep in mind:} Posterior robabilities go down if we have both pos and comparative compete with each other. We currently do not use a \emph{silence} utterance among the alternatives.
+
+
+\subsection{Pragmatic Listener}
+Assigns probabilities to referents $r$ given (partially masked) description $d$, reflecting the probability of the speaker using (any resolution of) $d$ to describe $r$ in any context $C$ with any threshold $\theta$. A context is defined as any element powerset of the xxx (excluding the empty set).
+
+
+
+\noindent
+Marginalizing over $C$, $\theta$, and $N_2$:
+
+\begin{equation} 
+  \begin{array}{l}
+  L_1(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto \\
+  \sum_C \sum_\theta \sum_{N_2} S_1(d=N_1\textnormal{ in the (Adj) }N_2\given r,C,\theta)\cdot P(r\given C)\cdot P(\theta\given C,d)\cdot P(C)
+  \end{array}
+\end{equation} 
+
+
+For models without context coordination, the context is $C = \{r_1,r_2,r_3,r_4,r_5\}$. 
+Models that allow for context coordination are such that a cotext $C'$ is set to $C' \subseteq \mathcal{P}(C)$.
+
+We have considered two types of priors over contexts: either a flat prior, or a prior with different degrees of skewedness that assigns higher probability to bigger contexts.  
+
+
+Prior over thresholds is flat, but only thresholds that are instantiated by CC in context + 1.
+
+
+\textbf{Open questions}:
+
+1. As of now, skewness is only in context prior. Do we also want to use a skewed prior as part of the referents given context probability?
+
+\begin{verbatim}
+var referentsPriorGivenContext = function(context) {
+  return Infer({method: "enumerate"}, function() {
+     flip(0.01) ? rU : uniformDraw(context)
+  });
+};
+\end{verbatim}
+
+2. Alternative ways of implementing skeweness?
+
+3. Do we want flat prior over thresholds? As of now it is flat.
 
 
 \subsection{Simulations}
@@ -462,7 +506,6 @@ The Literal Listener assigns prior-based probability to every referent $r$ in co
 
 bags.standard<-subset(results, Container=="bag" & posMeaning=="standard")
 bags.bumford<-subset(results, Container=="bag" & posMeaning=="bumford")
-
 
 cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
 
@@ -505,9 +548,35 @@ bumford<-ggplot(bags.bumford, aes(x=Condition, y=Probability, fill=Adjective)) +
 
 ggarrange(standard, bumford + rremove("x.text"), 
           heights = c(2, 2.5),
-          #labels = c("A", "B", "C"),
           ncol = 1, nrow = 2)
 @
+
+
+
+
+\subsection{Pragmatic Listener 2}
+
+Pragmatic Listener Full Utterance
+\begin{equation} 
+  L_1(r\given d) \propto \sum_C \sum_\theta S_1(d\given r,C,\theta) \cdot P(r\given C)\cdot P(\theta\given C,d)\cdot P(C)
+  \label{l1-full}
+\end{equation} 
+
+Pragmatic Speaker
+\begin{equation} 
+  S_2(u\given r) \propto    \text{exp}(\alpha \times \text{ln} (L_1(r\given d) ) -    \textsf{cost}(d)) 
+  \label{S2}
+\end{equation} 
+
+
+Second Level Pragmatic Listener (L2)
+\begin{equation} 
+  L_2(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto  \sum_{N_2}S_2(u\given r) \cdot P(r)
+  \label{S2}
+\end{equation} 
+
+
+\textbf{Questions to consider or to keep in mind:} No inference over thresholds or contexts at L2?
 
 
 
