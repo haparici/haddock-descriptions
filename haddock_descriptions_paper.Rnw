@@ -32,7 +32,7 @@
 
 
 \title{Haddock Descriptions}
-\author{Helena, Liz, Roger}
+\author{Helena, Roger, Liz}
 
 
 \begin{document}
@@ -237,7 +237,7 @@ colnames(results) <- c(
 
 \subsection{Results}
 
-{\sc \textbf{this section is outdated}
+{\textbf{this section is outdated}
 
 Experimental results are plotted in Figure XX, which plots for each of the three contexts tested the probability of bag resolution (proportion of clicks to the rabbit in the medium bag vs. clicks on the the rabbit in the medium box). 
 The yellow line corresponds to chance after correcting for responses that did not correspond to any of these two objects (a total of X).
