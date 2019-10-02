@@ -177,19 +177,51 @@ var contextsPrior = function() {
     return uniformDraw(contexts);
 }
 
-var ContextsPriorWeighted  = function() {
-    return Infer({method: "enumerate"}, function() {
-      var ref = referentsPrior(); 
-      var cont1 = contextsPrior(); 
-        var blah = function(ref,cont1) {
-          var includes = find(function(x) { return x == ref }, cont1) 
-          var inclusion = includes == ref ? true : false
-          return  flip(0.9) ? inclusion == true  : false
-        }
-     condition(blah(ref,cont1)==true)
-     return cont1
+var contextsPriorUniform = function() {
+  return Infer({method: "enumerate"}, function() {
+    uniformDraw(contexts);
   });
+};
+
+
+// var ContextsPriorWeighted  = function() {
+//     return Infer({method: "enumerate"}, function() {
+//       var ref = referentsPrior(); 
+//       var cont1 = contextsPrior(); 
+//         var blah = function(ref,cont1) {
+//           var includes = find(function(x) { return x == ref }, cont1) 
+//           var inclusion = includes == ref ? true : false
+//           return  inclusion//flip(0.000001) ? inclusion == true  : false
+//         }
+//      condition(blah(ref,cont1)==true)
+//      return cont1
+//   });
+// }
+
+var max_number_of_elements = 5
+
+var priorDistribution = function(contexts, skewedness) {
+  
+  var beta_dist =  Beta({a: skewedness, b: 1})
+  var context_length = max_number_of_elements
+//   var readout_values = _.range(0, context_length) // get the array
+//   var readout_values = map(function(x) { return x / (context.length-1); }, readout_values); // normalize it 
+//   readout_values[0] = 0.00001 //this doesn't work
+//   readout_values[context_length-1] = 0.99999 //this doesn't work
+  
+  var readout_values = [0.00001,0.25,0.5,0.75,0.999999] // this should be an array of length 'number of elements in the biggest context possible'
+  // that evenly spans the range from 0 to 1 (but excluding 0 and 1)
+  
+  var unnormalized_p = map(function(x) { return Math.exp(beta_dist.score(x)); }, readout_values);
+  
+  var categorical_p_unnormalized = map(function(set) {unnormalized_p[set.length-1]}, contexts)
+  var categorical_p_normalized = map(function(x) { return x / sum(categorical_p_unnormalized); }, categorical_p_unnormalized);
+  
+  return Categorical({ps: categorical_p_normalized, vs: contexts})
 }
+
+
+var priorContextSkewed = priorDistribution(contexts, 1)
 
 
 var descriptionPrior = function() {
@@ -416,7 +448,7 @@ var speaker = function(referent, context, theta) {
 var pragmaticListener = function(description) {
   return Infer({method: "enumerate"}, function() {
     var description = randomVariablePrior();
-    var context = sample(ContextsPriorWeighted()); 
+    var context = sample(priorContextSkewed); 
     var referent = sample(referentsPriorGivenContext(context));
     var theta = sample(thresholdPriorGivenContext(context,description)); 
     factor(speaker(referent, context, theta).score(description));
@@ -489,5 +521,7 @@ var pragmaticListener2 = function(description) {
 // pragmaticListener(["rabbit","big","silence"])
 //TODO: compress 4 models in one single script, add script with pragmaticlistener2 to repository
 
-marginalize(pragmaticListener(["rabbit","big","silence"]), "ref")
 
+
+
+marginalize(pragmaticListener(["rabbit","big","silence"]), "ref")

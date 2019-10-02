@@ -1,0 +1,585 @@
+\documentclass[letterpaper, 12pt]{article}
+%\usepackage{liatex85}
+\usepackage{etex}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+\usepackage{amsmath,amsfonts, amssymb, latexsym, mathrsfs, fancyhdr,theorem,  pifont, setspace, verbatim,  qtree, lscape, tipa, linguex, hyperref, wasysym, natbib,soul, minibox, lipsum, setspace, amssymb, color, multirow, multicol, soul,geometry,graphicx, wrapfig,gb4e,booktabs,stmaryrd}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+
+
+
+\geometry{hmargin={1in,1in},vmargin={1in,1in}}
+
+\definecolor{Red}{RGB}{255,0,0}
+\newcommand{\red}[1]{\textcolor{Red}{#1}}
+\newcommand{\ha}[1]{\textcolor{Red}{[ha: #1]}} 
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%% Some math symbols used in the text
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Format 
+
+
+\def\>{\rangle}
+\def\<{\langle}
+
+\def\true{1}
+\def\given{\,|\,}
+
+\def\valueof#1{\llbracket #1\rrbracket}
+
+
+\title{Haddock Descriptions}
+\author{Helena, Roger, Liz}
+
+
+\begin{document}
+\maketitle
+
+<<Model_Parameters_Variables, echo=FALSE, cache=FALSE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
+
+# Import libraries
+require(ggm)
+require(ggpubr)
+require(rlist)
+require(RJSONIO)
+require("rwebppl")
+
+
+#Repo
+#https://github.com/haparici/haddock-descriptions
+
+
+## Visuals Master ##
+refs_json <- '[
+  {"Animal": "rabbit", "Container": "bag", "Size": 1}
+  , {"Animal": "rabbit", "Container": "bag", "Size": 2}
+  , {"Animal": "frog", "Container": "bag", "Size": 3}
+  , {"Animal": "frog", "Container": "box", "Size": 1}
+  , {"Animal": "rabbit", "Container": "box", "Size": 2}
+  , {"Animal": "frog", "Container": "basket", "Size": 3}
+  , {"Animal": "rabbit", "Container": "box", "Size": 1}
+  ]'
+
+refs <- fromJSON(refs_json)
+refs <- do.call("rbind", refs)
+refs <- data.frame(refs)
+
+## Visual Logical Constructor ##
+conds_idx <- list(
+  c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+  , c(TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE)
+  , c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE)
+)
+
+get_visuals <- function(refs, conds_idx, i){
+  
+  cond_idx <- unlist(conds_idx[i])
+  visual <- refs[cond_idx, ]
+  
+  return(visual)
+  
+}
+
+## Descriptions ##
+sizes <- c('smaller', 'small', 'big', 'bigger', 'empty')
+#sizes <- c('smaller', 'bigger', 'empty')
+#sizes <- c( 'small', 'big', 'empty')
+get_descriptions <- function(visual, sizes) {
+  
+  visual_unique <- unique(visual[, c("Animal", "Container")])
+  
+  descs <- list()
+  for (ref in 1:nrow(visual_unique)) {
+    for (size in sizes) {
+      animal <- visual_unique[ref, "Animal"]
+      container <- visual_unique[ref, "Container"]
+      desc = list(animal, size, container)
+      descs <- list.append(descs, unlist(desc))
+    }
+  }
+  desc <- list("none", "none", "none")
+  descs <- list.append(descs, unlist(desc))
+  
+  return(descs)
+}
+
+get_costs <- function(descs) {
+  
+  costs <- list()
+  columns <- list()
+  
+  for (i in 1:length(descs)) {
+    
+    desc <- unlist(descs[i])
+    desc_str <- paste(desc[1], desc[2], desc[3])
+    adjective <- desc[2]
+    tail <- substr(adjective, nchar(adjective) - 1, nchar(adjective))
+    
+    if (tail == "er") {
+      
+      cost <- 1.5
+      
+    } else if (adjective %in% c("small", "big")) {
+      
+      cost <- 1
+      
+    } else if (adjective == "empty") {
+      
+      cost <- 0.5
+      
+    } else {
+      
+      cost <- 0
+      
+    }
+    costs <- list.append(costs, cost)
+    columns <- list.append(columns, desc_str)
+  }
+  costs <- data.frame(costs)
+  colnames(costs) <- unlist(columns)
+  
+  return(costs)
+}
+
+
+##Random Variables##
+
+pos<-list(c("rabbit", "big", "bag"),c("rabbit", "big", "box"))
+cmp<-list(c("rabbit", "bigger", "bag"),c("rabbit", "bigger", "box"))
+
+randomVariables<-list(pos,cmp)
+#randomVariables<-list(pos)
+#randomVariables<-list(cmp)
+
+execute_model <- function(randomVariable, cond, model, context, posMeaning) {
+  
+  # Model
+  visuals <- get_visuals(refs, conds_idx, cond)
+  descs <- get_descriptions(visuals, sizes)
+  costs <- get_costs(descs)
+
+  model_data <- list(randomVariable, visuals, descs, costs, context, posMeaning)
+  
+  model <- webppl(program_file=model, data = model_data, data_var = "model_data")
+  
+  return(model)
+  
+}
+
+@
+
+
+<<Model_Main, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+## Main ##
+
+# Calling Parameters 
+
+conds <- c(1, 2, 3)
+contexts <- c("cco","no-cc")
+posMeanings <- c("bumford", "standard")
+models <- c("haddock_model.wppl")
+
+# Execute Model
+results <- data.frame()
+
+for(posMeaning in posMeanings) { 
+  for (context in contexts) {
+    for (randomVariable in randomVariables) {
+      for (cond in conds) {
+        for (model in models) {
+          result <- execute_model(randomVariable, cond, model,context,posMeaning)
+          result$Adjective <- randomVariable[[1]][2]
+          result$posMeaning <- posMeaning
+          result$Context <- context
+          result$Condition <- cond
+          result$Model <- model
+          results <- rbind(results, result)
+          # print(paste("Processing adjective"
+          #        , randomVariable[[1]][2]
+          #        , "for context"
+          #        , context
+          #        , "for posMeaning"
+          #        , posMeaning
+          #        , "for condition"
+          #        , cond
+          #        , "with model"
+          #        , model))
+        }
+      }
+    }
+  }
+}
+
+colnames(results) <- c(
+  "Animal"
+  , "Container"
+  , "Size"
+  , "Probability"
+  , "Adjective"
+  , "posMeaning"
+  , "Context"
+  , "Condition"
+  , "Model")
+
+#results
+
+@
+
+
+
+\section{Experiment}
+
+\subsection{Design}
+
+\subsection{Results}
+
+{\textbf{this section is outdated}
+
+Experimental results are plotted in Figure XX, which plots for each of the three contexts tested the probability of bag resolution (proportion of clicks to the rabbit in the medium bag vs. clicks on the the rabbit in the medium box). 
+The yellow line corresponds to chance after correcting for responses that did not correspond to any of these two objects (a total of X).
+
+
+%Do we want to regenerate this plot with bootstrap CI's?
+
+%Data from xx were discarded either because xxx (N) or because the reported not to be native speakers of American English (XX). After xxx a total of XX participants.
+
+
+<<results, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 8, fig.height=4>>=
+
+require(Rmisc)
+require(ggplot2)
+
+#combined_all3_data.csv
+data<-read.csv("haddock_clean_data.csv", header=TRUE) #117 unique IDs
+
+data$stim.version<-paste(data$stimnum,data$version,sep="-")
+
+data$stim.version<-as.factor(data$stim.version)
+
+data.summary<-summarySE(data, measurevar="target", 
+                        groupvars=c("displaytype","adjtype"))
+
+data.summary$displaytype1[data.summary$displaytype=="abs-rel"]= "Context 1"
+data.summary$displaytype1[data.summary$displaytype=="abs-both"]= "Context 2"
+data.summary$displaytype1[data.summary$displaytype=="both-rel"]= "Context 3"
+
+data.summary$adjtype2[data.summary$adjtype=="pos"]= "big"
+data.summary$adjtype2[data.summary$adjtype=="cmp"]= "bigger"
+
+
+cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  
+               "#F0E442", "#0072B2", "#D55E00",  "#999999")
+
+
+results.plot<- ggplot(data.summary, aes(x=displaytype1, y=target, fill=adjtype2)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  geom_errorbar(aes(ymin=target-ci, ymax=target+ci),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=15),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  xlab("Context Type") +
+  ylab("Probability of bag resoluion") +
+  labs(fill="Adj. Type")
+
+results.plot
+
+
+@
+
+
+\noindent
+Type of analysis: results for subset of data corresponding to the first two conditions:
+posterior mean estimate and 95$\%$ credible interval: $\beta$ = $-1.25[-2.63, 0.02]$
+
+<<Stats, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+require(dplyr)
+require(lmerTest)
+#devtools::install_github("paul-buerkner/brms")
+require("rstan") 
+require(brms)
+require(broom)
+
+#data<-read.csv("haddock_clean_data.csv", header=TRUE)
+#head(data)
+
+
+#native column? do we need to discard any data here?
+#96 participants. do we need to disccard someone? we have 24 data points from one participant. how about the non-natives?
+
+### frequentist analysis ###
+
+
+#remove both-rel condition (context 3)
+
+#data.interaction2 = subset(dat, displaytype!="rel-both")
+#data.pos = subset(data.interaction2, adjtype!="cmp")
+
+#Column we are trying to predict data$target1
+#Set reference level to .
+#"abs-rel" same/diff+competitor, aka context 1
+#"abs-both" same/diff-competitor, aka context 2
+#"both-rel" same/same+competitor, aka context 3
+
+#is stim num the right random effect or should it also factor in the a-b manipulation?
+#what analysis do we want to report? maybe first subset the for the relevant interaction
+
+#model1.f<-glmer(
+#  target~adjtype*displaytype +
+#    (1+adjtype*displaytype | usernum)+(1+adjtype+displaytype|stim.version), 
+#  data=data.interaction2, 
+#  family=binomial,
+  #glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))
+#) 
+#isSingular(model1, tol = 1e-05)
+#[1] TRUE
+
+# model1<-glmer(
+#   target~displaytype +
+#     (1+displaytype | usernum)+(1+displaytype|stim), 
+#   data=data.pos, 
+#   family=binomial
+#   #glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))
+# ) 
+
+### Bayesian analysis ###
+#for model comparison loo()
+#data.interaction2 comares contexts 1 and 2
+#https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+
+
+
+#   model1.b<- brm(
+#    formula = target ~ adjtype*displaytype +
+#       (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype|stim.version),
+#     data = data.interaction2,
+#     family = "bernoulli",
+#     #control=list(adapt_delta=0.99),
+#     iter = 2000,
+#    chains = 4,
+#    cores = 4,
+#   )
+# 
+#
+# 
+# model1<- brm(
+#    formula = target ~ displaytype +
+#     (1+displaytype | usernum)+(1+displaytype|stim.version),
+#     data = data.pos,
+#     family = "bernoulli",
+#     #control=list(adapt_delta=0.99),
+#     iter = 2000,
+#    chains = 4,
+#    cores = 4,
+# )
+#   
+
+# 
+# model1.b
+
+@
+
+\section{Semantic Assumptions}
+
+\subsection{Definite Article}
+
+\subsection{Gradable Adjectives}
+
+\subsection{Comparative}
+
+\section{Computational Model}
+
+We implement a one level RSA model where the pragmatic listener jointly infers a referent, a threshold and a context, where the latter can be narrowed down to accomodate the semantic requirements of the speaker's utterance.
+
+
+\subsection{Literal Listener}
+
+The Literal Listener infers (assigns posterior probability) a referent $r$ given a description $d$, a context $C$ and a threshold $\theta$ used in the interpretation of the relative adjective {\em big} or its comparative form {\em bigger} (see semantics in the previous section). 
+This is done proportionally to whether the description $d$ is true of $r$ in $C$ for the threshold value $d$ times the prior probability of $r$.
+Put it differently, the literal listener discards potential referents that do not satisfy the semantic requirements of the description, and assigns posterior probability to each remaining regerent that is modulated by its prior probability.
+
+\begin{equation}
+  L_0(r\given d,C,\theta) \propto \llbracket d \rrbracket^{C,\theta}(r)\cdot P(r) \label{literal-listener}
+\end{equation}
+
+
+In this model, both $\theta$ and $C$ are treated as lifted variables. 
+This means that the value of both $\theta$ and $C$, whose value is not resolved at the fist level of the model (i.e., at the Literal Listener level), but rather `lifted' all the way up to the Pragmatic Listener.
+
+We assume a flat prior over referents.
+However, this distribution is undefinable if there is no referent in $C$ satisfying $d$, i.e., if there is presupposition failure of existence and/or uniqueness. 
+
+\begin{equation} 
+  P(r) =
+    \begin{cases}
+      \epsilon & \text{if } r = \textsf{fail}\\
+      \text{uniform} & \text{otherwise} 
+      \label{undefined}
+    \end{cases}
+\end{equation}
+
+Technically, we achieve this effect by posing a special \textsf{fail} referent, with prior probability $\epsilon$ (see \ref{undefined}).
+
+
+\subsection{Speaker}
+The speaker softMax agent chooses a description $d$ given the referent context and threshold that she wishes to convey by maximizing the likelihood of the LIteral Listener inferring the right referent, while minimizing production cost. .
+The former in terms of informativity the latter in terms of production cost
+assigns probabilities to descriptions $d$ given intended referent $r$, context $C$ and threshold $\theta$ that reflect both the probability of the literal listener picking the referent and the cost (length) of $d$.
+
+\begin{equation} 
+  S_1(d\given r,C,\theta) \propto \text{exp}(\alpha \times \text{ln}(L_0(r\given d,C,\theta)) -    \textsf{cost}(d)) 
+  \label{undefined}
+\end{equation} 
+
+
+Utility of $u$ for the Speaker is proportional to its informativity to the literal listener minus the utterance cost cost $C(u)$. 
+
+The utterance cost comparative 1.5, positive 1 and 0.5 if the utterance does not contain an adjective.
+
+Informativity is quantified as negative surprisal (or positive log probability) of the referent in the posterior.
+
+Finally, we assume the rationality parameter $\alpha = 1$. Ensures that the speaker is only quasi-deterministic
+
+\textbf{Questions to consider or to keep in mind:} Posterior robabilities go down if we have both pos and comparative compete with each other. We currently do not use a \emph{silence} utterance among the alternatives.
+
+
+\subsection{Pragmatic Listener}
+Assigns probabilities to referents $r$ given (partially masked) description $d$, reflecting the probability of the speaker using (any resolution of) $d$ to describe $r$ in any context $C$ with any threshold $\theta$. A context is defined as any element powerset of the xxx (excluding the empty set).
+
+
+
+\noindent
+Marginalizing over $C$, $\theta$, and $N_2$:
+
+\begin{equation} 
+  \begin{array}{l}
+  L_1(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto \\
+  \sum_C \sum_\theta \sum_{N_2} S_1(d=N_1\textnormal{ in the (Adj) }N_2\given r,C,\theta)\cdot P(r\given C)\cdot P(\theta\given C,d)\cdot P(C)
+  \end{array}
+\end{equation} 
+
+
+For models without context coordination, the context is $C = \{r_1,r_2,r_3,r_4,r_5\}$. 
+Models that allow for context coordination are such that a cotext $C'$ is set to $C' \subseteq \mathcal{P}(C)$.
+
+We have considered two types of priors over contexts: either a flat prior, or a prior with different degrees of skewedness that assigns higher probability to bigger contexts.  
+
+
+Prior over thresholds is flat, but only thresholds that are instantiated by CC in context + 1.
+
+
+\textbf{Open questions}:
+
+1. As of now, skewness is only in context prior. Do we also want to use a skewed prior as part of the referents given context probability?
+
+\begin{verbatim}
+var referentsPriorGivenContext = function(context) {
+  return Infer({method: "enumerate"}, function() {
+     flip(0.01) ? rU : uniformDraw(context)
+  });
+};
+\end{verbatim}
+
+2. Alternative ways of implementing skeweness?
+
+3. Do we want flat prior over thresholds? As of now it is flat.
+
+
+\subsection{Simulations}
+
+
+<<Plots, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=7>>=
+
+## Plots ##
+
+bags.standard<-subset(results, Container=="bag" & posMeaning=="standard")
+bags.bumford<-subset(results, Container=="bag" & posMeaning=="bumford")
+
+cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
+
+standard<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Standard") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+bumford<-ggplot(bags.bumford, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Bumford") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+
+ggarrange(standard, bumford + rremove("x.text"), 
+          heights = c(2, 2.5),
+          ncol = 1, nrow = 2)
+@
+
+
+
+
+\subsection{Pragmatic Listener 2}
+
+Pragmatic Listener Full Utterance
+\begin{equation} 
+  L_1(r\given d) \propto \sum_C \sum_\theta S_1(d\given r,C,\theta) \cdot P(r\given C)\cdot P(\theta\given C,d)\cdot P(C)
+  \label{l1-full}
+\end{equation} 
+
+Pragmatic Speaker
+\begin{equation} 
+  S_2(u\given r) \propto    \text{exp}(\alpha \times \text{ln} (L_1(r\given d) ) -    \textsf{cost}(d)) 
+  \label{S2}
+\end{equation} 
+
+
+Second Level Pragmatic Listener (L2)
+\begin{equation} 
+  L_2(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto  \sum_{N_2}S_2(u\given r) \cdot P(r)
+  \label{S2}
+\end{equation} 
+
+
+\textbf{Questions to consider or to keep in mind:} No inference over thresholds or contexts at L2?
+
+
+
+
+
+\end{document}
