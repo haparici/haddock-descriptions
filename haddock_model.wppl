@@ -150,7 +150,7 @@ var thresholdPriorGivenContext  = function(context,description) {
 };
 
 
-descriptionPrior1()
+
 var referentsPriorGivenContext = function(context) {
   return Infer({method: "enumerate"}, function() {
      flip(0.01) ? rU : uniformDraw(context)
@@ -362,7 +362,7 @@ var comparative = function(description, referent, all_referents, theta, context)
 
   }
   
-  return sample(Infer({method: "enumerate"}, function() {flip(0.01) ? thresholdFn(referent, "low") : thresholdFn(referent, "high")}))
+  return sample(Infer({method: "enumerate"}, function() {flip(0.000001) ? thresholdFn(referent, "low") : thresholdFn(referent, "high")}))
   
 }
 
@@ -464,4 +464,3 @@ marginalize(pragmaticListener("rabbit","adjective","silence"), "ref")
 // pragmaticListener2("rabbit","adjective","silence")
 //sample(priorContextSkewed)
 
-//TODO: pragmaticlistener2 to repository

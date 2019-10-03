@@ -6,8 +6,7 @@
 \usepackage{amsmath,amsfonts, amssymb, latexsym, mathrsfs, fancyhdr,theorem,  pifont, setspace, verbatim,  qtree, lscape, tipa, linguex, hyperref, wasysym, natbib,soul, minibox, lipsum, setspace, amssymb, color, multirow, multicol, soul,geometry,graphicx, wrapfig,gb4e,booktabs,stmaryrd}
 \usepackage[T1]{fontenc}
 \usepackage{times}
-
-
+%\usepackage[backend=bibtex, sorting=none]{biblatex}
 
 \geometry{hmargin={1in,1in},vmargin={1in,1in}}
 
@@ -31,11 +30,17 @@
 \def\valueof#1{\llbracket #1\rrbracket}
 
 
+\def\ol#1{\textit{#1}}
+
+\def\valueof#1{\ensuremath{\llbracket #1\rrbracket}}
+
+
 \title{Haddock Descriptions}
 \author{Helena, Roger, Liz}
 
 
 \begin{document}
+
 \maketitle
 
 <<Model_Parameters_Variables, echo=FALSE, cache=FALSE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
@@ -144,7 +149,7 @@ get_costs <- function(descs) {
   return(costs)
 }
 
-
+    
 ##Random Variables##
 
 pos<-list(c("rabbit", "big", "bag"),c("rabbit", "big", "box"))
@@ -175,7 +180,6 @@ execute_model <- function(randomVariable, cond, model, context, posMeaning) {
 <<Model_Main, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
 
 ## Main ##
-
 # Calling Parameters 
 
 conds <- c(1, 2, 3)
@@ -229,15 +233,181 @@ colnames(results) <- c(
 
 @
 
+\section{Semantic Assumptions}
+
+\subsection{Semantics for {\em the}}
+
+\citet{bumford:2017} offers a semantic analysis of Haddock descriptions, building on an analysis of the definite article in which the existence and uniqueness components may enter the composition at different stages, with other material intervening. The existence component ensures that a discourse referent is associated with the nominal. The uniqueness component ensures that the discourse referent cannot be mapped to more than one entity, in light of the restrictions that have been put on it. The restrictions put on the discourse referent may not be limited to the descriptive material within the definite description; surrounding descriptive material may accumulate before uniqueness is checked. In particular, the uniqueness component of the inner definite in an expression of the form \ol{the rabbit in the big bag} may take scope above \ol{rabbit}. Interpreted with such high scope, the definite article serves merely to ensure that there is no more than one rabbit/big-bag pair such that the rabbit is in the big bag. As far as the definite article is concerned, there may well be another big bag, as long as it doesn't contain a rabbit. In other words, this definite article does not require uniqueness with respect to the property `big bag'. 
+
+This high-scope construal of the uniqueness component of the definite article is not entirely synonymous with \ol{rabbit in a big bag}, as the latter could felicitously describe a rabbit that is in multiple big bags, assuming that were physically possible, and the former could not. But as we do not have those types of situations to contend with, the inner definite effectively disappears.
+
+Thus, under this construal, the non-trivial conditions that a given referent $r$ must satisfy in order to fall the description \ol{the rabbit in the NP}, relative to context $C$ and threshold $\theta$ are just the following:
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(r) =\true$
+    \item $r$ is in some $b$:\\
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
+    \item $b$ satisfies \ol{NP}, relative to $\theta$ and $C$:\\
+    $\valueof{\ol{NP}}^{C,\theta}(b) = \true$
+    \item No distinct $r' \in C$ meets the conditions 1-3.
+\end{enumerate}
+The last condition is the contribution of the outer definite article, which we assume is interpreted without any scope-taking placing additional constraints on the rabbit. 
+When these conditions are met, $\valueof{\ol{the rabbit in the NP}}^{\theta,C}(r) =\true$.
+
+
+[\textbf{Add alternative account of definite interpretation. Context Coordination.}]
+
+
+
+\subsection{Positive (big)}
+
+Now let us consider what \ol{NP} $=$ \ol{big bag}. What it takes for $b$ to count as a \ol{big bag}, relative to threshold $\theta$ and context $C$, is the following:
+\begin{enumerate}
+    \item $b$ is a bag in $C$:\\
+     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+    \item $b$'s size exceeds the threshold required for bags to count as \ol{big}:\\
+    $\textsf{size}(b)>\theta(\ol{bag})$
+\end{enumerate}
+Note that thresholds for counting as `big' differ depending on the type of object whose size is in question. This is why $\theta$ is parameterized by the type $\textsf{bag}$ in the second condition. If both of these conditions are met, then $\valueof{\ol{big bag}}^{\theta,C}(b)=\true$
+
+
+
+
+\subsection{Superlative}
+
+According to Bumford, superlatives can be interpreted either high, with the determiner, or low, where the positive form adjective is interpreted. A low interpretation corresponds to an `absolute' interpretation of a superlative. In principle, the superlative can be interpreted low even if the determiner is interpreted high. On a low interpretation of the superlative combined with a high interpretation of the definite article, \ol{the rabbit in the biggest hat} is true of $r$ if and only if:
+%
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+    \item $r$ is in some $b$:\\
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
+    \item $b$ is a bag in $C$:\\
+     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+    \item $b$ is bigger than any other bag in $C$:\\
+    For all $b'$ such that $\valueof{\ol{bag}}^{\theta,C}(b') =\true$:
+    \textsf{size}($b$) $>$ \textsf{size}($b'$)
+\item No  referent distinct from $r$ meets 1-4.
+\end{enumerate}
+
+On a high interpretation of the superlative, combined with a high interpretation of the definite article, \ol{the rabbit in the biggest hat} is true of $r$ if and only if:
+%
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+    \item $r$ is in some $b$:\\
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
+    \item $b$ is a bag in $C$:\\
+     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+    \item $b$ is bigger than any other rabbit-containing bag in $C$:\\
+    For all $b'$ such that:
+    \begin{itemize}
+        \item $\valueof{\ol{bag}}^{\theta,C}(b') =\true$
+        \item and there is some $r'$ such that:
+        \begin{itemize}
+            \item $\valueof{\ol{rabbit}}^{\theta,C}(r')$
+            \item $\valueof{\ol{in}}^{\theta,C}(r',b')$
+        \end{itemize}
+    \end{itemize}
+    \textsf{size}($b$) $>$ \textsf{size}($b'$)
+\item No referent distinct from $r$ meets 1-4.
+\end{enumerate}
+
+
+\subsection{Comparative (bigger)}
+
+The comparative behaves like the superlative in all relevant respects, suggesting that they two can have both high and low interpretations. [...]
+
+We assume that attributive comparatives are only defined when the comparison class contains exactly two elements. [Justification...]
+
+The low interpretation of the comparative, then, combined with the high interpretation of the definite article is as follows, for the expression \ol{the rabbit in the bigger hat}:
+%
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+    \item $r$ is in some $b$:\\
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
+    \item $b$ is a bag in $C$:\\
+     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+    \item $b$ is bigger than the other bag in $C$:
+    \begin{itemize}
+    \item There is exactly one referent $b'\neq b$ such that $\valueof{\ol{bag}}^{\theta,C}(b') =\true$.
+    \item \textsf{size}($b$) $>$ \textsf{size}($b'$)
+    \end{itemize}
+\item No  referent distinct from $r$ meets 1-4.
+\end{enumerate}
+
+On a high interpretation of the comparative, combined with a high interpretation of the definite article, \ol{the rabbit in the bigger hat} is true of $r$ if and only if:
+%
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+    \item $r$ is in some $b$:\\
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
+    \item $b$ is a bag in $C$:\\
+     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+    \item $b$ is bigger than the other rabbit-containing bag in $C$:
+    \begin{itemize}
+    \item There is exactly one referent $b'\neq b$ such that:
+    \begin{itemize}
+        \item $\valueof{\ol{bag}}^{\theta,C}(b') =\true$
+        \item there is some $r'$ such that:
+        \begin{itemize}
+            \item $\valueof{\ol{rabbit}}^{\theta,C}(r')$
+            \item $\valueof{\ol{in}}^{\theta,C}(r',b')$
+        \end{itemize}
+    \end{itemize}
+    \item \textsf{size}($b$) $>$ \textsf{size}($b'$)
+\end{itemize}
+\item No referent distinct from $r$ meets 1-4.
+\end{enumerate}
+On the high interpretation of the comparative, then, the comparison class consists of the full set of  rabbit-containing bags, rather than the full set of bags. No bag that does not contain a rabbit will have any impact on whether the description truthfully and felicitously applies to the referent.
+
 
 
 \section{Experiment}
 
-\subsection{Design}
+
+Participants heard auditory instructions while looking at visual displays consisting of five images arranged in a circle. In experimental trials, the auditory instruction consisted of a request of the form `{\em Click on the rabbit in the big} [{\em masked}]', where the second NP had been masked with quite static noise. 
+Each display contained two possible referents compatible with the truncated description (e.g., a rabbit in a medium bag and a rabbit in a medium box in Figure \ref{displays}). 
+Given this ambiguity, participants were instructed to click on the referent that best matched the available linguistic content of the utterance given the visual display.
+
+\begin{figure}[h]
+\centering
+    \includegraphics[width=11cm]{images/contexts.png}
+  \caption{Visual Displays tested in Experiment 1. The labeling in this picture is a bit misleading in that it codes each of the           contexts w.r.t. the positive form adjective, not the comparative. However, we seem to be observing slight competitor            effects for the comparative as well, so this labeling might turn out to be the correct one. Also, do we want to use             this labeling?}
+\label{displays}
+\end{figure}
+
+The experimental manipulations targetted the content of the auditory instructions, as well as the features of the visual displays. 
+The first manipulated factor was the adjective type used to modify the masked NP in the auditory instruction.
+This modifier always consisted of the relative adjective {\em big} in either its positive ({\em big}) or comparative form ({\em bigger}). 
+Second, we manipulated the visual properties of the displays with respect to whether they contained a competitor object that was in the same container-type as one of the potential referents of the truncated description (i.e., a bag or a box). However, this competitor was not a possible referent of the global description, since it consisted of an animal that could not be described by the first NP in the description (e.g., a frog inside a bag). 
+Despite not being compatible with the global instruction, this referent acted as a competitor because the size of its container was always greater than the biggest rabbit-containing bag/box in the display.
+Thus, the competitor's container was the most appropriate referent of the nested definite description if interpreted in isolation (see Context 1, or leftmost pannel, in Figure \ref{displays}). 
+The second visual manipulation determined whether the smallest box/bag in the display also contained a rabbit in it (e.g., a rabbit vs. a frog in the smallest box. See Contexts 1-2 vs. 3 respectively in Figure \ref{displays}). 
+This manipulation determined whether the use of the adjective in the auditory instruction was informative, i.e., whether the mention of the adjective was required for successful reference resolution. 
+For instance, given Context 1 in Figure \ref{displays}, where the smallest box in the display contains a frog and the smallest bag contains a rabbit, the adjective in the instruction `{\em Click on the rabbit in the big} [masked]' is informative on the bag resolution, but superfluous on the box resolution, since in the latter case the shorter adjectiveless description `{\em Click on the rabbit in the} [masked]' would have sufficed to properly identify the referent in the medium box, but not the referent in the medium bag.\footnote{Once we settle on a meaning for the comparative, we should also be specific about how this applies to the comparative.}
+The experimental manipulations described above were tested through the three visual contexts exemplified in Figure \ref{displays}. 
+
+\noindent
+{\bf ToDo:} Add information about fillers.
+%Norming study?
+
+
+
+\subsection{Predictions}
+
+\noindent
+\textbf{Predictions w.r.t. CC calculation}
+
+\noindent
+\textbf{Predictions w.r.t. definite article interpretation}
+
 
 \subsection{Results}
 
-{\textbf{this section is outdated}
+{\textbf{[this section is outdated]}
 
 Experimental results are plotted in Figure XX, which plots for each of the three contexts tested the probability of bag resolution (proportion of clicks to the rabbit in the medium bag vs. clicks on the the rabbit in the medium box). 
 The yellow line corresponds to chance after correcting for responses that did not correspond to any of these two objects (a total of X).
@@ -248,7 +418,7 @@ The yellow line corresponds to chance after correcting for responses that did no
 %Data from xx were discarded either because xxx (N) or because the reported not to be native speakers of American English (XX). After xxx a total of XX participants.
 
 
-<<results, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 8, fig.height=4>>=
+<<results, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 5, fig.height=3>>=
 
 require(Rmisc)
 require(ggplot2)
@@ -391,35 +561,33 @@ require(broom)
 
 @
 
-\section{Semantic Assumptions}
 
-\subsection{Definite Article}
 
-\subsection{Gradable Adjectives}
-
-\subsection{Comparative}
 
 \section{Computational Model}
 
-We implement a one level RSA model where the pragmatic listener jointly infers a referent, a threshold and a context, where the latter can be narrowed down to accomodate the semantic requirements of the speaker's utterance.
+We implement an RSA model where the pragmatic listener jointly infers a referent, a threshold and a context. Our model includes Context Coordination (CC), which allows the context to be narrowed down in order to accomodate the semantic requirements of the speaker's utterance.
 
 
 \subsection{Literal Listener}
 
-The Literal Listener infers (assigns posterior probability) a referent $r$ given a description $d$, a context $C$ and a threshold $\theta$ used in the interpretation of the relative adjective {\em big} or its comparative form {\em bigger} (see semantics in the previous section). 
-This is done proportionally to whether the description $d$ is true of $r$ in $C$ for the threshold value $d$ times the prior probability of $r$.
-Put it differently, the literal listener discards potential referents that do not satisfy the semantic requirements of the description, and assigns posterior probability to each remaining regerent that is modulated by its prior probability.
+The Literal Listener infers a referent $r$ given a description $d$, a context $C$ and a threshold $\theta$ proportionally to 1) whether the description is true of $r$ in $C$ given the threshold value; and 2) the prior probability of $r$.
+%The threshold $\theta$ is used in the interpretation of the relative adjective {\em big} and its comparative form {\em bigger} (see semantics in the previous section). 
+In other words, the literal listener discards referents that do not satisfy the semantic requirements of the description, and assigns a posterior probability to any remaining referent as a function of the referent's prior probability (\ref{literal-listener}).
 
 \begin{equation}
-  L_0(r\given d,C,\theta) \propto \llbracket d \rrbracket^{C,\theta}(r)\cdot P(r) \label{literal-listener}
+  L_0(r\given d,C,\theta) \propto \llbracket d \rrbracket^{C,\theta}(r)\cdot P(r) 
+  \label{literal-listener}
 \end{equation}
 
 
-In this model, both $\theta$ and $C$ are treated as lifted variables. 
-This means that the value of both $\theta$ and $C$, whose value is not resolved at the fist level of the model (i.e., at the Literal Listener level), but rather `lifted' all the way up to the Pragmatic Listener.
+In this model, both $\theta$ and $C$ are treated as lifted variables, i.e., their value is not resolved at the level of the model where they are first called (i.e., at the Literal Listener level).
+Rather these variables are `lifted' all the way up to the Pragmatic Listener, where its value is resolved.
 
-We assume a flat prior over referents.
-However, this distribution is undefinable if there is no referent in $C$ satisfying $d$, i.e., if there is presupposition failure of existence and/or uniqueness. 
+The posterior distribution in (\ref{literal-listener}) is undefinable if the existence and/or uniqueness presuppositions associated with the definite determiner are not satisfied, i.e., if $C$ does not contain exactly one referent $r$ that satisfies the description $d$ for the adjectival threshold $\theta$.
+Presupposition failure is thechnically implemented by posing a special \textsf{fail} referent, with prior probability $\epsilon$. 
+Otherwise, we assume an uninfornative prior over referents, as shown in (\ref{undefined}).
+
 
 \begin{equation} 
   P(r) =
@@ -430,59 +598,134 @@ However, this distribution is undefinable if there is no referent in $C$ satisfy
     \end{cases}
 \end{equation}
 
-Technically, we achieve this effect by posing a special \textsf{fail} referent, with prior probability $\epsilon$ (see \ref{undefined}).
+
 
 
 \subsection{Speaker}
-The speaker softMax agent chooses a description $d$ given the referent context and threshold that she wishes to convey by maximizing the likelihood of the LIteral Listener inferring the right referent, while minimizing production cost. .
-The former in terms of informativity the latter in terms of production cost
-assigns probabilities to descriptions $d$ given intended referent $r$, context $C$ and threshold $\theta$ that reflect both the probability of the literal listener picking the referent and the cost (length) of $d$.
+The speaker is modeled as a {\em softMax} agent that chooses a description $d$, given that she wants to convey the referent $r$ in context $C$ for the adjectival threshold $d$.
+In choosing utterances, the speaker balances out two constraints: maximizing the likelihood that the Literal Listener will infer the intended referent by choosing informative utterances, while minimizing production cost. 
+Informativity is modeled as negative surprisal (or positive log probability) of the referent in the posterior, whereas utterance cost $C(u)$, is directly proportional to the utterance length.\footnote{Currently, the costs are set as follows: comparative 1.5; positive 1; and 0.5 if the utterance does not contain an adjective.} 
+Finally, we assume a rationality parameter $\alpha$ of 1. 
+
 
 \begin{equation} 
   S_1(d\given r,C,\theta) \propto \text{exp}(\alpha \times \text{ln}(L_0(r\given d,C,\theta)) -    \textsf{cost}(d)) 
-  \label{undefined}
+  \label{speaker}
 \end{equation} 
 
 
-Utility of $u$ for the Speaker is proportional to its informativity to the literal listener minus the utterance cost cost $C(u)$. 
 
-The utterance cost comparative 1.5, positive 1 and 0.5 if the utterance does not contain an adjective.
 
-Informativity is quantified as negative surprisal (or positive log probability) of the referent in the posterior.
+\textbf{Questions to consider or to keep in mind:} 
+\noindent
+1. Posterior probabilities go down if we have both pos and comparative alternative utterenaces compete with each other. 
 
-Finally, we assume the rationality parameter $\alpha = 1$. Ensures that the speaker is only quasi-deterministic
-
-\textbf{Questions to consider or to keep in mind:} Posterior robabilities go down if we have both pos and comparative compete with each other. We currently do not use a \emph{silence} utterance among the alternatives.
+\noindent
+2. We currently do not use a \emph{silence} utterance among the alternatives.
 
 
 \subsection{Pragmatic Listener}
-Assigns probabilities to referents $r$ given (partially masked) description $d$, reflecting the probability of the speaker using (any resolution of) $d$ to describe $r$ in any context $C$ with any threshold $\theta$. A context is defined as any element powerset of the xxx (excluding the empty set).
+
+The Pragmatic Listener is modeled as a Bayesian agent that assigns posterior probabilities to referents $r$ given a masked description $d$, proportionally to the probability of the speaker using (any possible resolution of) $d$ to describe $r$ given context $C$ and assuming threshold $\theta$ (i.e., the likelihood), times the prior over referents given the context, the prior over thresholds given the context and a full description, and the prior over contexts (see equation \ref{pragmatic-listener}).
+
+
+\begin{equation}
+  \begin{array}{l}
+    L_1(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto \\
+    \sum_C \sum_\theta \sum_{N_2} S_1(d=N_1\textnormal{ in the (Adj) }N_2\given r,C,\theta)\cdot P(r\given C)\cdot P                (\theta\given C,d)\cdot P(C)
+  \end{array}
+  \label{pragmatic-listener}
+\end{equation}
+
+For models with context coordination, the context $C$ always consists of the five referents present in the display ($C = \{r_1,r_2,r_3,r_4,r_5\}$).
+In models that allow for Context Coordination, a context is any $C'$ such that $C'$ is in the powerset of $C$ ($C' \subseteq \mathcal{P}(C)$).
+
+
+
+As seen in equation \ref{pragmatic-listener}, different types of priors modulate the probability of a given referent in the posterior; 
+the prior probability of a referent $r$ given a context $C$ is uniform among the referents in the context and undefined otherwise. 
+In the latter case, the referent receives a small but non-negligible probability $\epsilon$. 
+Crucially, this value is fixed in models that do not use context coordination, but will vary in models that assume context coordination as a function of the context-referent pair under consideration. 
+
+\begin{equation}
+  P(r\given C) =
+    \begin{cases}
+      \epsilon & \text{if } r = \textsf{fail}\\
+      \text{uniform among any } r \in C & \text{otherwise}
+      \label{prior-referent-given-context}
+    \end{cases}
+\end{equation}
+
+
+The prior over thresholds is also assumed to be uniform among the possible threshold values licensed by the context and the description. 
+Possible threshold values are obtained by extracting the referents in the display that are in the extension of the adjectivally modified noun (e.g., bag), which is taken to provide the Comparison Class against which the adjective is evaluated.
+This is done to ensure that the sizes of other objects present in the context that are not in the extension of the nested noun are not included as possible threshold values. 
+the intuition that attributive adjectives NP sister the Comparison Class.
+This manipulation derives dispreference for contexts with bigger bag.
+For instance, in a context with two bags (see Figure \ref{2bag-context}), two possible thresholds would result This prior has an important role in deriving the.
+Bag resolution for contexts 1 and 3 involves three possible thresholds. Bag resolution for context 2 involves xxx. Each threshold receives higher probability in the prior in context 2 compared to contexts 1 and 3.
+
+
+\begin{figure}
+\centering
+  \begin{minipage}[c]{0.4\textwidth}
+    \includegraphics[width=3.0in]{images/con1.png}
+    \caption{Context with two bags, 2 thresholds}
+    \label{2bag-context}
+  \end{minipage}
+  \begin{minipage}[c]{0.5\textwidth}
+    \includegraphics[width=3.0in]{images/con2.png}
+    \caption{Context with three bags, 3 thresholds}
+    \label{3bag-context}
+  \end{minipage}
+\end{figure}
+
+
+Finally, the last term in equation \ref{pragmatic-listener} samples contexts from a $beta$ prior with parameters $\alpha=2$ and $\beta =1$ that assigns higher probability to bigger contexts as shown in XX. [\textbf{This needs to be completed}]
+
+
+
+% \begin{verbatim}
+% var max_number_of_elements = 5
+% 
+% var priorDistribution = function(contexts, skewedness) {
+%   
+%   var beta_dist =  Beta({a: skewedness, b: 1})
+%   var context_length = max_number_of_elements
+%   
+%   var readout_values = [0.00001,0.25,0.5,0.75,0.999999] 
+%   // this should be an array of length 'number of elements 
+%   // in the biggest context possible'
+%   // that evenly spans the range from 0 to 1 (but excluding 0 and 1)
+%   
+%   var unnormalized_p = map(function(x) { 
+%       return Math.exp(beta_dist.score(x)); 
+%       }, readout_values);
+%   
+%   var categorical_p_unnormalized = map(function(set) {
+%     unnormalized_p[set.length-1]
+%     }, contexts)
+%  
+%   var categorical_p_normalized = map(function(x) { 
+%     return x / sum(categorical_p_unnormalized); 
+%     }, categorical_p_unnormal  ized);
+%   
+%   return Categorical({ps: categorical_p_normalized, vs: contexts})
+% }
+% 
+% var priorContextSkewed = priorDistribution(contexts, 2)
+% 
+% \end{verbatim}
+
 
 
 
 \noindent
-Marginalizing over $C$, $\theta$, and $N_2$:
-
-\begin{equation} 
-  \begin{array}{l}
-  L_1(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto \\
-  \sum_C \sum_\theta \sum_{N_2} S_1(d=N_1\textnormal{ in the (Adj) }N_2\given r,C,\theta)\cdot P(r\given C)\cdot P(\theta\given C,d)\cdot P(C)
-  \end{array}
-\end{equation} 
-
-
-For models without context coordination, the context is $C = \{r_1,r_2,r_3,r_4,r_5\}$. 
-Models that allow for context coordination are such that a cotext $C'$ is set to $C' \subseteq \mathcal{P}(C)$.
-
-We have considered two types of priors over contexts: either a flat prior, or a prior with different degrees of skewedness that assigns higher probability to bigger contexts.  
-
-
-Prior over thresholds is flat, but only thresholds that are instantiated by CC in context + 1.
-
-
 \textbf{Open questions}:
 
-1. As of now, skewness is only in context prior. Do we also want to use a skewed prior as part of the referents given context probability?
+1. The discussion on threshold values is missing treatment of thresholds for the comparative.
+
+2. As of now, skewness is only in context prior. Do we also want to use a skewed prior as part of the referents given context probability?
 
 \begin{verbatim}
 var referentsPriorGivenContext = function(context) {
@@ -492,9 +735,9 @@ var referentsPriorGivenContext = function(context) {
 };
 \end{verbatim}
 
-2. Alternative ways of implementing skeweness?
+3. Alternative ways of implementing skeweness?
 
-3. Do we want flat prior over thresholds? As of now it is flat.
+
 
 
 \subsection{Simulations}
@@ -565,14 +808,14 @@ Pragmatic Listener Full Utterance
 Pragmatic Speaker
 \begin{equation} 
   S_2(u\given r) \propto    \text{exp}(\alpha \times \text{ln} (L_1(r\given d) ) -    \textsf{cost}(d)) 
-  \label{S2}
+  \label{pragmatic-speaker}
 \end{equation} 
 
 
 Second Level Pragmatic Listener (L2)
 \begin{equation} 
   L_2(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto  \sum_{N_2}S_2(u\given r) \cdot P(r)
-  \label{S2}
+  \label{s2-pragmatic-listener}
 \end{equation} 
 
 
@@ -580,6 +823,8 @@ Second Level Pragmatic Listener (L2)
 
 
 
+%\bibliography{master}
+%\bibliographystyle{sp}
 
 
 \end{document}
