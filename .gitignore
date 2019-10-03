@@ -46,7 +46,9 @@ vignettes/*.pdf
 *.synctex(busy)
 *.synctex.gz
 *.synctex.gz(busy)
-
+*.blg
+*.bbl
+haddock_descriptions_paper.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/

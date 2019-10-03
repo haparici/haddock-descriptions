@@ -41,9 +41,10 @@
 
 \begin{document}
 
+
 \maketitle
 
-<<Model_Parameters_Variables, echo=FALSE, cache=FALSE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
+<<Model_Parameters_Variables, echo=FALSE, cache=TRUE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
 
 # Import libraries
 require(ggm)
@@ -823,8 +824,8 @@ Second Level Pragmatic Listener (L2)
 
 
 
-%\bibliography{master}
-%\bibliographystyle{sp}
+\bibliography{master}
+\bibliographystyle{sp}
 
 
 \end{document}

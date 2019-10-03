@@ -1,0 +1,18 @@
+\newcommand{\SortNoop}[1]{}
+\begin{thebibliography}{1}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem[{Bumford(2017)}]{bumford:2017}
+Bumford, Dylan. 2017.
+\newblock Split-scope definites: Relative superlatives and {H}addock
+  descriptions.
+\newblock \emph{Linguistics and Philosophy} 40(6). 549--593.
+\newblock \urlprefix\url{https://doi.org/10.1007/s10988-017-9210-2}.
+
+\end{thebibliography}
