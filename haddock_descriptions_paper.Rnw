@@ -659,12 +659,11 @@ Crucially, this value is fixed in models that do not use context coordination, b
 
 
 The prior over thresholds is also assumed to be uniform among the possible threshold values licensed by the context and the description. 
-Possible threshold values are obtained by extracting the referents in the display that are in the extension of the adjectivally modified noun (e.g., bag), which is taken to provide the Comparison Class against which the adjective is evaluated.
-This is done to ensure that the sizes of other objects present in the context that are not in the extension of the nested noun are not included as possible threshold values. 
-the intuition that attributive adjectives NP sister the Comparison Class.
-This manipulation derives dispreference for contexts with bigger bag.
-For instance, in a context with two bags (see Figure \ref{2bag-context}), two possible thresholds would result This prior has an important role in deriving the.
-Bag resolution for contexts 1 and 3 involves three possible thresholds. Bag resolution for context 2 involves xxx. Each threshold receives higher probability in the prior in context 2 compared to contexts 1 and 3.
+Possible threshold values are obtained by extracting the referents in the context that are in the extension of the nested noun (e.g., bag), which is taken to provide the Comparison Class against which the adjective is evaluated ([reference]).
+This prior derives the dispreference for the bag resolution in conditions that contain more than two bags (i.e., Contexts 1 and 3), even if the biggest bag in the display does not contain an animal that matches the first noun in the description.\footnote{There's something funny about this logic. If Context 1 contained frogs in the two biggest bags, and a rabbit in the smallest bag, it would be off to refer to that referent as the rabbit in the big bag. I think our model does not predict a dispreference agianst this. Both big and small would be equally preferred here. Also, doesn't this logic predict that if we were comparing Context 1 to another context where the frog in the biggest bag is substituted by a rabbit, we would still get lower probability for the bag resolution compared to the box resolution? Is this right?} 
+In such contexts, the prior probability of each of the thresholds licensed by the description and the context will be lower than the condition that only contains two bags (Context 2), since the prior probability is split among three possible thresholds, as opposed to two, as exemplified in Figures \ref{2bag-context}-\ref{3bag-context}. Each threshold receives higher probability in the prior in context 2 compared to contexts 1 and 3.
+This difference in the prior over threshold values results in higher posterior probabilities for the bag resolution compared to the box resolution, since the number of boxes in any given context is never greater than two.
+
 
 
 \begin{figure}
