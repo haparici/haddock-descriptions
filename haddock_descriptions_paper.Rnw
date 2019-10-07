@@ -3,11 +3,10 @@
 \usepackage{etex}
 \usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
 \geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
-\usepackage{amsmath,amsfonts, amssymb, latexsym, mathrsfs, fancyhdr,theorem,  pifont, setspace, verbatim,  qtree, lscape, tipa, linguex, hyperref, wasysym, natbib,soul, minibox, lipsum, setspace, amssymb, color, multirow, multicol, soul,geometry,graphicx, wrapfig,gb4e,booktabs,stmaryrd}
+\usepackage{amsmath,amsfonts, amssymb, latexsym, mathtools,mathrsfs, fancyhdr,theorem,  pifont, setspace, verbatim,  qtree, lscape, tipa, linguex, hyperref, wasysym, natbib,soul, minibox, lipsum, setspace, amssymb, color, multirow, multicol, soul,geometry,graphicx, wrapfig,gb4e,booktabs,stmaryrd}
 \usepackage[T1]{fontenc}
 \usepackage{times}
 %\usepackage[backend=bibtex, sorting=none]{biblatex}
-
 \geometry{hmargin={1in,1in},vmargin={1in,1in}}
 
 \definecolor{Red}{RGB}{255,0,0}
@@ -680,42 +679,20 @@ This difference in the prior over threshold values results in higher posterior p
   \end{minipage}
 \end{figure}
 
+Finally, the last term in equation \ref{pragmatic-listener} samples contexts in models that incorporate Context Coordination, as shown in \ref{context-prior}. [\textbf{This needs to be completed}]
+%Finally, the last term in equation \ref{pragmatic-listener} samples contexts from a $beta$ prior with parameters $\alpha=2$ and $\beta =1$ that assigns higher probability to bigger contexts as shown in XX. [\textbf{This needs to be completed}]
 
-Finally, the last term in equation \ref{pragmatic-listener} samples contexts from a $beta$ prior with parameters $\alpha=2$ and $\beta =1$ that assigns higher probability to bigger contexts as shown in XX. [\textbf{This needs to be completed}]
-
-
-
-% \begin{verbatim}
-% var max_number_of_elements = 5
-% 
-% var priorDistribution = function(contexts, skewedness) {
-%   
-%   var beta_dist =  Beta({a: skewedness, b: 1})
-%   var context_length = max_number_of_elements
-%   
-%   var readout_values = [0.00001,0.25,0.5,0.75,0.999999] 
-%   // this should be an array of length 'number of elements 
-%   // in the biggest context possible'
-%   // that evenly spans the range from 0 to 1 (but excluding 0 and 1)
-%   
-%   var unnormalized_p = map(function(x) { 
-%       return Math.exp(beta_dist.score(x)); 
-%       }, readout_values);
-%   
-%   var categorical_p_unnormalized = map(function(set) {
-%     unnormalized_p[set.length-1]
-%     }, contexts)
-%  
-%   var categorical_p_normalized = map(function(x) { 
-%     return x / sum(categorical_p_unnormalized); 
-%     }, categorical_p_unnormal  ized);
-%   
-%   return Categorical({ps: categorical_p_normalized, vs: contexts})
-% }
-% 
-% var priorContextSkewed = priorDistribution(contexts, 2)
-% 
-% \end{verbatim}
+\begin{equation}
+\begin{multlined}
+  P(C) =  \frac{1}{Z}2^{\alpha \mid C\mid}\text{, where Z} =\sum_{C \in \mathcal{P}(C)}2^{\alpha \mid C\mid}\text{    , such that} \\
+  P(C) =
+  \begin{cases}
+    \text{Uniform for } \alpha = 1\\
+    \text{For } \alpha > 1\text{: Bigger contexts receive higher probability in the prior.}
+  \end{cases}
+\end{multlined}
+  \label{context-prior}
+\end{equation}
 
 
 
