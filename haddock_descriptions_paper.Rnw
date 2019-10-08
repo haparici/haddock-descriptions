@@ -34,12 +34,11 @@
 \def\valueof#1{\ensuremath{\llbracket #1\rrbracket}}
 
 
-\title{Haddock Descriptions}
+\title{Context-Sensitivity in Haddock Descriptions}
 \author{Helena, Roger, Liz}
 
 
 \begin{document}
-
 
 \maketitle
 
@@ -52,6 +51,9 @@ require(rlist)
 require(RJSONIO)
 require("rwebppl")
 
+#to install rwebppl
+#install.packages("devtools")
+#devtools::install_github("mhtess/rwebppl")
 
 #Repo
 #https://github.com/haparici/haddock-descriptions
@@ -233,136 +235,227 @@ colnames(results) <- c(
 
 @
 
+\section{Introduction}
+
+%The gradable adjective {\em big} and the definite article {\em the} are both context-sensitive expressions. 
+%Something that is big in one context might not be big in another. 
+%Whether or not it is felicitous to use the expression {\em the rabbit} depends on how many rabbits are in the context. 
+%This paper investigates the relationship between these two manifestations of context-sensitivity.
+
+Suppose there are three hats, two rabbits, a frog, and a calculator on a table before you. 
+One of the rabbits is in one of the hats, and the other two hats contain the frog and the calculator, respectively.
+You are instructed to point to {\em the hat}. 
+You might feel a bit squeamish, because the uniqueness requirement of the definite article is not satisfied in this context. 
+But asked to point to {\em the rabbit in the hat}, you would confidently pick out the rabbit in {\em the hat that has a rabbit in it} (barring unusual circumstances). 
+Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are called {\em Haddock descriptions}.%
+\footnote{Fun fact: The same phenomenon can occur when multiple definites are embedded within another. \citet{horacek:1995} observed that {\em the table with the apple and the banana} felicitous in a context with three tables, one with one apple and one banana (the referent), one with an apple and a mug, and one with a banana and a bowl.}
+
+
+\citet{haddock:1987} characterized the task of the listener when presented with such descriptions as a {\em constraint satisfaction problem} of the kind studied in Artificial Intelligence: 
+Find the unique $x$ such that (i) $x$ is a rabbit; (ii) $y$ is a hat; and (iii) $x$ is in $y$. \citet{vaneijck:1993} cast the same idea in dynamic semantics. 
+The description is felicitous if a unique such $x$ can be found. 
+But neither \citeauthor{haddock:1987} nor \citeauthor{vaneijck:1993} specified the process by which a listener can determine that this is the problem before her, and in principle, these constraints could be derived either semantically or pragmatically.
+
+According to \citet{bumford:2017}, the uniqueness requirement of the inner definite in {\em the rabbit in a hat} can be loosened through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above {\em rabbit}. 
+In that scope position, what the uniqueness requirement demands is that there be no more than one {\em hat containing a rabbit}, even if there is more than one {\em hat} simpliciter.
+On this semantic approach, the loosening of the uniqueness requirement does not involve elimination of certain referents from consideration through pragmatic reasoning.
+
+But it is known that the process of identifying a referent for {\em unembedded} definite descriptions involves a flexible conception of uniqueness, on which entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
+Given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question \citep{chambers+al:2002}, even if there are multiple cans in the display. 
+These experimental findings bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the hat} or {\em Bill put the rabbit in the hat}.
+Given this, the disappearance of the uniqueness requirement for the inner definite of a Haddock description might reasonably be seen as an instance of the same phenomenon, involving commonsense reasoning to exclude certain potential referents from consideration. One particular way of caching this out, suggested by \citet{muhlstein+al:2015}, is that the listener reasons probabilistically about the context relative to which a definite description should be interpreted.%
+
+If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. The question that this paper aims to address is whether or not such a phenomenon occurs, specifically with gradable adjectives.
+
+To that end, the present paper investigates the interpretation of gradable adjectives embedded inside Haddock descriptions, as in {\em the rabbit in the big hat}.
+Given that the relevant set of hats for the purpose of the definite description contains only ones with rabbits in them, does that restrict what hats are included in the comparison class for {\em big}?
+{\em Ceteris paribus,} the semantic approach predicts that the comparison class for {\em big} should not be restricted to rabbit-containing hats, as there is no context narrowing on this view.
+On the other hand, if Haddock descriptions involve context narrowing, then, depending on how this idea is implemented, we might expect that the comparison class for {\em big} should be restricted to rabbit-containing hats.
+
+Our experiments show that the comparison class for {\em big} includes all hats, not just the ones containing rabbits. 
+This is straightforwardly predicted under the semantic approach to Haddock descriptions, and places some constraints on how the pragmatic approach should work. 
+If the loosening of the uniqueness requirement for definite articles is due to context-narrowing, this narrowing is not so powerful and all-encompassing that it affects comparison classes for gradable adjectives.
+
+
 \section{Semantic Assumptions}
 
-\subsection{Semantics for {\em the}}
 
-\citet{bumford:2017} offers a semantic analysis of Haddock descriptions, building on an analysis of the definite article in which the existence and uniqueness components may enter the composition at different stages, with other material intervening. The existence component ensures that a discourse referent is associated with the nominal. The uniqueness component ensures that the discourse referent cannot be mapped to more than one entity, in light of the restrictions that have been put on it. The restrictions put on the discourse referent may not be limited to the descriptive material within the definite description; surrounding descriptive material may accumulate before uniqueness is checked. In particular, the uniqueness component of the inner definite in an expression of the form \ol{the rabbit in the big bag} may take scope above \ol{rabbit}. Interpreted with such high scope, the definite article serves merely to ensure that there is no more than one rabbit/big-bag pair such that the rabbit is in the big bag. As far as the definite article is concerned, there may well be another big bag, as long as it doesn't contain a rabbit. In other words, this definite article does not require uniqueness with respect to the property `big bag'. 
+\subsection{Positive (\ol{big})}
 
-This high-scope construal of the uniqueness component of the definite article is not entirely synonymous with \ol{rabbit in a big bag}, as the latter could felicitously describe a rabbit that is in multiple big bags, assuming that were physically possible, and the former could not. But as we do not have those types of situations to contend with, the inner definite effectively disappears.
+Let us begin by discussing our semantics for positive form gradable adjectives like \ol{big}. We assume that such expressions are evaluated relative to a given threshold $\theta$, which must be exceeded in order for the gradable adjective to hold of a given referent. We assume furthermore that what counts as `big' differs depending on the type of object whose size is in question. We therefore have different thresholds for different types of objects. $\theta(\ol{bag})$ is the threshold for bags, for example.
 
-Thus, under this construal, the non-trivial conditions that a given referent $r$ must satisfy in order to fall the description \ol{the rabbit in the NP}, relative to context $C$ and threshold $\theta$ are just the following:
+Writing `the denotation of $\alpha$ relative to context $C$ and threshold $\theta$' as $\valueof{\alpha}^{\theta,C}$, we will say that $\valueof{\alpha}^{\theta,C}(r) = \true$ if referent $r$ falls under description $\alpha$, relative to $\theta$ and $C$.
+What it takes for $b$ to count as a \ol{big bag}, relative to threshold $\theta$ and context $C$, is the following:
+\begin{enumerate}
+  \item $b$ is in $C$
+  \item $b$ is a bag:\\
+  $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+  \item $b$'s size exceeds the threshold required for bags to count as \ol{big}:\\
+  $\textsf{size}(b)>\theta(\ol{bag})$
+\end{enumerate}
+Thus if all of the above conditions are met, then $\valueof{\ol{big bag}}^{\theta,C}(b)=\true$.
+
+\subsection{Definite article}
+
+Now let us consider how to analyze {\em the big bag}.
+We entertain two alternative analyses of the definite article {\em the}. 
+On what we will refer to as the \textbf{standard analysis}, the definite article carries a presupposition of uniqueness relative to some given context.
+Thus, \ol{the big bag} denotes the unique bag in some given context $C$ that counts as `big', as determined by whether or not it exceeds a given threshold $\theta$.  To serve as the referent for a definite description of the form \ol{the NP}, a given referent $r$ must satisfy the following conditions:
+\begin{enumerate}
+\item $r$ satisfies NP, relative to $\theta$ and $C$:\\
+$\valueof{\textnormal{NP}}^{\theta,C}(r) = \true$ 
+\item No distinct $r'\in C$ satsifies NP, relative to $\theta$ and $C$.
+\end{enumerate}
+
+By extension, \ol{the rabbit in the big bag} denotes the unique rabbit (in some given context $C$) that is in $b$, 
+where $b$ is the unique bag in $C$ that is big, according to a given threshold $\theta$.
+Thus, the non-trivial conditions that a given referent $r$ must satisfy in order to fall under the description \ol{the rabbit in the NP}, 
+relative to context $C$ and threshold $\theta$, 
+are the following:
 \begin{enumerate}
     \item $r$ is a rabbit in $C$:\\
      $\valueof{\ol{rabbit}}^{\theta,C}(r) =\true$
     \item $r$ is in some $b$:\\
-        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
-    \item $b$ satisfies \ol{NP}, relative to $\theta$ and $C$:\\
-    $\valueof{\ol{NP}}^{C,\theta}(b) = \true$
-    \item No distinct $r' \in C$ meets the conditions 1-3.
+    $\valueof{\ol{in}}^{\theta,C}(b)(r) =\true$, where:
+    \begin{itemize}
+        \item $b$ satisfies \ol{NP}, relative to $\theta$ and $C$:\\
+        $\valueof{\ol{NP}}^{C,\theta}(b) = \true$ 
+        \item No distinct $b'$  satisfies \ol{NP}, relative to $\theta$ and $C$
+    \end{itemize}
+    \item No distinct $r' \in C$ meets conditions 1-2.
+\end{enumerate}
+%
+Thus uniqueness is enforced at both the inner and outer layers of the description, relative to a given context.
+
+Another analysis of definite descriptions that we will entertain is what we will call \textbf{Bumford's}. \citet{bumford:2017} offers a semantic analysis of Haddock descriptions, building on an analysis of the definite article in which the existence and uniqueness components may enter the composition at different stages, with other material intervening. 
+The existence component ensures that a discourse referent is associated with the nominal. 
+The uniqueness component ensures that the discourse referent cannot be mapped to more than one entity, in light of the restrictions that have been put on it. The restrictions put on the discourse referent may not be limited to the descriptive material within the definite description; 
+surrounding descriptive material may accumulate before uniqueness is checked. In particular, the uniqueness component of the inner definite in an expression of the form \ol{the rabbit in the big bag} may take scope above \ol{rabbit}. 
+Interpreted with such high scope, the definite article serves merely to ensure that there is no more than one rabbit/big-bag pair such that the rabbit is in the big bag. 
+As far as the definite article is concerned, there may well be another big bag, as long as it doesn't contain a rabbit. 
+In other words, this definite article does not require uniqueness with respect to the property `big bag'. 
+
+This high-scope construal of the uniqueness component of the definite article is not entirely synonymous with \ol{rabbit in a big bag}, 
+as the latter could felicitously describe a rabbit that is in multiple big bags, assuming that were physically possible, and the former could not. 
+But as we do not have those types of situations to contend with, the inner definite effectively disappears.
+
+Thus, under this construal, the non-trivial conditions that a given referent $r$ must satisfy in order to fall under the description \ol{the rabbit in the NP}, 
+relative to context $C$ and threshold $\theta$, 
+are just the following:
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(r) =\true$
+    \item $r$ is in some $b$:\\
+    $\valueof{\ol{in}}^{\theta,C}(b)(r) =\true$, where:
+    \begin{itemize}
+      \item $\valueof{\ol{NP}}^{C,\theta}(b) = \true$
+    \end{itemize}
+    \item No distinct $r' \in C$ meets conditions 1-2.
 \end{enumerate}
 The last condition is the contribution of the outer definite article, which we assume is interpreted without any scope-taking placing additional constraints on the rabbit. 
-When these conditions are met, $\valueof{\ol{the rabbit in the NP}}^{\theta,C}(r) =\true$.
+When these conditions are met, $\valueof{\ol{the rabbit in the NP}}^{\theta,C}(r) =\true$, on Bumford's analysis. The main difference between Bumford's analysis and the standard analysis is what constraints are put on $b$, whether it just has to satisfy the descriptive content of the inner NP (as on Bumford's analysis), or whether it must furthermore be the only entity in $C$ that does so.
 
+\subsection{Comparative}
 
-[\textbf{Add alternative account of definite interpretation. Context Coordination.}]
+We will consider two alternative analyses of the comparative \ol{bigger} corresponding to the he well-known distinction between {\em relative} and {\em absolute} readings of superlatives \citep{szabolcsi:1986,heim:1999}.
+Although the distinction has mainly been discussed in regards to superlatives, it also applies to comparatives, as argued in the appendix.
+Just as {\em the highest shelf} in {\em the book on the highest shelf} can refer to either the absolutely highest shelf (absolute reading) or the highest shelf {\em that a book is on} (relative reading), {\em the higher shelf} in {\em the book on the higher shelf} can refer to the higher of two shelves (absolute reading), or it can refer to the higher of the two shelves {\em that a book is on} (relative reading).
 
-
-
-\subsection{Positive (big)}
-
-Now let us consider what \ol{NP} $=$ \ol{big bag}. What it takes for $b$ to count as a \ol{big bag}, relative to threshold $\theta$ and context $C$, is the following:
-\begin{enumerate}
-    \item $b$ is a bag in $C$:\\
-     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
-    \item $b$'s size exceeds the threshold required for bags to count as \ol{big}:\\
-    $\textsf{size}(b)>\theta(\ol{bag})$
-\end{enumerate}
-Note that thresholds for counting as `big' differ depending on the type of object whose size is in question. This is why $\theta$ is parameterized by the type $\textsf{bag}$ in the second condition. If both of these conditions are met, then $\valueof{\ol{big bag}}^{\theta,C}(b)=\true$
-
-
-
-
-\subsection{Superlative}
-
-According to Bumford, superlatives can be interpreted either high, with the determiner, or low, where the positive form adjective is interpreted. A low interpretation corresponds to an `absolute' interpretation of a superlative. In principle, the superlative can be interpreted low even if the determiner is interpreted high. On a low interpretation of the superlative combined with a high interpretation of the definite article, \ol{the rabbit in the biggest hat} is true of $r$ if and only if:
+According to Bumford, superlatives can be interpreted either high, with the determiner, or low, where the positive form adjective is interpreted. A low scope position corresponds to an absolute interpretation. Note that in principle, the superlative can be interpreted low even if the determiner is interpreted high. On a low interpretation of the superlative combined with a high interpretation of the definite article, \ol{the rabbit in the biggest bag} is true of $r$ if and only if:
 %
 \begin{enumerate}
     \item $r$ is a rabbit in $C$:\\
      $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
     \item $r$ is in some $b$:\\
-        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ where
+        \begin{itemize}
     \item $b$ is a bag in $C$:\\
      $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
     \item $b$ is bigger than any other bag in $C$:\\
     For all $b'$ such that $\valueof{\ol{bag}}^{\theta,C}(b') =\true$:
     \textsf{size}($b$) $>$ \textsf{size}($b'$)
-\item No  referent distinct from $r$ meets 1-4.
+    \end{itemize}
+\item No referent distinct from $r$ in $C$ meets conditions 1-2.
 \end{enumerate}
 
-On a high interpretation of the superlative, combined with a high interpretation of the definite article, \ol{the rabbit in the biggest hat} is true of $r$ if and only if:
+On a high interpretation of the superlative, combined with a high interpretation of the definite article, \ol{the rabbit in the biggest bag} is true of $r$ if and only if it is a rabbit in a bag that is bigger than any other {\em rabbit-containing} bag:
 %
 \begin{enumerate}
     \item $r$ is a rabbit in $C$:\\
      $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
     \item $r$ is in some $b$:\\
-        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
-    \item $b$ is a bag in $C$:\\
-     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
-    \item $b$ is bigger than any other rabbit-containing bag in $C$:\\
-    For all $b'$ such that:
-    \begin{itemize}
-        \item $\valueof{\ol{bag}}^{\theta,C}(b') =\true$
-        \item and there is some $r'$ such that:
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ where:
         \begin{itemize}
-            \item $\valueof{\ol{rabbit}}^{\theta,C}(r')$
-            \item $\valueof{\ol{in}}^{\theta,C}(r',b')$
+          \item $b$ is a bag in $C$:\\
+          $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+          \item $b$ is bigger than any other rabbit-containing bag in $C$:\\
+          For all $b'$ such that:
+            \begin{itemize}
+              \item $\valueof{\ol{bag}}^{\theta,C}(b') =\true$
+              \item and there is some $r'$ such that:
+                \begin{itemize}
+                  \item $\valueof{\ol{rabbit}}^{\theta,C}(r')$
+                  \item $\valueof{\ol{in}}^{\theta,C}(r',b')$
+                \end{itemize}
+            \end{itemize}
+          \textsf{size}($b$) $>$ \textsf{size}($b'$)
         \end{itemize}
-    \end{itemize}
-    \textsf{size}($b$) $>$ \textsf{size}($b'$)
-\item No referent distinct from $r$ meets 1-4.
+\item No referent distinct from $r$ in $C$ meets conditions 1-2.
 \end{enumerate}
 
-
-\subsection{Comparative (bigger)}
-
-The comparative behaves like the superlative in all relevant respects, suggesting that they two can have both high and low interpretations. [...]
-
-We assume that attributive comparatives are only defined when the comparison class contains exactly two elements. [Justification...]
-
+We assume that the same two possibilities are available for comparatives, and  furthermore that comparatives are only defined when the comparison class contains exactly two elements.%
+\footnote{%
+It is possible to find attestations of {\em the bigger of the three}, but there are very few attestations of {\em the bigger of the $n$} for larger $n$s, and it appears that {\em the larger of the three} is licensed only in contexts where there are two sizes, one larger than the other, and the referent of {\em the larger of the three} bears the larger of the two sizes, while the other two bear the smaller of the two sizes. 
+To account for such cases, we could modify our assumptions so that {\em larger N} means something like {\em larger of the Ns}, where the comparison class consists of two pluralities of Ns, each with their own aggregate size. 
+Because we never had multiple Ns whose sizes could be treated as the same in our experiments, we ignore this wrinkle.%
+}
 The low interpretation of the comparative, then, combined with the high interpretation of the definite article is as follows, for the expression \ol{the rabbit in the bigger hat}:
 %
 \begin{enumerate}
     \item $r$ is a rabbit in $C$:\\
      $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
     \item $r$ is in some $b$:\\
-        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
-    \item $b$ is a bag in $C$:\\
-     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
-    \item $b$ is bigger than the other bag in $C$:
-    \begin{itemize}
-    \item There is exactly one referent $b'\neq b$ such that $\valueof{\ol{bag}}^{\theta,C}(b') =\true$.
-    \item \textsf{size}($b$) $>$ \textsf{size}($b'$)
-    \end{itemize}
-\item No  referent distinct from $r$ meets 1-4.
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$, where:
+        \begin{itemize}
+          \item $b$ is a bag in $C$:\\
+            $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+          \item $b$ is bigger than the other bag in $C$:
+          \begin{itemize}
+            \item There is exactly one referent $b'\neq b$ such that $\valueof{\ol{bag}}^{\theta,C}(b') =\true$.
+            \item \textsf{size}($b$) $>$ \textsf{size}($b'$)
+          \end{itemize}
+        \end{itemize}
+\item No referent distinct from $r$ in $C$ meets conditions 1-2.
 \end{enumerate}
+The standard analysis of the definite article is also compatible with a low interpretation of the comparative, and this would merely add a uniqueness clause for the referent of the embedded description.
 
-On a high interpretation of the comparative, combined with a high interpretation of the definite article, \ol{the rabbit in the bigger hat} is true of $r$ if and only if:
+A high interpretation of the comparative necessitates a high interpretation of the definite article. On such an interpretation, \ol{the rabbit in the bigger hat} is true of $r$ if and only if:
 %
 \begin{enumerate}
-    \item $r$ is a rabbit in $C$:\\
-     $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
-    \item $r$ is in some $b$:\\
-        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ for some $b$
-    \item $b$ is a bag in $C$:\\
-     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
-    \item $b$ is bigger than the other rabbit-containing bag in $C$:
+  \item $r$ is a rabbit in $C$:\\
+    $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+  \item $r$ is in some $b$:\\
+    $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ where:
     \begin{itemize}
-    \item There is exactly one referent $b'\neq b$ such that:
-    \begin{itemize}
-        \item $\valueof{\ol{bag}}^{\theta,C}(b') =\true$
-        \item there is some $r'$ such that:
+      \item $b$ is a bag in $C$:\\
+        $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+      \item $b$ is bigger than the other rabbit-containing bag in $C$:
         \begin{itemize}
-            \item $\valueof{\ol{rabbit}}^{\theta,C}(r')$
-            \item $\valueof{\ol{in}}^{\theta,C}(r',b')$
+          \item There is exactly one referent $b'\neq b$ such that:
+            \begin{itemize}
+              \item $\valueof{\ol{bag}}^{\theta,C}(b') =\true$
+              \item there is some $r'$ such that:
+                \begin{itemize}
+                  \item $\valueof{\ol{rabbit}}^{\theta,C}(r')$
+                  \item $\valueof{\ol{in}}^{\theta,C}(r',b')$
+                \end{itemize}
+            \end{itemize}
+            \item \textsf{size}($b$) $>$ \textsf{size}($b'$)
         \end{itemize}
-    \end{itemize}
-    \item \textsf{size}($b$) $>$ \textsf{size}($b'$)
-\end{itemize}
-\item No referent distinct from $r$ meets 1-4.
+      \end{itemize}
+    \item No referent distinct from $r$ in $C$ meets conditions 1-2.
 \end{enumerate}
-On the high interpretation of the comparative, then, the comparison class consists of the full set of  rabbit-containing bags, rather than the full set of bags. No bag that does not contain a rabbit will have any impact on whether the description truthfully and felicitously applies to the referent.
-
+On the high interpretation of the comparative, then, the comparison class consists of the set of rabbit-containing bags, rather than the full set of bags. No bag that does not contain a rabbit will have any impact on whether the description truthfully and felicitously applies to the referent.
 
 
 \section{Experiment}
@@ -809,5 +902,67 @@ Second Level Pragmatic Listener (L2)
 \bibliography{master}
 \bibliographystyle{sp}
 
+\appendix
+ 
+\section{Why comparatives have both absolute and relative readings}
+
+[linguex not working for some reason]
+
+\begin{verbatim}
+
+As with superlatives \citep[i.a.]{szabolcsi:1986,coppock+beaver:salt2014}, 
+relative readings of comparatives obviate definiteness effects:
+
+\ex.
+\a. *Bernie has the campaign chairman.
+\b. Bernie has the most enthusiastic campaign chairman.
+\c. Bernie has the more enthusiastic campaign chairman.
+
+As \citet{bumford:2017} discusses, 
+relative readings blocked by possessives, 
+both for superlatives and for comparatives:
+
+\ex.
+\a. Who has read the longest play by Shakespeare?
+\b. Who has read Shakespeare's longest play?\\
+$\equiv$ Who has read Hamlet?
+
+
+\ex.
+\a. Who has read the longer play by Shakespeare?
+\b. Who has read Shakespeare's longer play?\\
+$\leadsto$ Shakespeare wrote two plays?
+
+Further evidence comes from ambiguities of the following type, 
+observed by \citet{bhatt:2002} for \ref{tolstoy:first} and
+\ref{tolstoy:longest}. 
+\ref{tolstoy:longer} is ambiguous in an analogous way.
+
+\ex.
+\a. the first book that John said Tolstoy had written\label{tolstoy:first}
+%\b. the only book that John said Tolstoy had written
+\b. the longest book that John said Tolstoy had written\label{tolstoy:longest}
+\b. the longer book that John said Tolstoy had written\label{tolstoy:longer}
+High reading: of the books John said Tolstoy
+wrote, the longer\\
+Low reading: the book John said was longer among Tolstoy's.
+
+%\citet{sleeman:2010}: `identificational focus' \citep{kiss:1998a}
+
+As with superlatives \citep{bhatt:1999,bhatt:2006}, 
+relative readings of comparatives are blocked by non-modal infinitival relative clauses:
+
+\ex.
+\a. John gave Mary the most expensive telescope
+\b. ... to be built in the
+9th century.
+
+
+\ex.
+\a. John gave Mary the more expensive telescope
+\b. ... to be built in the
+9th century.
+
+\end{verbatim}
 
 \end{document}
