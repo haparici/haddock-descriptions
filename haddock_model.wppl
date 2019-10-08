@@ -183,6 +183,7 @@ var priorDistribution = function(contexts, skewedness) {
   
   return Categorical({ps: categorical_p_normalized, vs: contexts})
 }
+// renormalize because it does not sum up to 1
 
 var priorContextSkewed = priorDistribution(contexts, 2)
 
