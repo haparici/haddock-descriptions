@@ -34,7 +34,7 @@
 \def\valueof#1{\ensuremath{\llbracket #1\rrbracket}}
 
 
-\title{Haddock Descriptions}
+\title{Context-Sensitivity in Haddock Descriptions}
 \author{Helena, Roger, Liz}
 
 
