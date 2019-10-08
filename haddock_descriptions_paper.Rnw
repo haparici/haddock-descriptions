@@ -246,24 +246,33 @@ Suppose there are three hats, two rabbits, a frog, and a calculator on a table b
 One of the rabbits is in one of the hats, and the other two hats contain the frog and the calculator, respectively.
 You are instructed to point to {\em the hat}. 
 You might feel a bit uncomfortable, because the uniqueness requirement of the definite article is not satisfied in this context. 
-But asked to point to {\em the rabbit in the hat}, you would confidently pick out the rabbit in {\em the hat that has a rabbit in it} (unless you were afraid of pointing at rabbits or something unusual like that). 
-Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are called {\em Haddock descriptions}.
+But asked to point to {\em the rabbit in the hat}, you would confidently pick out the rabbit in {\em the hat that has a rabbit in it} (barring unusual circumstances). 
+Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are called {\em Haddock descriptions}.%
+\footnote{Fun fact: The same phenomenon can occur when multiple definites are embedded within another. \citet{horacek:1995} observed that {\em the table with the apple and the banana} felicitous in a context with three tables, one with one apple and one banana (the referent), one with an apple and a mug, and one with a banana and a bowl.}
 
-It is known that the process of identifying a referent for a definite description involves a flexible conception of the context, for the purposes of identifying a referent. Given the instruction, {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question \citep{chambers+al:2002}, even if there are multiple cans in the display. One possible explanation for the disappearance of the uniqueness requirement for the inner definite of a Haddock description would be in terms of this kind of commonsense reasoning about what the most likely referent would be \citep{muhlstein+al:2015}.
 
-Another approach to the loss of the uniqueness requirement for Haddock descriptions is semantic. 
+\citet{haddock:1987} characterized the task of the listener when presented with such descriptions as a {\em constraint satisfaction problem} of the kind studied in Artificial Intelligence: 
+Find the unique $x$ such that (i) $x$ is a rabbit; (ii) $y$ is a hat; and (iii) $x$ is in $y$. \citet{vaneijck:1993} cast the same idea in dynamic semantics. 
+The description is felicitous if a unique such $x$ can be found. 
+But neither \citeauthor{haddock:1987} nor \citeauthor{vaneijck:1993} specified the process by which a listener can determine that this is the problem before her, and in principle, these constraints could be derived either semantically or pragmatically.
+
 According to \citet{bumford:2017}, the uniqueness requirement of the inner definite in {\em the rabbit in a hat} can be loosened through a scope-taking mechanism that lets the definite article take scope above {\em rabbit}. 
 In that scope position, what the definite article semantically requires is that there is no more than one  {\em hat containing a rabbit}, as opposed to {\em hat} simpliciter.
-On this semantic approach, the obviation of the uniqueness requirement is not due to narrowing of the context.
+On this semantic approach, the obviation of the uniqueness requirement is not due to scope, rather than elimination of certain referents from consideration due to pragmatic reasoning.
 
-The present paper investigates what happens when a gradable adjective is embedded inside a Haddock description, as in {\em the rabbit in the big hat}.
-Given that the relevant set of hats for the purpose of the definite description contains only ones with rabbits in them, does that affect what counts as {\em big} for the purposes of the embedded description?
-In other words: If there are extra-large hats that don't contain rabbits in the scene, does that affect whether the biggest of the rabbit-containing hats can serve as the bearer of {\em the rabbit in the big hat}?
-{\em Ceteris paribus,} the semantic approach predicts that the answer is {\em no}.
-Since there is no context narrowing on this view, the comparison class for the gradable adjective should not be affected by the embedding of the definite description.
-On the other hand, depending on how context-narrowing is implemented under the pragmatic approach to Haddock descriptions, the answer might be {\em yes}.
+But it is known that the process of identifying a referent for unembedded definite descriptions involves a flexible conception of uniqueness, on which entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
+Given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question \citep{chambers+al:2002}, even if there are multiple cans in the display. 
+These experimental findings bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the hat} or {\em Bill put the rabbit in the hat}.
+Given this, the disappearance of the uniqueness requirement for the inner definite of a Haddock description might reasonably be seen as an instance of the same phenomenon, involving commonsense reasoning to identify the referent. One particular way of caching this out, suggested by \citet{muhlstein+al:2015}, is that the listener reasons probabilistically about the context relative to which a definite description should be interpreted.%
 
-Our experiments show that the answer is {\em no}. This is straightforwardly predicted under the semantic approach to Haddock descriptions, and places some constraints on how the pragmatic approach should work. If the obviation of the uniqueness requirement for definite articles is due to context-narrowing, this narrowing is not so powerful that it affects comparison classes for gradable adjectives.
+If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. The question that this paper aims to address is whether or not such a phenomenon occurs, specifically with gradable adjectives.
+
+To that end, the present paper investigates the interpretation of gradable adjectives embedded inside Haddock descriptions, as in {\em the rabbit in the big hat}.
+Given that the relevant set of hats for the purpose of the definite description contains only ones with rabbits in them, does that restrict what hats are included in the comparison class for {\em big}?
+{\em Ceteris paribus,} the semantic approach predicts that the comparison class for {\em big} should not be restricted to rabbit-containing hats, as there is no context narrowing on this view.
+On the other hand, if Haddock descriptions involve context narrowing, then, depending on how this idea is implemented, we might expect that the comparison class for {\em big} should be restricted to rabbit-containing hats.
+
+Our experiments show that the comparison class for {\em big} includes all hats, not just the ones containing rabbits. This is straightforwardly predicted under the semantic approach to Haddock descriptions, and places some constraints on how the pragmatic approach should work. If the loosening of the uniqueness requirement for definite articles is due to context-narrowing, this narrowing is not so powerful that it affects comparison classes for gradable adjectives.
 
 
 \section{Semantic Assumptions}
