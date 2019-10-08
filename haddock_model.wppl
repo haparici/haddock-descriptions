@@ -462,6 +462,4 @@ var pragmaticListener2 = function(description) {
 // Main
 
 marginalize(pragmaticListener("rabbit","adjective","silence"), "ref")
-// pragmaticListener2("rabbit","adjective","silence")
-//sample(priorContextSkewed)
 
