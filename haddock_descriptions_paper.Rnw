@@ -41,7 +41,6 @@
 
 \begin{document}
 
-
 \maketitle
 
 <<Model_Parameters_Variables, echo=FALSE, cache=TRUE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
@@ -53,6 +52,9 @@ require(rlist)
 require(RJSONIO)
 require("rwebppl")
 
+#to install rwebppl
+#install.packages("devtools")
+#devtools::install_github("mhtess/rwebppl")
 
 #Repo
 #https://github.com/haparici/haddock-descriptions
@@ -233,6 +235,37 @@ colnames(results) <- c(
 #results
 
 @
+
+\section{Introduction}
+
+%The gradable adjective {\em big} and the definite article {\em the} are both context-sensitive expressions. 
+%Something that is big in one context might not be big in another. 
+%Whether or not it is felicitous to use the expression {\em the rabbit} depends on how many rabbits are in the context. 
+%This paper investigates the relationship between these two manifestations of context-sensitivity.
+
+Suppose there are three hats, two rabbits, a frog, and a calculator on a table before you. 
+One of the rabbits is in one of the hats, and the other two hats contain the frog and the calculator, respectively.
+You are instructed to point to {\em the hat}. 
+You might feel a bit uncomfortable, because the uniqueness requirement of the definite article is not satisfied in this context. 
+But asked to point to {\em the rabbit in the hat}, you would confidently pick out the rabbit in {\em the hat that has a rabbit in it} (unless you were afraid of pointing at rabbits or something unusual like that). 
+Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are called {\em Haddock descriptions}.
+
+It is known that the process of identifying a referent for a definite description involves a flexible conception of the context, for the purposes of identifying a referent. Given the instruction, {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question \citep{chambers+al:2002}, even if there are multiple cans in the display. One possible explanation for the disappearance of the uniqueness requirement for the inner definite of a Haddock description would be in terms of this kind of commonsense reasoning about what the most likely referent would be \citep{muhlstein+al:2015}.
+
+Another approach to the loss of the uniqueness requirement for Haddock descriptions is semantic. 
+According to \citet{bumford:2017}, the uniqueness requirement of the inner definite in {\em the rabbit in a hat} can be loosened through a scope-taking mechanism that lets the definite article take scope above {\em rabbit}. 
+In that scope position, what the definite article semantically requires is that there is no more than one  {\em hat containing a rabbit}, as opposed to {\em hat} simpliciter.
+On this semantic approach, the obviation of the uniqueness requirement is not due to narrowing of the context.
+
+The present paper investigates what happens when a gradable adjective is embedded inside a Haddock description, as in {\em the rabbit in the big hat}.
+Given that the relevant set of hats for the purpose of the definite description contains only ones with rabbits in them, does that affect what counts as {\em big} for the purposes of the embedded description?
+In other words: If there are extra-large hats that don't contain rabbits in the scene, does that affect whether the biggest of the rabbit-containing hats can serve as the bearer of {\em the rabbit in the big hat}?
+{\em Ceteris paribus,} the semantic approach predicts that the answer is {\em no}.
+Since there is no context narrowing on this view, the comparison class for the gradable adjective should not be affected by the embedding of the definite description.
+On the other hand, depending on how context-narrowing is implemented under the pragmatic approach to Haddock descriptions, the answer might be {\em yes}.
+
+Our experiments show that the answer is {\em no}. This is straightforwardly predicted under the semantic approach to Haddock descriptions, and places some constraints on how the pragmatic approach should work. If the obviation of the uniqueness requirement for definite articles is due to context-narrowing, this narrowing is not so powerful that it affects comparison classes for gradable adjectives.
+
 
 \section{Semantic Assumptions}
 
