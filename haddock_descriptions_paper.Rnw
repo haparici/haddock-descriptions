@@ -397,29 +397,63 @@ require("rstan")
 require(brms)
 require(broom)
 
-#data<-read.csv("haddock_clean_data.csv", header=TRUE)
+data<-read.csv("haddock_clean_data.csv", header=TRUE)
 #head(data)
 
+#merge stim and version colum
+data$stim.version<-paste(data$stim, "", data$version)
 
-#native column? do we need to discard any data here?
-#96 participants. do we need to disccard someone? we have 24 data points from one participant. how about the non-natives?
+#96 participants
 
-### frequentist analysis ###
+#remove both-rel condition (context 3) to check relevant interaction
 
-
-#remove both-rel condition (context 3)
-
-#data.interaction2 = subset(dat, displaytype!="rel-both")
-#data.pos = subset(data.interaction2, adjtype!="cmp")
+data.interaction = subset(data, displaytype!="both-rel")
 
 #Column we are trying to predict data$target1
-#Set reference level to .
+
+#Different labels we've used for the different kinds of displays
 #"abs-rel" same/diff+competitor, aka context 1
 #"abs-both" same/diff-competitor, aka context 2
 #"both-rel" same/same+competitor, aka context 3
 
-#is stim num the right random effect or should it also factor in the a-b manipulation?
-#what analysis do we want to report? maybe first subset the for the relevant interaction
+
+### Bayesian analysis ###
+#for model comparison loo()
+#data.interaction2 comares contexts 1 and 2
+#https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+
+
+model1<- brm(
+  formula = target ~ adjtype*displaytype +
+    (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype | stim),
+    data = data.interaction,
+    family = "bernoulli",
+    control=list(adapt_delta=0.99),
+    iter = 2000,
+    chains = 4,
+    cores = 4,
+)
+
+
+model2<- brm(
+  formula = target ~ adjtype*displaytype +
+    (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype | stim.version),
+    data = data.interaction,
+    family = "bernoulli",
+    control=list(adapt_delta=0.99),
+    iter = 2000,
+    chains = 4,
+    cores = 4,
+)
+
+
+
+#model1
+#model2
+
+##### STUFF WE NO LONGER USE #####
+
+### frequentist analysis ###
 
 #model1.f<-glmer(
 #  target~adjtype*displaytype +
@@ -439,40 +473,6 @@ require(broom)
 #   #glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))
 # ) 
 
-### Bayesian analysis ###
-#for model comparison loo()
-#data.interaction2 comares contexts 1 and 2
-#https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
-
-
-
-#   model1.b<- brm(
-#    formula = target ~ adjtype*displaytype +
-#       (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype|stim.version),
-#     data = data.interaction2,
-#     family = "bernoulli",
-#     #control=list(adapt_delta=0.99),
-#     iter = 2000,
-#    chains = 4,
-#    cores = 4,
-#   )
-# 
-#
-# 
-# model1<- brm(
-#    formula = target ~ displaytype +
-#     (1+displaytype | usernum)+(1+displaytype|stim.version),
-#     data = data.pos,
-#     family = "bernoulli",
-#     #control=list(adapt_delta=0.99),
-#     iter = 2000,
-#    chains = 4,
-#    cores = 4,
-# )
-#   
-
-# 
-# model1.b
 
 @
 
