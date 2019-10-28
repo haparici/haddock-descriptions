@@ -5,7 +5,6 @@ var visuals = model_data[1]
 var descriptions = model_data[2]
 var cost = model_data[3][0]
 var cont = model_data[4]
-var posMeaning = model_data[5]
 var def_art = model_data[5]
 
 
@@ -221,7 +220,6 @@ return uniformDraw(descriptions);
 var literalListener = function(description, context, theta) {
     return Infer({method: "enumerate"}, function() {
 	var referent = referentsPrior();
-	var all_referents = context;
 	var scope = sample(Infer({method: "enumerate"}, function() {
 	    if (def_art=="standard") {
 		"low"
@@ -229,7 +227,7 @@ var literalListener = function(description, context, theta) {
 		flip(0.000001) ? "low" : "high"
 	    }
 	}))
-  	condition(meaning(description, referent, all_referents, theta, context, def_art, scope))
+  	condition(meaning(description, referent, theta, context, def_art, scope))
 	return referent;
     });
 }
