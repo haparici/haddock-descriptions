@@ -1,0 +1,306 @@
+//// Meaning Function ////
+
+
+var rU = ["", "", ""]
+
+// Positive Function
+
+// var positiveStand = function(description, referent, all_referents, theta, context) {
+
+//   var innerMatch = function(referent) {
+
+//     var sameContainer = description[2] == referent[1] ? true : false
+//     return sameContainer == true 
+
+//   }
+
+//   var truthFn = function(referent) {
+
+//     var includes = find(function(x) {return x == referent}, context) 
+//     var inclusion = includes == referent ? true : false
+//     var sameNoun = description[0] == referent[0] ? true : false
+//     var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false
+
+//     return inclusion == true && sameNoun == true && threshold == true && innerMatch(referent)== true && sum(map(innerMatch, all_referents))==1
+
+//   }
+
+//   return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
+
+// }
+
+var outerNoun = function(description) { description[0] }
+var modifier = function(description) {  description[1] }
+var innerNoun = function(description) { description[2] }
+
+var refAnimType = function(referent) { referent[0] }
+var refInanType = function(referent) { referent[1] }
+var refInanSize = function(referent) { referent[2] }
+
+
+var isIncluded = function(referent, context) {
+    var includes = find(function(x) { return x == referent }, context) 
+    // display(includes)
+    var inclusion = includes == referent ? true : false 
+    // display(inclusion)
+    return(inclusion)
+}
+
+var findOther = function(referent, comparisonClass) {
+    find(function(x) { return x != referent }, comparisonClass) 
+}
+
+var uniquelyTrue = function(desc,domain) {
+    sum(map(desc, domain))==1
+}
+
+var cardinalityTwoFn = function(comparisonClass) {
+    return comparisonClass.length==2
+}
+
+
+var positive = function(description, referent, all_referents, theta, context, def_art) {
+    // description: e.g. ["rabbit", "big", "bag"]
+    // referent: e.g. ['rabbit', 'bag', 2]
+    // all_referents: a sequence of referents
+    // theta: 0, 1 or 2
+    // context: a sequence of referents (difference with all_referents??)
+    // def_art: "standard" (inner uniqueness check) or "bumford" (no inner uniqueness check)
+
+    
+    if (!(modifier(description)=="big" || modifier(description)=="small" || modifier(description)=="none")) {
+
+	error("Unrecognized positive adjective: \"" + modifier(description) + "\"")
+
+    }
+    if (isIncluded(referent,context)) {
+
+	// if description is [ the rabbit in [ the big bag ] ]
+	// inner noun = bag
+	// inner NP = big bag 
+	// inner DP = the big bag
+	// outer noun = rabbit
+	// outer NP = rabbit in the big bag
+	// outer DP = the rabbit in the big bag
+	
+	var innerNPTrueFn = function(referent) {
+	    
+	    //display(referent)
+	    
+	    var innerNounTrue = innerNoun(description) == refInanType(referent) ? true : false 
+	    
+	    var modifierTrue =
+		modifier(description) == "none" ? true : // ugly, this isn't a positive form
+		modifier(description) == "big" ? refInanSize(referent) > theta :
+		modifier(description) == "small" ? refInanSize(referent) <= theta :
+		false
+	    
+	    //display(innerNounTrue)
+	    //display(refInanSize(referent))
+	    //display(modifierTrue)
+	    
+	    innerNounTrue == true && modifierTrue == true
+	}
+	
+	//var innerNPTrue = innerNPTrueFn(referent)==true 
+	//display("innerNPTrue")
+	//display(innerNPTrue)
+	
+	var innerDPTrueFn = function (referent) {
+	    
+	    if (def_art=="standard") {
+		//then check uniqueness of the inner NP
+		    return (innerNPTrueFn(referent) && uniquelyTrue(innerNPTrueFn, all_referents))
+	    } else {
+		//with Bumford's definite article, ignore uniqueness of the inner NP
+		return (innerNPTrueFn(referent))
+	    }
+	    
+	}
+	
+	//var innerDPTrue = innerDPTrueFn(referent)
+	//display("innerDPTrue")
+	//display(innerDPTrue)
+	
+	var outerNounTrueFn = function(referent) {
+	    outerNoun(description) == refAnimType(referent)  ? true : false
+	}
+	
+	var outerNPTrueFn = function(referent) {	    
+	    innerDPTrueFn(referent) && outerNounTrueFn(referent)
+	}
+	
+	//var outerNPTrue = outerNPTrueFn(referent)
+	
+	//display("outerNPTrue")
+	//display(outerNPTrue)
+	
+	//display("uniquelyTrue(outerNPTrueFn, all_referents)")
+	//display(uniquelyTrue(outerNPTrueFn, all_referents))
+	
+	return (outerNPTrueFn(referent) && uniquelyTrue(outerNPTrueFn, all_referents))
+	
+    } else {
+	return(false)
+    }
+}
+
+
+
+// Comparative Function
+var comparative = function(description, referent, all_referents, theta, context, def_art, scope) {
+
+    if (!(modifier(description)=="bigger" || modifier(description)=="smaller")) {
+	error("Comparative function called but modifier wasn't /bigger/ or /smaller/")
+    }
+    
+    if (def_art=="standard" && scope=="high") {
+     	error("High scope for comparatives is only possible with a Bumfordian analysis of the definite article")
+    }
+    
+    //display(description)
+
+    if (isIncluded(referent,context)) {
+
+	// if description is [ the rabbit in [ the bigger bag ] ]
+	// inner noun = bag
+	// inner NP = bigger bag (although bigger is be interpreted higher when scope=high)
+	// inner DP = the bigger bag
+	// outer noun = rabbit
+	// outer NP = rabbit in the bigger bag
+	// outer DP = the rabbit in the bigger bag
+	
+	//note here the variable "referent" is re-bound by the "function" operator
+	var innerNounTrueFn = function(referent) {
+	    innerNoun(description) == refInanType(referent) ? true : false
+	}
+	
+	var outerNounTrueFn = function(referent) {
+	    outerNoun(description) == refAnimType(referent) ? true : false
+	}
+	
+	var inHighComparisonClassFn = function(referent) {
+	    innerNounTrueFn(referent) && outerNounTrueFn(referent)
+	}
+	
+	var comparisonClassFn = function(scope) {
+	    
+	    if (scope == "low") {
+		return filter(innerNounTrueFn,all_referents)
+	    } 
+	    
+	    else {
+		return filter(inHighComparisonClassFn,all_referents)
+	    }
+    	}
+
+	
+	var comparativeTrueFn = function(referent,scope) {
+	    
+	    var comparisonClass = comparisonClassFn(scope)
+
+	    //display("comparisonClass")
+	    //display(comparisonClass)
+	    
+	    var inComparisonClass = isIncluded(referent,comparisonClass)
+
+	    if (inComparisonClass && cardinalityTwoFn(comparisonClass)) {
+
+		var otherRef = findOther(referent,comparisonClass)
+
+		//display("otherRef")
+		//display(otherRef)
+
+		if (modifier(description)=="bigger") {
+		    return (refInanSize(referent) > refInanSize(otherRef))
+		} else {
+		    if (modifier(description)=="smaller") {
+			return (refInanSize(referent) < refInanSize(otherRef))
+		    }
+		    else {
+			error("The only comparatives I understand are bigger and smaller")
+		    }
+		}
+	    }
+	    else {
+		return false
+	    }
+	}
+	
+	var innerNPTrueFn = function(referent) {
+	    
+	    //note here the variable "referent" is re-bound by the "function" operator
+	    var innerNounTrue = innerNoun(description) == refInanType(referent) ? true : false
+	    
+	    if (scope == "low") {
+		return (innerNounTrueFn(referent) && comparativeTrueFn(referent,scope))
+	    } else {
+		return innerNounTrueFn(referent) 
+	    }
+	    
+	}
+	
+	var outerNPTrueFn = function(referent) {
+	    
+	    var outerNounTrue = outerNoun(description) == refAnimType(referent)  ? true : false
+	    
+	    if (scope == "low") {
+		return outerNounTrue == true && innerNPTrueFn(referent)
+	    } else {
+		return outerNounTrue == true && innerNPTrueFn(referent) && comparativeTrueFn(referent,scope)
+	    }
+	}
+	
+	return (outerNPTrueFn(referent) && uniquelyTrue(outerNPTrueFn, all_referents))	
+    }
+    else {
+	return(false)
+    }
+}
+
+
+var meaning = function(description, referent, all_referents, theta, context, def_art, cmpr_scope) {
+    // def_art: "bumford" or "standard" -- the analysis for the definite article
+    // cmpr_scope: "high" or "low" -- the scope of the comparative
+    // note: high scope is incompatible with the standard analysis of the definite article
+
+    
+    // the empty description is always true and the undefined referent falls under every description
+    if (_.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)) {
+	return(true)
+    } else {
+    
+	var adjective = modifier(description)
+	
+	if (adjective.substr(-2) == "er") {
+	    return comparative(description, referent, all_referents, theta, context, def_art, cmpr_scope)
+	}
+	else {
+	    if ((adjective == "big")||(adjective == "small")||(adjective=="none")) {
+		return positive(description, referent, all_referents, theta, context, def_art)
+	    }
+	    else {
+		error(modifier(description))
+	    }
+	}
+    }
+}
+    
+//// End of Meaning Function ////
+
+//// For testing purposes ////
+
+
+// Context 1
+var r1test = ["rabbit", "bag", 1]
+var r2test = ["rabbit", "bag", 2]
+var r3test = ["frog", "bag", 3]
+var r4test = ["frog", "box", 1]
+var r5test = ["rabbit", "box", 2]
+
+
+//description, referent, all_referents, theta, context, posMeaning
+//meaning(["rabbit","big","box"], r5test, [r1test,r2test,r3test,r4test,r5test], 1, [r1test,r2test,r3test,r4test,r5test],"bumford","high")
+
+
+

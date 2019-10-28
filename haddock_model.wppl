@@ -6,6 +6,7 @@ var descriptions = model_data[2]
 var cost = model_data[3][0]
 var cont = model_data[4]
 var posMeaning = model_data[5]
+var def_art = model_data[5]
 
 
 var r1 = [visuals[0]["Animal"][0], visuals[0]["Container"][0], visuals[0]["Size"][0]]
@@ -217,183 +218,20 @@ return uniformDraw(descriptions);
 };
 
 
-//// Meaning Function ////
-
-// Positive Function
-
-// var positiveStand = function(description, referent, all_referents, theta, context) {
-
-//   var innerMatch = function(referent) {
-
-//     var sameContainer = description[2] == referent[1] ? true : false
-//     return sameContainer == true 
-
-//   }
-
-//   var truthFn = function(referent) {
-
-//     var includes = find(function(x) {return x == referent}, context) 
-//     var inclusion = includes == referent ? true : false
-//     var sameNoun = description[0] == referent[0] ? true : false
-//     var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false
-
-//     return inclusion == true && sameNoun == true && threshold == true && innerMatch(referent)== true && sum(map(innerMatch, all_referents))==1
-
-//   }
-
-//   return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
-
-// }
-
-var positiveStand = function(description, referent, all_referents, theta, context) {
-    
-  var innerMatch = function(referent) {
-    var includes = find(function(x) { return x == referent }, context) 
-    // display(includes)
-    var inclusion = includes == referent ? true : false 
-      // display(inclusion)
-    var sameContainer = description[2] == referent[1] ? true : false 
-    // display(sameContainer)
-    var threshold =  description[1] == "empty" ? true : description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false 
-    //       display(threshold)
-    inclusion == true && sameContainer == true && threshold == true
-  }
-  
-  var truthFn = function(referent){
-
-      var includes = find(function(x) { return x == referent }, context) 
-      // display(includes)
-      var inclusion = includes == referent ? true : false 
-      // display(inclusion)
-      var sameNoun = description[0] == referent[0]  ? true : false 
-      // display(sameNoun)
-      
-      innerMatch(referent)==true && sum(map(innerMatch, all_referents))==1 && sameNoun == true && inclusion == true
-     
-  }
-  
-  return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
-
-}
-
-var positiveBum = function(description, referent, all_referents, theta, context) {
-
-  var innerMatch = function(referent) {
-
-    var sameContainer = description[2] == referent[1] ? true : false
-
-    return sameContainer == true 
-
-  }
-
-  var truthFn = function(referent) {
-
-    var includes = find(function(x) {return x == referent}, context) 
-    var inclusion = includes == referent ? true : false
-    var sameNoun = description[0] == referent[0] ? true : false
-    var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false
-
-    return inclusion == true && sameNoun == true && threshold == true && innerMatch(referent)
-
-   }
-
-  return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
-
-}
-
-
-
-
-var pos = function(posMeaning) {
-
-  if (posMeaning == "standard") {
-
-    return positiveStand
-
-  }
-
-  else {
-
-    return positiveBum
-  }
-}
-
-
-var positive = pos(posMeaning)
-
-
-// Comparative Function
-var comparative = function(description, referent, all_referents, theta, context) {
-
-  var innerMatch = function(referent) {
-
-    var sameContainer = description[2] == referent[1] ? true : false
-
-    return sameContainer == true
-
-  }
-
-  var truthFn = function(referent) {
-
-    var includes = find(function(x) { return x == referent }, context) 
-    var inclusion = includes == referent ? true : false 
-    var sameNoun = description[0] == referent[0]  ? true : false 
-    
-    return sameNoun == true && inclusion == true && innerMatch(referent)
-
-  }
-  
-  var cardinalityCheck = function(scope) {
-    
-    if (scope == "low") {
-      return description[1] == "empty" ? true : description[1] == "bigger" ? sum(map(innerMatch, all_referents)) == 2 : false
-    } 
-
-    else {
-      return description[1] == "empty" ? true : description[1] == "bigger" ? sum(map(truthFn, all_referents)) == 2 : false
-    }
-    
-  }
-
-  var thresholdFn = function(referent, scope) {
-
-    var threshold =  description[1] == "empty" ? true : description[1] == "bigger" ? referent[2] > theta : description[1] == "smaller" ? referent[2] <= theta : false
-
-    return (threshold == true && cardinalityCheck(scope) == true && truthFn(referent)) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
-
-  }
-  
-  return sample(Infer({method: "enumerate"}, function() {flip(0.000001) ? thresholdFn(referent, "low") : thresholdFn(referent, "high")}))
-  
-}
-
-var meaning = function(description, referent, all_referents, theta, context) {
-
-  var adjective = description[1]
-
-  if (adjective.substr(-2) == "er") {
-
-    return comparative(description, referent, all_referents, theta, context)
-
-  }
-
-  else {
-
-    return positive(description, referent, all_referents, theta, context)
-
-  }
-
-}
-
-//// End of Meaning Function ////
-
 var literalListener = function(description, context, theta) {
     return Infer({method: "enumerate"}, function() {
-    var referent = referentsPrior();
-    var all_referents = context; 
-    condition(meaning(description, referent, all_referents, theta, context))
-    return referent;
-  });
+	var referent = referentsPrior();
+	var all_referents = context;
+	var scope = sample(Infer({method: "enumerate"}, function() {
+	    if (def_art=="standard") {
+		"low"
+	    } else {
+		flip(0.000001) ? "low" : "high"
+	    }
+	}))
+  	condition(meaning(description, referent, all_referents, theta, context, def_art, scope))
+	return referent;
+    });
 }
 
 var speaker = function(referent, context, theta) {

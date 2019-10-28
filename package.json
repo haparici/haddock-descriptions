@@ -1,0 +1,12 @@
+{
+    "name": "haddock_descriptions",
+    "main": "stub.js",
+    "description": "WebPPL library for Haddock Comparatives project", 
+    "webppl": {
+	"wppl": [
+	    "meaning.wppl",
+	    "haddock_model.wppl",
+	    "test.wppl"
+	]
+    }
+}
