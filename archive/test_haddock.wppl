@@ -16,7 +16,7 @@ var alpha = 1;
 //Removing bigger and smaller and adding a bunch of pos form descriptions
 
 var descriptions = [ 
-["rabbit","smaller","bag"],["rabbit","smaller","box"],["rabbit","bigger","bag"],["rabbit","bigger","box"],
+//["rabbit","smaller","bag"],["rabbit","smaller","box"],["rabbit","bigger","bag"],["rabbit","bigger","box"],
 ["frog", "big", "basket"],["frog", "empty", "bag"],["frog", "big", "bag"],["frog", "small", "bag"],["rabbit","big","bag"],["rabbit","big","box"],["rabbit","small","bag"],["rabbit","small","box"],["rabbit","empty","bag"],["rabbit","empty","box"],["frog","small","box"],["frog","empty","box"],["none","none","none"]];
 // ok this gives me right output after removing comparative. Tomorrow check that after including comparative probabilities go down again
 // Could add more baket utterances
@@ -80,15 +80,11 @@ var cont2 =[
 
 
 var conts = function(cont) {
-
-  if (cont == "no-cc") {
-
+    display("cont: " + cont)
+    if (cont == "no-cc") {
     return cont1
-
   }
-
   else {
-
     return cont2
   }
 }
@@ -165,6 +161,22 @@ var thresholdPriorGivenContext  = function(context,description) {
 
   });
 };
+
+// var thresholdPriorGivenContext  = function(context,description) {
+    
+//   var cc = function(context, description){
+//     filter(function(rf){
+//     rf[1] == description[2]
+//     }, context) 
+//     };
+//   var result = cc(context,description);
+//     return Infer({method: "enumerate"}, function() {
+//       var getThres = map(function(result){ return result[2] }, result )
+//       var extendThres = getThres.slice(0)
+//       extendThres.push(extendThres[0] - 1) 
+//       uniformDraw(extendThres)
+//   });
+// };
 
 
 var referentsPriorGivenContext = function(context) {
@@ -284,33 +296,45 @@ var thresholdsPrior = function() {
 // }
 
 var positiveStand = function(description, referent, all_referents, theta, context) {
-    
-  var innerMatch = function(referent) {
-    var includes = find(function(x) { return x == referent }, context) 
-    // display(includes)
-    var inclusion = includes == referent ? true : false 
-      // display(inclusion)
-    var sameContainer = description[2] == referent[1] ? true : false 
-    // display(sameContainer)
-    var threshold =  description[1] == "empty" ? true : description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false 
-    //       display(threshold)
-    inclusion == true && sameContainer == true && threshold == true
-  }
-  
-  var truthFn = function(referent){
 
-      var includes = find(function(x) { return x == referent }, context) 
-      // display(includes)
-      var inclusion = includes == referent ? true : false 
-      // display(inclusion)
-      var sameNoun = description[0] == referent[0]  ? true : false 
-      // display(sameNoun)
-      
-      innerMatch(referent)==true && sum(map(innerMatch, all_referents))==1 && sameNoun == true && inclusion == true
-     
-  }
-  
-  return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
+    
+    var innerMatch = function(referent) {
+	var includes = find(function(x) { return x == referent }, context) 
+	// display(includes)
+	var inclusion = includes == referent ? true : false 
+	// display(inclusion)
+	var sameContainer = description[2] == referent[1] ? true : false 
+	// display(sameContainer)
+	var threshold =  description[1] == "empty" ? true : description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false 
+	//       display(threshold)
+	inclusion == true && sameContainer == true && threshold == true
+    }
+    
+    var truthFn = function(referent){
+	
+	var includes = find(function(x) { return x == referent }, context) 
+	// display(includes)
+	var inclusion = includes == referent ? true : false 
+	// display(inclusion)
+	var sameNoun = description[0] == referent[0]  ? true : false 
+	// display(sameNoun)
+	
+	innerMatch(referent)==true && sum(map(innerMatch, all_referents))==1 && sameNoun == true && inclusion == true
+    }
+
+    var trivially_true = _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
+
+    var nontrivially_true = (truthFn(referent) && sum(map(truthFn, all_referents))==1)
+
+    // if (nontrivially_true) {
+    // 	display("referent")
+    // 	display(referent)
+    // 	display("context")
+    // 	display(context)
+    // 	display("\n")
+    // }
+    
+    return trivially_true || nontrivially_true
 
 }
 
@@ -340,20 +364,17 @@ var positiveBum = function(description, referent, all_referents, theta, context)
 }
 
 
-var positiveMeaning = "standard"
+var positiveMeaning = "bumford"
 
 var pos = function(positiveMeaning) {
-
-  if (positiveMeaning == "standard") {
-
-    return positiveStand
-
-  }
-
-  else {
-
-    return positiveBum
-  }
+    if (positiveMeaning == "standard") {
+	display("Using standard meaning")
+	return positiveStand
+    }
+    else {
+	display("Using Bumford meaning")
+	return positiveBum
+    }
 }
 
 
@@ -363,65 +384,71 @@ var positive = pos(positiveMeaning)
 
 // Comparative Function
 var comparative = function(description, referent, all_referents, theta, context) {
-
   var innerMatch = function(referent) {
-
     var sameContainer = description[2] == referent[1] ? true : false
-
     return sameContainer == true
-
   }
-
   var truthFn = function(referent) {
-
     var includes = find(function(x) { return x == referent }, context) 
     var inclusion = includes == referent ? true : false 
     var sameNoun = description[0] == referent[0]  ? true : false 
-    
     return sameNoun == true && inclusion == true && innerMatch(referent)
-
   }
-  
   var cardinalityCheck = function(scope) {
-    
     if (scope == "low") {
       return description[1] == "empty" ? true : description[1] == "bigger" ? sum(map(innerMatch, all_referents)) == 2 : false
     } 
-
     else {
       return description[1] == "empty" ? true : description[1] == "bigger" ? sum(map(truthFn, all_referents)) == 2 : false
     }
-    
   }
-
   var thresholdFn = function(referent, scope) {
-
     var threshold =  description[1] == "empty" ? true : description[1] == "bigger" ? referent[2] > theta : description[1] == "smaller" ? referent[2] <= theta : false
-
     return (threshold == true && cardinalityCheck(scope) == true && truthFn(referent)) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
-
   }
-  
   return sample(Infer({method: "enumerate"}, function() {flip(0.05) ? thresholdFn(referent, "low") : thresholdFn(referent, "high")}))
   
 }
 
 var meaning = function(description, referent, all_referents, theta, context) {
+    var adjective = description[1]
+    if (adjective.substr(-2) == "er") {
+	return comparative(description, referent, all_referents, theta, context)
+    }
+    else {
+	return positive(description, referent, all_referents, theta, context)
+    }
+}
 
-  var adjective = description[1]
+var meaning1 = function(description, referent, all_referents, theta, context) {
+    var truthFn = function(referent){
+	var includes = find(function(x) { return x == referent }, context)
+	// display(includes)
+	var inclusion = includes == referent ? true : false
+	// display(inclusion)
+	var sameNoun = description[0] == referent[0]  ? true : false
+	// display(sameNoun)
+	var sameContainer = description[2] == referent[1] ? true : false
+	// display(sameContainer)
+	var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false
+	//       display(threshold)
+	sameNoun == true && sameContainer == true && threshold == true && inclusion == true
+    }
 
-  if (adjective.substr(-2) == "er") {
+    var trivially_true = _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
+    
+    var nontrivially_true = (truthFn(referent) && sum(map(truthFn, all_referents))==1)
+ 
+    var return_value = trivially_true || nontrivially_true
 
-    return comparative(description, referent, all_referents, theta, context)
-
-  }
-
-  else {
-
-    return positive(description, referent, all_referents, theta, context)
-
-  }
-
+    // if (nontrivially_true) {
+    // 	display("referent: " + referent)
+    // 	display("context: ")
+    // 	display(context)
+    // 	display("\n")
+    // }
+    
+    return return_value
 }
 
 //// End of Meaning Function ////
@@ -508,7 +535,7 @@ var pragmaticListener2 = function(description) {
 
 // literalListener(["rabbit","big","bag"],[r1,r2],1)
 
-// literalListener(["rabbit","big","box"],[r1,r2,r3,r4,r5],1)
+// literalListener(["rabbit","big","bag"],[r1,r2,r3,r4,r5],1)
 
 // pragmaticListener(["rabbit","big","bag"]) //for tomorrow check what happens in condition 1 for this instruction. DO I have similations for this??
 
@@ -521,6 +548,35 @@ var pragmaticListener2 = function(description) {
 //TODO: compress 4 models in one single script, add script with pragmaticlistener2 to repository
 
 
+//var speaker = function(referent, context, theta) 
+//speaker(r1,[r1,r4,r5],0)
+
+//marginalize(pragmaticListener(["rabbit","big","silence"]), "ref")
+
+//pragmaticListener(["rabbit","big","silence"])
+
+var cont = "cc"
+
+// var myContextsPrior = function(refs) {
+//     var gamma = (cont == "no-cc") ? 1 : 0.95
+//     Infer({method: "enumerate"}, function() {
+// 	filter(function(rf) {
+// 	    flip(gamma)
+// 	}, refs)
+
+//     })
+// }
 
 
-marginalize(pragmaticListener(["rabbit","big","silence"]), "ref")
+var contextsPriorLevyStyle = function(refs) {
+    var gamma = (cont == "no-cc") ? 1 : 0.95
+    Infer({method: "enumerate"}, function() {
+	var filtered = filter(function(rf) {
+	    flip(gamma)
+	}, refs)
+	condition(filtered.length>0)
+	return (filtered)
+    })
+}
+
+contextsPriorLevyStyle([r1,r2,r3])

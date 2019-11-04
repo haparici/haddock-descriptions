@@ -127,6 +127,7 @@ get_costs <- function(descs) {
       
       cost <- 1.5
       
+      
     } else if (adjective %in% c("small", "big")) {
       
       cost <- 1
@@ -159,14 +160,14 @@ randomVariables<-list(pos,cmp)
 #randomVariables<-list(pos)
 #randomVariables<-list(cmp)
 
-execute_model <- function(randomVariable, cond, model, context, defArt, package) {
+execute_model <- function(randomVariable, cond, model, context, defArt, package, gamma, costCoefficient,highScopeConstrualProb) {
   
   # Model
   visuals <- get_visuals(refs, conds_idx, cond)
   descs <- get_descriptions(visuals, modifiers)
   costs <- get_costs(descs)
-
-  model_data <- list(randomVariable, visuals, descs, costs, context, defArt)
+  
+  model_data <- list(randomVariable, visuals, descs, costs, context, defArt, gamma, costCoefficient,highScopeConstrualProb)
   
   model <- webppl(program_file=model, 
                   data = model_data, 
@@ -176,6 +177,8 @@ execute_model <- function(randomVariable, cond, model, context, defArt, package)
   return(model)
   
 }
+
+
 
 @
 
@@ -188,9 +191,17 @@ execute_model <- function(randomVariable, cond, model, context, defArt, package)
 conds <- c(1, 2, 3)
 contexts <- c("cco","no-cc")
 defArtMeanings <- c("bumford", "standard")
-models <- c("haddock_model.wppl","haddock_model_pragmaticListener2.wppl")
+#models <- c("haddock_model.wppl","haddock_model_pragmaticListener2.wppl")
+models <- c("haddock_model.wppl") #,"haddock_model_pragmaticListener2.wppl")
+#gamma is probability that any given referent will be included in the context
+gamma <- .9
+#higher cost coefficient increases informativity effect
+costCoefficient <- 3
+highScopeConstrualProb <- 0.5
 
-test_result <- execute_model(pos, 1, "haddock_model.wppl","no-cc","bumford",".")
+test_result <- execute_model(pos, 1, "haddock_model.wppl","cc","bumford",".",gamma,costCoefficient,highScopeConstrualProb)
+
+
 
 # Execute Model
 results <- data.frame()
@@ -200,9 +211,9 @@ for(defArtMeaning in defArtMeanings) {
     for (randomVariable in randomVariables) {
       for (cond in conds) {
         for (model in models) {
-          result <- execute_model(randomVariable, cond, model, context, defArtMeaning)
+          result <- execute_model(randomVariable, cond, model, context, defArtMeaning,".",gamma,costCoefficient,highScopeConstrualProb)
           result$Adjective <- randomVariable[[1]][2]
-          result$posMeaning <- posMeaning
+          result$defArtMeaning <- defArtMeaning
           result$Context <- context
           result$Condition <- cond
           result$Model <- model
@@ -211,8 +222,8 @@ for(defArtMeaning in defArtMeanings) {
           #        , randomVariable[[1]][2]
           #        , "for context"
           #        , context
-          #        , "for posMeaning"
-          #        , posMeaning
+          #        , "for defArtMeaning"
+          #        , defArtMeaning
           #        , "for condition"
           #        , cond
           #        , "with model"
@@ -229,7 +240,7 @@ colnames(results) <- c(
   , "Size"
   , "Probability"
   , "Adjective"
-  , "posMeaning"
+  , "DefArtMeaning"
   , "Context"
   , "Condition"
   , "Model")
@@ -496,7 +507,7 @@ What it takes for $b$ to count as a \ol{big bag}, relative to threshold $\theta$
   \item $b$ is a bag:\\
   $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
   \item $b$'s size exceeds the threshold required for bags to count as \ol{big}:\\
-  $\textsf{size}(b)>\theta(\ol{bag})$
+  $\textsf{size}(b)>\theta$
 \end{enumerate}
 Thus if all of the above conditions are met, then $\valueof{\ol{big bag}}^{\theta,C}(b)=\true$.
 
@@ -520,7 +531,7 @@ are the following:
 \begin{enumerate}
     \item $r$ is a rabbit in $C$:\\
      $\valueof{\ol{rabbit}}^{\theta,C}(r) =\true$
-    \item $r$ is in some $b$:\\
+    \item $r$ is in some $b$ such that:\\
     $\valueof{\ol{in}}^{\theta,C}(b)(r) =\true$, where:
     \begin{itemize}
         \item $b$ satisfies \ol{NP}, relative to $\theta$ and $C$:\\
@@ -540,9 +551,8 @@ Interpreted with such high scope, the definite article serves merely to ensure t
 As far as the definite article is concerned, there may well be another big bag, as long as it doesn't contain a rabbit. 
 In other words, this definite article does not require uniqueness with respect to the property `big bag'. 
 
-This high-scope construal of the uniqueness component of the definite article is not entirely synonymous with \ol{rabbit in a big bag}, 
-as the latter could felicitously describe a rabbit that is in multiple big bags, assuming that were physically possible, and the former could not. 
-But as we do not have those types of situations to contend with, the inner definite effectively disappears.
+Under a high-scope construal of the uniqueness component of the definite article,
+is \ol{rabbit in the big bag} synonymous with \ol{rabbit in a big bag}? Almost, but not entirely. The difference in meaning would only be visible in a scenario in which a rabbits was in multiple bags -- something very hard to imagine. But consider an example like \ol{the singer with the gold bracelet}. Even on a high scope construal, this description could only be true of a singer that is wearing a single bracelet, whereas \ol{the singer with a gold bracelet} could truthfully hold of a singer that has multiple bracelets (although pragmatics would suggest that he or she was only wearing one). As this kind of situation (e.g.\ one rabbit - multiple bags) does not occur in our experimental stimuli, the difference effectively disappears in our setting. 
 
 Thus, under this construal, the non-trivial conditions that a given referent $r$ must satisfy in order to fall under the description \ol{the rabbit in the NP}, 
 relative to context $C$ and threshold $\theta$, 
@@ -550,7 +560,7 @@ are just the following:
 \begin{enumerate}
     \item $r$ is a rabbit in $C$:\\
      $\valueof{\ol{rabbit}}^{\theta,C}(r) =\true$
-    \item $r$ is in some $b$:\\
+    \item $r$ is in some $b$ such that:\\
     $\valueof{\ol{in}}^{\theta,C}(b)(r) =\true$, where:
     \begin{itemize}
       \item $\valueof{\ol{NP}}^{C,\theta}(b) = \true$
@@ -571,7 +581,7 @@ According to Bumford, superlatives can be interpreted either high, with the dete
 \begin{enumerate}
     \item $r$ is a rabbit in $C$:\\
      $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
-    \item $r$ is in some $b$:\\
+    \item $r$ is in some $b$ such that:\\
         $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ where
         \begin{itemize}
     \item $b$ is a bag in $C$:\\
@@ -614,7 +624,7 @@ It is possible to find attestations of {\em the bigger of the three}, but there 
 To account for such cases, we could modify our assumptions so that {\em larger N} means something like {\em larger of the Ns}, where the comparison class consists of two pluralities of Ns, each with their own aggregate size. 
 Because we never had multiple Ns whose sizes could be treated as the same in our experiments, we ignore this wrinkle.%
 }
-The low interpretation of the comparative, then, combined with the high interpretation of the definite article is as follows, for the expression \ol{the rabbit in the bigger hat}:
+The low interpretation of the comparative, then, combined with the high interpretation of the definite article is as follows, for the expression \ol{the rabbit in the bigger bag}:
 %
 \begin{enumerate}
     \item $r$ is a rabbit in $C$:\\
@@ -634,7 +644,7 @@ The low interpretation of the comparative, then, combined with the high interpre
 \end{enumerate}
 The standard analysis of the definite article is also compatible with a low interpretation of the comparative, and this would merely add a uniqueness clause for the referent of the embedded description.
 
-A high interpretation of the comparative necessitates a high interpretation of the definite article. On such an interpretation, \ol{the rabbit in the bigger hat} is true of $r$ if and only if:
+A high interpretation of the comparative necessitates a high interpretation of the definite article. On such an interpretation, \ol{the rabbit in the bigger bag} is true of $r$ if and only if:
 %
 \begin{enumerate}
   \item $r$ is a rabbit in $C$:\\
@@ -683,10 +693,11 @@ In other words, the literal listener discards referents that do not satisfy the 
 
 In this model, both $\theta$ and $C$ are treated as lifted variables, i.e., their value is not resolved at the level of the model where they are first called (i.e., at the Literal Listener level).
 Rather these variables are `lifted' all the way up to the Pragmatic Listener, where its value is resolved.
+%I don't understand this paragraph --Liz
 
 The posterior distribution in (\ref{literal-listener}) is undefinable if the existence and/or uniqueness presuppositions associated with the definite determiner are not satisfied, i.e., if $C$ does not contain exactly one referent $r$ that satisfies the description $d$ for the adjectival threshold $\theta$.
-Presupposition failure is thechnically implemented by posing a special \textsf{fail} referent, with prior probability $\epsilon$. 
-Otherwise, we assume an uninfornative prior over referents, as shown in (\ref{undefined}).
+Presupposition failure is technically implemented by positing a special \textsf{fail} referent, with prior probability $\epsilon$. 
+Otherwise, we assume an uninformative prior over referents, as shown in (\ref{undefined}).
 
 
 \begin{equation} 
@@ -698,13 +709,18 @@ Otherwise, we assume an uninfornative prior over referents, as shown in (\ref{un
     \end{cases}
 \end{equation}
 
-
-
+As discussed above, the same string can be assigned two different underlying structures (Logical Forms, as it were). 
+For the comparative, in particular, Bumford's theory allows either a high or low scope construal.
+The choice of construal is determined by a free parameter in the model, set to `r highScopeConstrualProb`.
+%Why isn't this inline code showing up?
+The higher this probability, the more likely the `bag' construal.
 
 \subsection{Speaker}
-The speaker is modeled as a {\em softMax} agent that chooses a description $d$, given that she wants to convey the referent $r$ in context $C$ for the adjectival threshold $d$.
+The speaker is modeled as a {\em softMax} agent that chooses a description $d$, given that she wants to convey the referent $r$ in context $C$ for the adjectival threshold $\theta$.
 In choosing utterances, the speaker balances out two constraints: maximizing the likelihood that the Literal Listener will infer the intended referent by choosing informative utterances, while minimizing production cost. 
-Informativity is modeled as negative surprisal (or positive log probability) of the referent in the posterior, whereas utterance cost $C(u)$, is directly proportional to the utterance length.\footnote{Currently, the costs are set as follows: comparative 1.5; positive 1; and 0.5 if the utterance does not contain an adjective.} 
+Informativity is modeled as negative surprisal (or positive log probability) of the referent in the posterior, whereas utterance cost $C(u)$, is directly proportional to the utterance length.\footnote{Currently, the costs are set as follows: comparative 1.5; positive 1; and 0.5 if the utterance does not contain an adjective. 
+%Should we talk about costCoefficient here?
+} 
 Finally, we assume a rationality parameter $\alpha$ of 1. 
 
 
@@ -718,7 +734,8 @@ Finally, we assume a rationality parameter $\alpha$ of 1.
 \noindent
 \textbf{Questions to consider or to keep in mind:} \\
 \noindent
-1. Posterior probabilities go down if we have both pos and comparative alternative utterenaces compete with each other (see model results in section 4.4.). \\
+1. Posterior probabilities go down if we have both pos and comparative alternative utterances compete with each other (see model results in section 4.4.). \\
+\textbf{Actually it seems that the probabilities were going down because of the way that theta was being computed: whether or not we assume that uninformative thetas are categorically excluded. --Liz}\\
 \noindent
 2. We currently do not use a \emph{silence} utterance among the alternatives.\\
 
@@ -736,7 +753,7 @@ The Pragmatic Listener is modeled as a Bayesian agent that assigns posterior pro
   \label{pragmatic-listener}
 \end{equation}
 
-For models with context coordination, the context $C$ always consists of the five referents present in the display ($C = \{r_1,r_2,r_3,r_4,r_5\}$).
+For models without context coordination, the context $C$ always consists of the five referents present in the display ($C = \{r_1,r_2,r_3,r_4,r_5\}$).
 In models that allow for Context Coordination, a context is any $C'$ such that $C'$ is in the powerset of $C$ ($C' \subseteq \mathcal{P}(C)$).
 
 As seen in equation \ref{pragmatic-listener}, different types of priors modulate the probability of a given referent in the posterior; 
@@ -753,6 +770,7 @@ Crucially, this value is fixed in models that do not use context coordination, b
     \end{cases}
 \end{equation}
 
+\textbf{The model results currently (November 4th) are derived using the assumption that the threshold categorically cannot be below the smallest. We are doing this because it seems to be the only way to get a preference for the bag overall; otherwise too much probability mass gets eaten up by non-targets (the smaller bag in particular, which has a rabbit in it). So the below is not accurate. --Liz}
 
 The prior over thresholds is also assumed to be uniform among the possible threshold values licensed by the context and the description. 
 Possible threshold values are obtained by extracting the referents in the context that are in the extension of the nested noun (e.g., bag), which is taken to provide the Comparison Class against which the adjective is evaluated ([reference]).
@@ -780,32 +798,42 @@ This difference in the prior over threshold values results in higher posterior p
 
 Finally, the last term in equation \ref{pragmatic-listener} corresponds to the prior over contexts.
 In models that do not invoke Context Coordination, there is only one context considered by the listener, and so the prior probability of this context is 1.
-For models that do involve Context Coordination, the prior probability over contexts (i.e., any element in the powerset of the set containing all referents) is determined by the distribution resulting from the exponential function in \ref{context-prior}. 
-This distribution is supported for the values corresponding to the cardinalities of the possible contexts. 
-When the parameter $\gamma = 1$, the resulting prior over contexts is the uninformative prior. 
-When the parameter is set $\gamma > 1$, the result is a skewed prior that places higher prior probability on contexts of bigger cardinalities.
+For models that do involve Context Coordination, the prior probability over contexts (i.e., any element in the powerset of the set containing all referents) is determined by 
+%the distribution resulting from the exponential function in \ref{context-prior}. 
+a parameter $\gamma$.
+For each referent, a coin weighted $\gamma$ is flipped in order to determine whether or not the referent is included in the context.
+The higher $\gamma$ is, the greater the preference for larger contexts.
+The resulting probability distribution is renormalized to exclude the empty context;
+this ensures that the probability distribution over referents is well-defined.
+%I got the error "All paths explored by Enumerate have probability zero" when I did not do this, but I don't know why --Liz
+
+%This distribution is supported for the values corresponding to the cardinalities of the possible contexts. 
+%When the parameter $\gamma = 1$, the resulting prior over contexts is the uninformative prior. 
+%When the parameter is set $\gamma > 1$, the result is a skewed prior that places higher prior probability on contexts of bigger cardinalities.
 
 %Finally, the last term in equation \ref{pragmatic-listener} samples contexts from a $beta$ prior with parameters $\alpha=2$ and $\beta =1$ that assigns higher probability to bigger contexts as shown in XX. [\textbf{This needs to be completed}]
 
-\begin{equation}
-\begin{multlined}
-  f(C) =  \frac{1}{Z}2^{\gamma \mid C\mid}\text{, where }Z =\sum_{C \in \mathcal{P}(C)}2^{\gamma\mid C\mid}\text{    , such that} \\
-  P(C) =
-  \begin{cases}
-    \text{Uniform for } \gamma = 0\\
-    \text{For } \gamma > 0\text{: Bigger contexts receive higher probability in the prior.}
-  \end{cases}
-\end{multlined}
-  \label{context-prior}
-\end{equation}
+% \begin{equation}
+% \begin{multlined}
+%   f(C) =  \frac{1}{Z}2^{\gamma \mid C\mid}\text{, where }Z =\sum_{C \in \mathcal{P}(C)}2^{\gamma\mid C\mid}\text{    , such that} \\
+%   P(C) =
+%   \begin{cases}
+%     \text{Uniform for } \gamma = 0\\
+%     \text{For } \gamma > 0\text{: Bigger contexts receive higher probability in the prior.}
+%   \end{cases}
+% \end{multlined}
+%   \label{context-prior}
+% \end{equation}
 
 
 \noindent
 \textbf{Open questions}:\\
 \noindent
 1. The discussion on threshold values is missing treatment of thresholds for the comparative.\\
+\textbf{Good, because the comparative is not threshold-sensitive --Liz}\\
 \noindent
-2. As of now, skewness is only in context prior. Do we also want to use a skewed prior as part of the referents given context probability?
+2. As of now, skewness is only in context prior. Do we also want to use a skewed prior as part of the referents given context probability?\\
+\textbf{Is this moot, now that we have implemented Roger's $\gamma$? --Liz}\\
 
 % \begin{verbatim}
 % var referentsPriorGivenContext = function(context) {
@@ -816,8 +844,8 @@ When the parameter is set $\gamma > 1$, the result is a skewed prior that places
 % \end{verbatim}
 
 \noindent
-3. Alternative ways of implementing skeweness?
-
+3. Alternative ways of implementing skewedness?\\
+\textbf{Is this done? --Liz}\\
 
 
 
@@ -831,7 +859,7 @@ Simulation results for the model described in Section \ref{computational-model}.
 
 ## Plots ##
 
-bags.standard<-subset(results, Container=="bag" & posMeaning=="standard" & Model=="haddock_model.wppl")
+bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl")
 
 
 cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
@@ -860,14 +888,15 @@ standard
 \end{figure}
 
 \noindent
-\textbf{Open Questions:} I do not understand the compartive results with standard meaning. Why are Contexts 1 and 2 not the same? This needs to be further investigated.
+\textbf{Open Questions:} I do not understand the comparative results with standard meaning. Why are Contexts 1 and 2 not the same? This needs to be further investigated.\\
+\textbf{With Context 1, there are potentially three bags, depending on how the context is set. This presents a risk that the comparative will be undefined. The comparative requires there to be two bags. --Liz}
 
 \begin{figure}[!htbp]
 \centering
 <<Plot-bumford, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
 
 ## Plots ##
-bags.bumford<-subset(results, Container=="bag" & posMeaning=="bumford" & Model=="haddock_model.wppl")
+bags.bumford<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl")
 
 bumford<-ggplot(bags.bumford, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +
@@ -1024,7 +1053,7 @@ Below we present a model that includes another level of recursion, i.e. Pragmati
 
 ## Plots ##
 
-bags.standard.pragList2<-subset(results, Container=="bag" & posMeaning=="standard" & Model=="haddock_model_pragmaticListener2.wppl")
+bags.standard.pragList2<-subset(results, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model_pragmaticListener2.wppl")
 
 
 cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
@@ -1058,7 +1087,7 @@ standard.pragList2
 <<Plot-bumford-pragList2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
 
 ## Plots ##
-bags.bumford.pragList2<-subset(results, Container=="bag" & posMeaning=="bumford" & Model=="haddock_model_pragmaticListener2.wppl")
+bags.bumford.pragList2<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model_pragmaticListener2.wppl")
 
 bumford.pragList2<-ggplot(bags.bumford.pragList2, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +

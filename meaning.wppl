@@ -40,15 +40,10 @@ var positive = function(description, referent, theta, context, def_art) {
     // theta: 0, 1 or 2
     // context: a sequence of referents
     // def_art: "standard" (inner uniqueness check) or "bumford" (no inner uniqueness check)
-
-    
     if (!(modifier(description)=="big" || modifier(description)=="small" || modifier(description)=="none")) {
-
 	error("Unrecognized positive adjective: \"" + modifier(description) + "\"")
-
     }
     if (isIncluded(referent,context)) {
-
 	// if description is [ the rabbit in [ the big bag ] ]
 	// inner noun = bag
 	// inner NP = big bag 
@@ -56,32 +51,23 @@ var positive = function(description, referent, theta, context, def_art) {
 	// outer noun = rabbit
 	// outer NP = rabbit in the big bag
 	// outer DP = the rabbit in the big bag
-	
 	var innerNPTrueFn = function(referent) {
-	    
 	    //display(referent)
-	    
 	    var innerNounTrue = innerNoun(description) == refInanType(referent) ? true : false 
-	    
 	    var modifierTrue =
 		modifier(description) == "none" ? true : // ugly, this isn't a positive form
 		modifier(description) == "big" ? refInanSize(referent) > theta :
 		modifier(description) == "small" ? refInanSize(referent) <= theta :
 		false
-	    
 	    //display(innerNounTrue)
 	    //display(refInanSize(referent))
 	    //display(modifierTrue)
-	    
 	    innerNounTrue == true && modifierTrue == true
 	}
-	
 	//var innerNPTrue = innerNPTrueFn(referent)==true 
 	//display("innerNPTrue")
 	//display(innerNPTrue)
-	
 	var innerDPTrueFn = function (referent) {
-	    
 	    if (def_art=="standard") {
 		//then check uniqueness of the inner NP
 		    return (innerNPTrueFn(referent) && uniquelyTrue(innerNPTrueFn, context))
@@ -89,31 +75,22 @@ var positive = function(description, referent, theta, context, def_art) {
 		//with Bumford's definite article, ignore uniqueness of the inner NP
 		return (innerNPTrueFn(referent))
 	    }
-	    
 	}
-	
 	//var innerDPTrue = innerDPTrueFn(referent)
 	//display("innerDPTrue")
 	//display(innerDPTrue)
-	
 	var outerNounTrueFn = function(referent) {
 	    outerNoun(description) == refAnimType(referent)  ? true : false
 	}
-	
 	var outerNPTrueFn = function(referent) {	    
 	    innerDPTrueFn(referent) && outerNounTrueFn(referent)
 	}
-	
 	//var outerNPTrue = outerNPTrueFn(referent)
-	
 	//display("outerNPTrue")
 	//display(outerNPTrue)
-	
 	//display("uniquelyTrue(outerNPTrueFn, context)")
 	//display(uniquelyTrue(outerNPTrueFn, context))
-	
 	return (outerNPTrueFn(referent) && uniquelyTrue(outerNPTrueFn, context))
-	
     } else {
 	return(false)
     }
@@ -262,6 +239,9 @@ var meaning = function(description, referent, theta, context, def_art, cmpr_scop
     
 //// End of Meaning Function ////
 
+
+
+
 //// For testing purposes ////
 
 
@@ -274,7 +254,11 @@ var r5test = ["rabbit", "box", 2]
 
 
 //description, referent, theta, context, posMeaning
-// meaning(["rabbit","big","bag"], r2test, 1, [r1test,r2test,r3test,r4test,r5test],"bumford","low")
+//meaning(["rabbit","big","bag"], r2test, 1, [r1test,r2test,r3test,r4test,r5test],"bumford","low")
 
 
+
+//meaning1 = function(description, referent, all_referents, theta, context)
+
+//meaning1(["rabbit","big","bag"], r2test, [r1test,r2test,r3test,r4test,r5test], 1, [r1test,r2test,r3test,r4test,r5test],"bumford")
 

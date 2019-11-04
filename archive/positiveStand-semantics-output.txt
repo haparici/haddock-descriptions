@@ -1,0 +1,6429 @@
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'box', 1 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'frog', 'bag', 3 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ],
+  [ 'rabbit', 'bag', 2 ],
+  [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'box', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'box', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'box', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ], [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'rabbit', 'box', 2 ]
+context
+[ [ 'rabbit', 'box', 2 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'box', 1 ]
+context
+[ [ 'frog', 'box', 1 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'frog', 'bag', 3 ]
+context
+[ [ 'frog', 'bag', 3 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 2 ]
+context
+[ [ 'rabbit', 'bag', 2 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ] ]
+
+
+referent
+[ 'rabbit', 'bag', 1 ]
+context
+[ [ 'rabbit', 'bag', 1 ] ]
+
+
+Marginal:
+    ["rabbit","box",2] : 0.6854433142972871
+    ["rabbit","bag",2] : 0.3145566857027129

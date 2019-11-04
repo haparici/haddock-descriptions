@@ -6,7 +6,9 @@ var descriptions = model_data[2]
 var cost = model_data[3][0]
 var cont = model_data[4]
 var def_art = model_data[5]
-
+var gamma = model_data[6][0]
+var costCoefficient = model_data[7][0]
+var highScopeConstrualProb = model_data[8][0]
 
 var r1 = [visuals[0]["Animal"][0], visuals[0]["Container"][0], visuals[0]["Size"][0]]
 var r2 = [visuals[1]["Animal"][0], visuals[1]["Container"][0], visuals[1]["Size"][0]]
@@ -26,6 +28,8 @@ var refs = {
 
 
 var cont1 = [[r1,r2,r3,r4,r5]]
+var globalContext = cont1[0]
+
 var cont2 = [
 
     [r1], [r2], [r3], [r4], [r5],
@@ -133,20 +137,46 @@ var referentsPrior = function() {
 
 
 
-var thresholdPriorGivenContext  = function(context,description) {
+// var thresholdPriorGivenContext  = function(context,description) {
     
-  var cc = function(context, description){
-    filter(function(rf){
-    rf[1] == description[2]
-    }, context) 
+//   var cc = function(context, description){
+//     filter(function(rf){
+//     rf[1] == description[2]
+//     }, context) 
+//     };
+//   var result = cc(context,description);
+//     return Infer({method: "enumerate"}, function() {
+//       var getThres = map(function(result){ return result[2] }, result )
+//       var extendThres = getThres.slice(0)
+//       extendThres.push(extendThres[0] - 1) 
+//       uniformDraw(extendThres)
+//   });
+// };
+
+
+var thresholdPriorGivenContext  = function(context,description) {
+
+    // find all the elements in the context with the same inner noun
+    var cc = function(context, description){
+	filter(function(rf){
+	    rf[1] == description[2]
+	}, context) 
     };
-  var result = cc(context,description);
+
+    // subset of the context with same inner noun
+    var result = cc(context,description);
+
+    var getThres = map(function(result){ return result[2] }, result )
+
     return Infer({method: "enumerate"}, function() {
-      var getThres = map(function(result){ return result[2] }, result )
-      var extendThres = getThres.slice(0)
-      extendThres.push(extendThres[0] - 1) 
-      uniformDraw(extendThres)
-  });
+	var getThres = map(function(result){ return result[2] }, result )
+	
+	// var extendThres = getThres.slice(0)
+	// extendThres.push(extendThres[0] - 1) 
+	// var addThres = getThres.length == 1 ? extendThres : getThres
+      uniformDraw(getThres)
+	
+    });
 };
 
 
@@ -157,41 +187,61 @@ var referentsPriorGivenContext = function(context) {
   });
 };
 
-var contextsPrior = function() {
-    return uniformDraw(contexts);
-}  
+// var contextsPrior = function() {
+//     return uniformDraw(contexts);
+// }  
 
 
-var max_number_of_elements = 5
-
-var priorDistribution = function(contexts, skewedness) {
-  
-  var beta_dist =  Beta({a: skewedness, b: 1})
-  var context_length = max_number_of_elements
-//   var readout_values = _.range(0, context_length) // get the array
-//   var readout_values = map(function(x) { return x / (context.length-1); }, readout_values); // normalize it 
-//   readout_values[0] = 0.00001 //this doesn't work
-//   readout_values[context_length-1] = 0.99999 //this doesn't work
-  
-  var readout_values = [0.00001,0.25,0.5,0.75,0.999999] // this should be an array of length 'number of elements in the biggest context possible'
-  // that evenly spans the range from 0 to 1 (but excluding 0 and 1)
-  
-  var unnormalized_p = map(function(x) { return Math.exp(beta_dist.score(x)); }, readout_values);
-  
-  var categorical_p_unnormalized = map(function(set) {unnormalized_p[set.length-1]}, contexts)
-  var categorical_p_normalized = map(function(x) { return x / sum(categorical_p_unnormalized); }, categorical_p_unnormalized);
-  
-  return Categorical({ps: categorical_p_normalized, vs: contexts})
+var contextsPriorLevyStyle = function(refs) {
+    var mygamma = (cont == "no-cc") ? 1 : gamma
+    Infer({method: "enumerate"}, function() {
+	var filtered = filter(function(rf) {
+	    // flip a gamma-weighted coin for each referent
+	    // to decide whether to include it in the context or not
+	    flip(mygamma)
+	}, refs)
+	// make sure every context has at least one element
+	// if we don't this we don't get a well-defined distribution
+	condition(filtered.length>0)  
+	return (filtered)
+    })
 }
-// renormalize because it does not sum up to 1
 
-var priorContextSkewed = priorDistribution(contexts, 2)
+var priorContextLevyStyle = contextsPriorLevyStyle(globalContext)
 
+// ---------Begin old skewed context distribution calculation-----------
+
+// var max_number_of_elements = 5
+
+// var priorDistribution = function(contexts, skewedness) {
+  
+//   var beta_dist =  Beta({a: skewedness, b: 1})
+//   var context_length = max_number_of_elements
+// //   var readout_values = _.range(0, context_length) // get the array
+// //   var readout_values = map(function(x) { return x / (context.length-1); }, readout_values); // normalize it 
+// //   readout_values[0] = 0.00001 //this doesn't work
+// //   readout_values[context_length-1] = 0.99999 //this doesn't work
+  
+//   var readout_values = [0.00001,0.25,0.5,0.75,0.999999] // this should be an array of length 'number of elements in the biggest context possible'
+//   // that evenly spans the range from 0 to 1 (but excluding 0 and 1)
+  
+//   var unnormalized_p = map(function(x) { return Math.exp(beta_dist.score(x)); }, readout_values);
+  
+//   var categorical_p_unnormalized = map(function(set) {unnormalized_p[set.length-1]}, contexts)
+//   var categorical_p_normalized = map(function(x) { return x / sum(categorical_p_unnormalized); }, categorical_p_unnormalized);
+  
+//   return Categorical({ps: categorical_p_normalized, vs: contexts})
+// }
+// // renormalize because it does not sum up to 1
+
+// var priorContextSkewed = priorDistribution(contexts, 2)
+
+// ------End old skewed context distribution calculation---------
 
 var descriptionPrior = function() {
-  var uttProbs = map(function(u) {
-    var uKey = typeof u == "string" ? u : u[0] + " " + u[1] + " " + u[2];
-         return Math.exp(-cost[uKey])
+    var uttProbs = map(function(u) {
+	var uKey = typeof u == "string" ? u : u[0] + " " + u[1] + " " + u[2];
+        return Math.exp(-(costCoefficient*cost[uKey]))
   }, descriptions);
     return categorical(uttProbs, descriptions);
 };
@@ -201,19 +251,20 @@ var descriptionPrior = function() {
 // }  //make this not uniform
 
 var pragmaticListenerFullDescription = function(description) {
-  return Infer({method: "enumerate"}, function() {
-    var context = contextsPrior(); 
-    var referent = referentsPrior();
-    // var referent = sample(referentsPriorGivenContext(context));
-    var theta = sample(thresholdPriorGivenContext(context,description)); 
-    factor(speaker(referent, context, theta).score(description));
-    // condition(referent[0]=="rabbit")
-    return {thet: theta, cont: context, ref: referent}; 
-  });
+    return Infer({method: "enumerate"}, function() {
+	var context = contextsPrior(); 
+	var referent = referentsPrior();
+	// var referent = sample(referentsPriorGivenContext(context));
+	//var theta = sample(thresholdPriorGivenContext(context,description));
+	//var theta = uniformDraw([0,1,2,3])
+	factor(speaker(referent, context, theta).score(description));
+	// condition(referent[0]=="rabbit")
+	return {thet: theta, cont: context, ref: referent}; 
+    });
 };
 
 var descriptionPrior1 = function() {
-return uniformDraw(descriptions);
+    return uniformDraw(descriptions);
 };
 
 
@@ -224,44 +275,50 @@ var literalListener = function(description, context, theta) {
 	    if (def_art=="standard") {
 		"low"
 	    } else {
-		flip(0.000001) ? "low" : "high"
+		flip(highScopeConstrualProb) ? "high" : "low"
 	    }
 	}))
   	condition(meaning(description, referent, theta, context, def_art, scope))
+	//testing old meaning
+	//condition(meaning1(description, referent, context, theta, context))
 	return referent;
     });
 }
 
 var speaker = function(referent, context, theta) {
-  return Infer({method: "enumerate"}, function() {
-    var description = descriptionPrior();
-    factor( alpha * literalListener(description, context, theta).score(referent));
-    return description;
-  });
+    return Infer({method: "enumerate"}, function() {
+	var description = descriptionPrior();
+	factor( alpha * literalListener(description, context, theta).score(referent));
+	return description;
+    });
 }
 
+
 var pragmaticListener = function(description) {
-  return Infer({method: "enumerate"}, function() {
-    var description = randomVariablePrior();
-    var context = sample(priorContextSkewed); 
-    //var context = contextsPrior(); 
-    var referent = sample(referentsPriorGivenContext(context));
-    var theta = sample(thresholdPriorGivenContext(context,description)); 
-    factor(speaker(referent, context, theta).score(description));
-    condition(referent[0]=="rabbit")
-    return {thet: theta, cont: context, ref: referent}; 
-  });
+    return Infer({method: "enumerate"}, function() {
+	var description = randomVariablePrior();
+	//var context = sample(priorContextSkewed);
+	var context = sample(priorContextLevyStyle);
+	//var context = contextsPrior(); 
+	var referent = sample(referentsPriorGivenContext(context));
+	var theta = sample(thresholdPriorGivenContext(context,description));
+	//var theta = uniformDraw([0,1,2,3]);
+	factor(speaker(referent, context, theta).score(description));
+	condition(referent[0]=="rabbit")
+	return {thet: theta, cont: context, ref: referent}; 
+    });
 }
 
 
 var pragmaticListenerFullDescription = function(description) {
   return Infer({method: "enumerate"}, function() {
-    var context = contextsPrior(); 
+      //var context = contextsPrior();
+      var context = sample(priorContextLevyStyle);
     //var referent = referentsPrior();
-    var referent = sample(referentsPriorGivenContext(context));
-    var theta = sample(thresholdPriorGivenContext(context,description)); 
-    factor(speaker(referent, context, theta).score(description));
-    // condition(referent[0]=="rabbit")
+      var referent = sample(referentsPriorGivenContext(context));
+      var theta = sample(thresholdPriorGivenContext(context,description)); 
+      factor(speaker(referent, context, theta).score(description));
+      // condition(referent[0]=="rabbit")
     return {thet: theta, cont: context, ref: referent}; 
   });
 }
@@ -297,5 +354,12 @@ var pragmaticListener2 = function(description) {
 
 // Main
 
-marginalize(pragmaticListener("rabbit","adjective","silence"), "ref")
 
+var pragListener = pragmaticListener("rabbit","adjective","silence")
+
+//display(pragListener)
+
+marginalize(pragListener, "ref")
+
+
+//pragmaticListener("rabbit","adjective","silence")
