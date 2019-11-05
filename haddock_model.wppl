@@ -95,6 +95,7 @@ var thres = {
 };
 
 
+
 var thresholdsPrior = function() {
     return categorical(thres.probabilities, thres.thresholds)
 }  //make this not uniform

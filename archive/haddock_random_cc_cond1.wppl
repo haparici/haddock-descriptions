@@ -1,0 +1,241 @@
+
+// condition 1_pos
+// CC and Dylans semantics
+
+var r1 = ["rabbit", "bag", 1]
+var r2 = ["rabbit", "bag", 2]
+var r3 = ["frog", "basket", 3]
+var r4 = ["frog", "box", 1]
+var r5 = ["rabbit", "box", 2]
+var rU = ["", "", ""]
+
+var referents = [r1, r2, r3, r4, r5, rU]
+
+var alpha = 1;
+
+var descriptions = [["rabbit","big","bag"],["rabbit","big","box"],["rabbit","small","bag"],["rabbit","empty","bag"],["rabbit","small","box"],["rabbit","empty","box"],["frog","big","box"],["frog","small","box"],["frog","empty","box"],["frog","big","basket"],["frog","small","basket"],["frog","empty","basket"],["none","none","none"]];
+
+var randomVariable = [["rabbit","big","bag"],["rabbit","big","box"]];
+
+var truncatedDescription = [["rabbit","big","empty"]]
+
+var randomVariablePrior = function() {
+   return uniformDraw(randomVariable);
+} // this is not a distribution in webppl. if i want to sample() from this i have to use the infer wrapping here
+
+
+var refs = {
+  "referents": [r1, r2, r3, r4, r5, rU],
+  "probabilities": [50, 50, 50, 50, 50, 10]
+};
+
+var referentsPrior = function() {
+  return categorical(refs.probabilities, refs.referents);
+};
+
+//threshold prior relativixed to the descriptions's relevant comparison class
+
+var contexts =[ [r1],[r2],[r3],[r4],[r5],
+[r1,r2],
+[r1,r3],
+[r1,r4],
+[r1,r5],
+[r2,r3],
+[r2,r4],
+[r2,r5],
+[r3,r4],
+[r3,r5],
+[r4,r5],
+
+[r1,r2,r3],
+[r1,r2,r4],
+[r1,r2,r5],
+[r1,r3,r4],
+[r1,r3,r5],
+[r1,r4,r5],
+[r2,r3,r4],
+[r2,r3,r5],
+[r2,r4,r5],
+[r3,r4,r5],
+
+[r1,r2,r3,r4],
+[r1,r2,r3,r5],
+[r1,r2,r4,r5],
+[r1,r3,r4,r5],
+[r2,r3,r4,r5],
+
+[r1,r2,r3,r4,r5]
+              ]
+
+
+var tresholdPriorGivenContext = function(context,description) {
+    
+    var cc = function(context, description){
+    filter(function(rf){
+    rf[1] == description[2]
+    }, context) 
+    };
+  var result = cc(context,description);
+    return Infer({method: "enumerate"}, function() {
+      var thres = map(function(result){ return result[2] }, result )
+      uniformDraw(thres)
+
+  });
+};
+
+
+var referentsPriorGivenContext = function(context) {
+  return Infer({method: "enumerate"}, function() {
+     flip(0.01) ? rU : uniformDraw(context)
+  });
+};
+
+
+var contextsPrior = function() {
+    return uniformDraw(contexts);
+} // this is not a distribution in webppl. if i want to sample() from this i have to use the infer wrapping here
+
+var cost = {
+  "rabbit big bag": 1,
+  "frog big basket": 1,
+  "rabbit big box": 1,
+  "frog big box": 1,
+  "rabbit small bag": 1,
+  "frog small basket": 1,
+  "rabbit small box": 1,
+  "frog small box": 1,
+  "rabbit empty bag": 0.5,
+  "frog empty box": 0.5,
+  "frog empty basket": 0.5,
+  "rabbit empty box": 0.5,
+  "none none none": 0,
+};
+
+var descriptionPrior = function() {
+  var uttProbs = map(function(u) {
+    var uKey = typeof u == "string" ? u : u[0] + " " + u[1] + " " + u[2];
+   //  display(uKey)
+         return Math.exp(-cost[uKey])
+  }, descriptions);
+  //  display(uttProbs)
+    return categorical(uttProbs, descriptions);
+};
+
+var thresholds = ["0","1","2","3"]
+
+var thresholdsPrior = function() {
+    return uniformDraw(thresholds);
+} 
+
+var meaning = function(description, referent, one_referent, all_referents, theta, context) {
+
+  var truthFn = function(referent){
+
+      var includes = find(function(x) { return x == referent }, context) 
+      // display(includes)
+      var inclusion = includes == referent ? true : false 
+      // display(inclusion)
+      var sameNoun = description[0] == referent[0]  ? true : false 
+      // display(sameNoun)
+      var sameContainer = description[2] == referent[1] ? true : false 
+      // display(sameContainer)
+      var threshold =  description[1] == "empty" ? true: description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false 
+//       display(threshold)
+      sameNoun == true && sameContainer == true && threshold == true && inclusion == true
+     
+  }
+  return (truthFn(one_referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
+
+}
+
+
+var literalListener = function(description, context, theta) {
+    return Infer({method: "enumerate"}, function() {
+    var referent = referentsPrior();
+    var one_referent = referent; 
+    var all_referents = context; 
+    condition(meaning(description, referent, one_referent, all_referents, theta, context))
+    return referent;
+  });
+}  
+
+var speaker = function(referent, context, theta) {
+  return Infer({method: "enumerate"}, function() {
+    var description = descriptionPrior();
+    // display(description)
+    factor( alpha * literalListener(description, context, theta).score(referent));
+    return description;
+  });
+}
+
+var pragmaticListener = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var description = randomVariablePrior();
+    var context = contextsPrior(); 
+    var referent = sample(referentsPriorGivenContext(context));
+//     display(JSON.stringify(referent))
+    var theta = sample(tresholdPriorGivenContext(context,description)); 
+    factor(speaker(referent, context, theta).score(description));
+    condition(referent[0]=="rabbit")
+    return {thet: theta, cont: context, ref: referent}; 
+  });
+};
+
+// var pragmaticListenerFullDescription = function(description) {
+//   return Infer({method: "enumerate"}, function() {
+//     var context = contextsPrior(); 
+//     var referent = sample(referentsPriorGivenContext(context));
+//     var theta = sample(tresholdPriorGivenContext(context,description)); 
+//     factor(speaker(referent, context, theta).score(description));
+//     // condition(referent[0]=="rabbit")
+//     return {thet: theta, cont: context, ref: referent}; 
+//   });
+// };
+var pragmaticListenerFullDescription = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var context = contextsPrior(); 
+    var referent = referentsPrior();
+    // var referent = sample(referentsPriorGivenContext(context));
+    var theta = sample(tresholdPriorGivenContext(context,description)); 
+    factor(speaker(referent, context, theta).score(description));
+    // condition(referent[0]=="rabbit")
+    return {thet: theta, cont: context, ref: referent}; 
+  });
+};
+
+
+var speaker1 = function(referent) {
+  return Infer({method: "enumerate"}, function() {
+    var description = descriptionPrior();
+    // display(description)
+    factor( alpha * marginalize(pragmaticListenerFullDescription(description),"ref").score(referent));
+    return description;
+  });
+}
+
+
+var pragmaticListener2 = function(description) {
+  return Infer({method: "enumerate"}, function() {
+    var description = randomVariablePrior();
+    // var context = contextsPrior(); 
+    // var referent = sample(referentsPriorGivenContext(context));
+//     display(JSON.stringify(referent))
+    // var theta = sample(tresholdPriorGivenContext(context,description)); 
+    var referent = referentsPrior();
+    factor(speaker1(referent).score(description));
+    condition(referent[0]=="rabbit")
+    return referent; 
+  });
+};
+
+
+// marginalize(pragmaticListener(["rabbit","big","silence"]), "ref")
+// pragmaticListener2(["rabbit","big","silence"])
+//condition on success so that i get rid of the probability mass on undefined
+
+// tresholdPriorGivenContext([r1,r2,r3],["rabbit","big","bag"])
+ meaning(["none", "none", "none"],r1,r1,[r1,r2],1,[r1,r2])
+ marginalize(pragmaticListener(["rabbit","big","silence"]), "ref")
+// literalListener(["frog","big","bag"],[r1,r2],1) 
+// speaker(["rabbit", "bag", 2],[r1,r2],1)
+// pragmaticListener(["rabbit","big","silence"])

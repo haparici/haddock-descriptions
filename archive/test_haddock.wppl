@@ -98,7 +98,7 @@ var thresholds = ["0", "1", "2", "3"]
 
 var thres = {
   "thresholds": ["0", "1", "2", "3"],
-  "probabilities": [10, 60, 60, 10]
+  "probabilities": [10, 10, 10, 10]
 };
 
 
@@ -155,9 +155,9 @@ var thresholdPriorGivenContext  = function(context,description) {
     return Infer({method: "enumerate"}, function() {
       var getThres = map(function(result){ return result[2] }, result )
       // var extendThres = getThres.slice(0)
-      // extendThres.push(extendThres[0] - 1) 
+     // extendThres.push(extendThres[0] - 1) 
       // var addThres = getThres.length == 1 ? extendThres : getThres
-      uniformDraw(getThres)
+     uniformDraw(getThres)
 
   });
 };
@@ -177,6 +177,8 @@ var thresholdPriorGivenContext  = function(context,description) {
 //       uniformDraw(extendThres)
 //   });
 // };
+
+
 
 
 var referentsPriorGivenContext = function(context) {
@@ -295,6 +297,7 @@ var thresholdsPrior = function() {
 
 // }
 
+<<<<<<< Updated upstream
 var positiveStand = function(description, referent, all_referents, theta, context) {
 
     
@@ -335,6 +338,36 @@ var positiveStand = function(description, referent, all_referents, theta, contex
     // }
     
     return trivially_true || nontrivially_true
+
+}
+
+var positiveStand = function(description, referent, all_referents, theta, context) {
+    
+  var innerMatch = function(referent) {
+   var includes = find(function(x) { return x == referent }, context) 
+   // display(includes)
+    var inclusion = includes == referent ? true : false 
+     // display(inclusion)
+   var sameContainer = description[2] == referent[1] ? true : false 
+   // display(sameContainer)
+   var threshold =  description[1] == "empty" ? true : description[1] == "big" ? referent[2] > theta : description[1] == "small" ? referent[2] <= theta : false 
+    //       display(threshold)
+  inclusion == true && sameContainer == true && threshold == true
+ }
+  
+ var truthFn = function(referent){
+
+     var includes = find(function(x) { return x == referent }, context) 
+     // display(includes)
+     var inclusion = includes == referent ? true : false 
+  // display(inclusion)
+    var sameNoun = description[0] == referent[0]  ? true : false 
+    // display(sameNoun)
+      
+    innerMatch(referent)==true && sum(map(innerMatch, all_referents))==1 && sameNoun == true && inclusion == true
+ }
+  
+ return (truthFn(referent) && sum(map(truthFn, all_referents))==1) || _.isEqual(description, ["none", "none", "none"]) || _.isEqual(referent, rU)
 
 }
 
@@ -458,7 +491,7 @@ var literalListener = function(description, context, theta) {
     return Infer({method: "enumerate"}, function() {
     var referent = referentsPrior();
     var all_referents = context; 
-    condition(meaning(description, referent, all_referents, theta, context))
+    condition(meaning1(description, referent, all_referents, theta, context))
     return referent;
   });
 }
@@ -579,4 +612,6 @@ var contextsPriorLevyStyle = function(refs) {
     })
 }
 
+
 contextsPriorLevyStyle([r1,r2,r3])
+
