@@ -62,7 +62,7 @@ require(broom)
 #require(Rmisc)
 require(ggplot2)
 require(tidyboot)
-#devtools::install_github("mikabr/ggpirate")
+devtools::install_github("mikabr/ggpirate")
 require(ggpirate)
 
 #Running models
@@ -119,8 +119,8 @@ get_visuals <- function(refs, conds_idx, i){
 }
 
 ## Descriptions ##
-#modifiers <- c('smaller', 'small', 'big', 'bigger', 'none')
-modifiers <- c('small', 'big', 'none')
+modifiers <- c('smaller', 'small', 'big', 'bigger', 'none')
+#modifiers <- c('small', 'big', 'none')
 get_descriptions <- function(visual, modifiers) {
   
   visual_unique <- unique(visual[, c("Animal", "Container")])
@@ -184,8 +184,8 @@ get_costs <- function(descs) {
 pos<-list(c("rabbit", "big", "bag"),c("rabbit", "big", "box"))
 cmp<-list(c("rabbit", "bigger", "bag"),c("rabbit", "bigger", "box"))
 
-#randomVariables<-list(pos,cmp)
-randomVariables<-list(pos)
+randomVariables<-list(pos,cmp)
+#randomVariables<-list(pos)
 #randomVariables<-list(cmp)
 
 execute_model <- function(randomVariable, cond, model, context, defArt, package, gamma, costCoefficient,highScopeConstrualProb) {
@@ -229,7 +229,7 @@ gamma <- .9
 costCoefficient <- 3
 highScopeConstrualProb <- 0.5
 
-test_result <- execute_model(pos, 1, "haddock_model.wppl","cc","bumford",".",gamma,costCoefficient,highScopeConstrualProb)
+test_result <- execute_model(cmp, 3, "haddock_model.wppl","cc","bumford",".",gamma,costCoefficient,highScopeConstrualProb)
 
 
 

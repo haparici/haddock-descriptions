@@ -304,7 +304,9 @@ var pragmaticListener = function(description) {
 	var referent = sample(referentsPriorGivenContext(context));
 	var theta = sample(thresholdPriorGivenContext(context,description));
 	//var theta = uniformDraw([0,1,2,3]);
-	factor(speaker(referent, context, theta).score(description));
+	var speakerdist = speaker(referent, context, theta);
+	//display(speakerdist);
+	factor(speakerdist.score(description));
 	condition(referent[0]=="rabbit")
 	return {thet: theta, cont: context, ref: referent}; 
     });
@@ -317,8 +319,10 @@ var pragmaticListenerFullDescription = function(description) {
       var context = sample(priorContextLevyStyle);
     //var referent = referentsPrior();
       var referent = sample(referentsPriorGivenContext(context));
-      var theta = sample(thresholdPriorGivenContext(context,description)); 
-      factor(speaker(referent, context, theta).score(description));
+      var theta = sample(thresholdPriorGivenContext(context,description));
+      var speakerdist = speaker(referent, context, theta);
+      //display(speakerdist);
+      factor(speakerdist.score(description));
       // condition(referent[0]=="rabbit")
     return {thet: theta, cont: context, ref: referent}; 
   });
@@ -356,11 +360,11 @@ var pragmaticListener2 = function(description) {
 // Main
 
 
+
+
 var pragListener = pragmaticListener("rabbit","adjective","silence")
 
 //display(pragListener)
 
 marginalize(pragListener, "ref")
 
-
-//pragmaticListener("rabbit","adjective","silence")
