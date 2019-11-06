@@ -366,7 +366,6 @@ var pragmaticListener2 = function(description) {
 
 var doPragmaticListener = function(description,level) {
     if (level == 2) {
-	display("level is 2")
 	return (pragmaticListener2(description))
     } else {
 	return (pragmaticListener(description))
