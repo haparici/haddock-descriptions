@@ -171,6 +171,7 @@ var thresholdPriorGivenContext  = function(context,description) {
     var getThres = map(function(result){ return result[2] }, result )
 
     return Infer({method: "enumerate"}, function() {
+      
 	var getThres = map(function(result){ return result[2] }, result )
 	
 	// var extendThres = getThres.slice(0)
