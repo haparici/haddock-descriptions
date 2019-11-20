@@ -171,10 +171,10 @@ var thresholdPriorGivenContext  = function(context,description) {
     return Infer({method: "enumerate"}, function() {
 	var getThres = map(function(result){ return result[2] }, result )
 	
-	// var extendThres = getThres.slice(0)
-	// extendThres.push(extendThres[0] - 1) 
-	// var addThres = getThres.length == 1 ? extendThres : getThres
-      uniformDraw(getThres)
+	 var extendThres = getThres.slice(0)
+	 extendThres.push(extendThres[0] - 1) 
+	 var addThres = getThres.length == 1 ? extendThres : getThres
+      uniformDraw(addThres)
 	
     });
 };
@@ -187,9 +187,9 @@ var referentsPriorGivenContext = function(context) {
   });
 };
 
-// var contextsPrior = function() {
-//     return uniformDraw(contexts);
-// }  
+var contextsPrior = function() {
+     return uniformDraw(contexts);
+}  
 
 
 var contextsPriorLevyStyle = function(refs) {
@@ -208,6 +208,15 @@ var contextsPriorLevyStyle = function(refs) {
 }
 
 var priorContextLevyStyle = contextsPriorLevyStyle(globalContext)
+
+var fitsFirstNoun = function(description,context) {
+    var filtered = filter(function(ref) {
+	description[0]==ref[0]
+    }, context)
+    return (context.length == filtered.length)
+}
+
+
 
 // ---------Begin old skewed context distribution calculation-----------
 
@@ -299,6 +308,7 @@ var pragmaticListener = function(description) {
 	var description = randomVariablePrior();
 	//var context = sample(priorContextSkewed);
 	var context = sample(priorContextLevyStyle);
+	condition(fitsFirstNoun(description,context))
 	//var context = contextsPrior(); 
 	var referent = sample(referentsPriorGivenContext(context));
 	var theta = sample(thresholdPriorGivenContext(context,description));
