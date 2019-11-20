@@ -9,6 +9,7 @@ var def_art = model_data[5]
 var gamma = model_data[6][0]
 var costCoefficient = model_data[7][0]
 var highScopeConstrualProb = model_data[8][0]
+var listenerLevel = model_data[9][0]
 
 var r1 = [visuals[0]["Animal"][0], visuals[0]["Container"][0], visuals[0]["Size"][0]]
 var r2 = [visuals[1]["Animal"][0], visuals[1]["Container"][0], visuals[1]["Size"][0]]
@@ -95,6 +96,7 @@ var thres = {
 };
 
 
+
 var thresholdsPrior = function() {
     return categorical(thres.probabilities, thres.thresholds)
 }  //make this not uniform
@@ -169,6 +171,7 @@ var thresholdPriorGivenContext  = function(context,description) {
     var getThres = map(function(result){ return result[2] }, result )
 
     return Infer({method: "enumerate"}, function() {
+      
 	var getThres = map(function(result){ return result[2] }, result )
 	
 	 var extendThres = getThres.slice(0)
@@ -313,7 +316,9 @@ var pragmaticListener = function(description) {
 	var referent = sample(referentsPriorGivenContext(context));
 	var theta = sample(thresholdPriorGivenContext(context,description));
 	//var theta = uniformDraw([0,1,2,3]);
-	factor(speaker(referent, context, theta).score(description));
+	var speakerdist = speaker(referent, context, theta);
+	//display(speakerdist);
+	factor(speakerdist.score(description));
 	condition(referent[0]=="rabbit")
 	return {thet: theta, cont: context, ref: referent}; 
     });
@@ -321,41 +326,46 @@ var pragmaticListener = function(description) {
 
 
 var pragmaticListenerFullDescription = function(description) {
-  return Infer({method: "enumerate"}, function() {
-      //var context = contextsPrior();
-      var context = sample(priorContextLevyStyle);
-    //var referent = referentsPrior();
-      var referent = sample(referentsPriorGivenContext(context));
-      var theta = sample(thresholdPriorGivenContext(context,description)); 
-      factor(speaker(referent, context, theta).score(description));
-      // condition(referent[0]=="rabbit")
-    return {thet: theta, cont: context, ref: referent}; 
-  });
+    display("pragmaticListenerFullDescription " + description)
+    return Infer({method: "enumerate"}, function() {
+	//var context = contextsPrior();
+	var context = sample(priorContextLevyStyle);
+	//var referent = referentsPrior();
+	var referent = sample(referentsPriorGivenContext(context));
+	var theta = sample(thresholdPriorGivenContext(context,description));
+      var speakerdist = speaker(referent, context, theta);
+	//display(speakerdist);
+	factor(speakerdist.score(description));
+	// condition(referent[0]=="rabbit")
+	return {thet: theta, cont: context, ref: referent}; 
+    });
 }
 
 
 var speaker1 = function(referent) {
-  return Infer({method: "enumerate"}, function() {
-    var description = descriptionPrior();
-    factor( alpha * marginalize(pragmaticListenerFullDescription(description),"ref").score(referent));
-    return description;
-  });
+    display("speaker1 " + referent)
+    return Infer({method: "enumerate"}, function() {
+	var description = descriptionPrior();
+	factor( alpha * marginalize(pragmaticListenerFullDescription(description),"ref").score(referent));
+	return description;
+    });
 }
 
 
 
 var pragmaticListener2 = function(description) {
-  return Infer({method: "enumerate"}, function() {
-    var description = randomVariablePrior();
-    // var context = contextsPrior(); 
-    // var referent = sample(referentsPriorGivenContext(context));
-//     display(JSON.stringify(referent))
-    // var theta = sample(tresholdPriorGivenContext(context,description)); 
-    var referent = referentsPrior();
-    factor(speaker1(referent).score(description));
-    condition(referent[0]=="rabbit")
-    return referent; 
-  });
+    display("pragmaticListener2")
+    return Infer({method: "enumerate"}, function() {
+	var description = randomVariablePrior();
+	// var context = contextsPrior(); 
+	// var referent = sample(referentsPriorGivenContext(context));
+	//     display(JSON.stringify(referent))
+	// var theta = sample(tresholdPriorGivenContext(context,description)); 
+	var referent = referentsPrior();
+	factor(speaker1(referent).score(description));
+	condition(referent[0]=="rabbit")
+	return {ref: referent}; 
+    });
 }
 
 
@@ -365,11 +375,18 @@ var pragmaticListener2 = function(description) {
 // Main
 
 
-var pragListener = pragmaticListener("rabbit","adjective","silence")
+var doPragmaticListener = function(description,level) {
+    if (level == 2) {
+	return (pragmaticListener2(description))
+    } else {
+	return (pragmaticListener(description))
+    }
+}
+
+
+var pragListener = doPragmaticListener(["rabbit","adjective","silence"], listenerLevel)
 
 //display(pragListener)
 
 marginalize(pragListener, "ref")
 
-
-//pragmaticListener("rabbit","adjective","silence")

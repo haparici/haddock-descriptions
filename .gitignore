@@ -55,3 +55,6 @@ rsconnect/
 haddock_model_mini.wppl
 archive/sleuthing.txt
 scratch.wppl
+
+#macOS index folders
+.DS_Store

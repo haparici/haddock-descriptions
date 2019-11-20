@@ -42,22 +42,48 @@
 
 \maketitle
 
-<<Model_Parameters_Variables, echo=FALSE, cache=TRUE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
+<<Setup, include=FALSE>>=
 
 # Import libraries
+
+#General
+
+require(knitr)
+#library(devtools)
+
+#Stats
+require(lmerTest)
+#devtools::install_github("paul-buerkner/brms")
+require("rstan") 
+require(brms)
+require(broom)
+
+#Plotting
+#require(Rmisc)
+require(ggplot2)
+require(tidyboot)
+
+#Running models
 require(ggm)
 require(ggpubr)
 require(rlist)
 require(RJSONIO)
 require("rwebppl")
-
 #to install rwebppl
 #install.packages("devtools")
 #devtools::install_github("mhtess/rwebppl")
 
+# Global settings for chunks
+opts_chunk$set(echo = F, message = F, warning = F, cache=T)
+#fig.path <- "../../" in case we end up needing it
+
 #Repo
 #https://github.com/haparici/haddock-descriptions
+#Add the rest of the libraries here
 
+@
+
+<<Model_Parameters_Variables, echo=FALSE, cache=TRUE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
 
 ## Visuals Master ##
 refs_json <- '[
@@ -92,6 +118,7 @@ get_visuals <- function(refs, conds_idx, i){
 
 ## Descriptions ##
 modifiers <- c('smaller', 'small', 'big', 'bigger', 'none')
+#modifiers <- c('small', 'big', 'none')
 get_descriptions <- function(visual, modifiers) {
   
   visual_unique <- unique(visual[, c("Animal", "Container")])
@@ -107,7 +134,6 @@ get_descriptions <- function(visual, modifiers) {
   }
   desc <- list("none", "none", "none")
   descs <- list.append(descs, unlist(desc))
-  
   return(descs)
 }
 
@@ -160,14 +186,14 @@ randomVariables<-list(pos,cmp)
 #randomVariables<-list(pos)
 #randomVariables<-list(cmp)
 
-execute_model <- function(randomVariable, cond, model, context, defArt, package, gamma, costCoefficient,highScopeConstrualProb) {
+execute_model <- function(randomVariable, cond, model, context, defArt, package, gamma, costCoefficient,highScopeConstrualProb,pragListenerLevel) {
   
   # Model
   visuals <- get_visuals(refs, conds_idx, cond)
   descs <- get_descriptions(visuals, modifiers)
   costs <- get_costs(descs)
   
-  model_data <- list(randomVariable, visuals, descs, costs, context, defArt, gamma, costCoefficient,highScopeConstrualProb)
+  model_data <- list(randomVariable, visuals, descs, costs, context, defArt, gamma, costCoefficient,highScopeConstrualProb,pragListenerLevel)
   
   model <- webppl(program_file=model, 
                   data = model_data, 
@@ -191,36 +217,51 @@ execute_model <- function(randomVariable, cond, model, context, defArt, package,
 conds <- c(1, 2, 3)
 contexts <- c("cco","no-cc")
 defArtMeanings <- c("bumford", "standard")
+pragListenerLevels <- c(1,2)
+
 #models <- c("haddock_model.wppl","haddock_model_pragmaticListener2.wppl")
 models <- c("haddock_model.wppl") #,"haddock_model_pragmaticListener2.wppl")
 #gamma is probability that any given referent will be included in the context
-gamma <- .9
+gamma <- .5
 #higher cost coefficient increases informativity effect
 costCoefficient <- 3
 highScopeConstrualProb <- 0.5
 
-test_result <- execute_model(pos, 1, "haddock_model.wppl","cc","bumford",".",gamma,costCoefficient,highScopeConstrualProb)
+
+
+test_result <- execute_model(pos, 1, "haddock_model.wppl","cc","standard",".",gamma,costCoefficient,highScopeConstrualProb,1)
+
 
 
 
 # Execute Model
 results <- data.frame()
 
-for(defArtMeaning in defArtMeanings) { 
-  for (context in contexts) {
-    for (randomVariable in randomVariables) {
-      for (cond in conds) {
-        for (model in models) {
-          result <- execute_model(randomVariable, cond, model, context, defArtMeaning,".",gamma,costCoefficient,highScopeConstrualProb)
-          result$Adjective <- randomVariable[[1]][2]
-          result$defArtMeaning <- defArtMeaning
-          result$Context <- context
-          result$Condition <- cond
-          result$Model <- model
-          results <- rbind(results, result)
-          # print(paste("Processing adjective"
-          #        , randomVariable[[1]][2]
-          #        , "for context"
+results <- read.csv("exp2-models-2levels.csv")
+
+
+recalculate_results <- FALSE
+
+if (recalculate_results) {
+for(pragListenerLevel in pragListenerLevels) {
+  for(defArtMeaning in defArtMeanings) { 
+    for (context in contexts) {
+      for (randomVariable in randomVariables) {
+        for (cond in conds) {
+          for (model in models) {
+  
+            result <- execute_model(randomVariable, cond, model, context, defArtMeaning,".",gamma,costCoefficient,highScopeConstrualProb,pragListenerLevel)
+
+            result$Adjective <- randomVariable[[1]][2]
+            result$defArtMeaning <- defArtMeaning
+            result$Context <- context
+            result$Condition <- cond
+            result$Model <- model
+            result$ListenerLevel <- pragListenerLevel
+            results <- rbind(results, result)
+           #print(paste("Processing adjective"
+           #       , randomVariable[[1]][2]
+           #       , "for context"
           #        , context
           #        , "for defArtMeaning"
           #        , defArtMeaning
@@ -228,12 +269,13 @@ for(defArtMeaning in defArtMeanings) {
           #        , cond
           #        , "with model"
           #        , model))
+         }
         }
       }
     }
   }
 }
-
+  
 colnames(results) <- c(
   "Animal"
   , "Container"
@@ -243,11 +285,42 @@ colnames(results) <- c(
   , "DefArtMeaning"
   , "Context"
   , "Condition"
-  , "Model")
+  , "Model"
+  , "ListenerLevel")
+}
 
 #results
 
 @
+
+
+% <<test-plots, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+% 
+% cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
+% 
+% bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl")
+% test<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
+%   geom_bar(position=position_dodge(), stat="identity") +
+%   scale_fill_manual(values=cbPalette) +
+%   theme_bw() +
+%   theme(axis.text.x = element_text(size=8),
+%         axis.text.y = element_text(size=15),  
+%         axis.title.x = element_text(size=18),
+%         axis.title.y = element_text(size=18),
+%         legend.title=element_text(size=16), 
+%         legend.text=element_text(size=14)
+%   ) +
+%   ylim(0,1) +
+%   xlab("Display Type") +
+%   ylab("Bag Resolution") +
+%   ggtitle("Standard Meaning") +
+%   facet_grid(Context ~ Adjective) +
+%   labs(fill="Adj. Type")
+% 
+% 
+% @
+
+
 
 \section{Introduction}
 
@@ -346,53 +419,57 @@ The yellow line corresponds to chance after correcting for responses that did no
 
 \begin{figure}
 \centering
-<<results, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 5, fig.height=3>>=
+<<results1, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 4, fig.height=4.5>>=
 
-require(Rmisc)
-require(ggplot2)
+data<-read.csv("exp2-m1-p1-p2-p3b-cleaned.csv", header=TRUE) #225 participants
 
-#combined_all3_data.csv
-data<-read.csv("haddock_clean_data.csv", header=TRUE) #117 unique IDs
+data$displaytype1[data$displaytype=="abs-rel"]= "Context 1"
+data$displaytype1[data$displaytype=="abs-both"]= "Context 2"
+data$displaytype1[data$displaytype=="both-rel"]= "Context 3"
+
+data$adjtype2[data$adjtype=="pos"]= "big"
+data$adjtype2[data$adjtype=="cmp"]= "bigger"
 
 data$stim.version<-paste(data$stimnum,data$version,sep="-")
 
 data$stim.version<-as.factor(data$stim.version)
+data$target<-as.numeric(as.character(data$target))
 
-data.summary<-summarySE(data, measurevar="target", 
-                        groupvars=c("displaytype","adjtype"))
+df.data.item <- data %>%
+  group_by(displaytype1, adjtype2, stimnum) %>%
+  tidyboot_mean(column = target)
 
-data.summary$displaytype1[data.summary$displaytype=="abs-rel"]= "Context 1"
-data.summary$displaytype1[data.summary$displaytype=="abs-both"]= "Context 2"
-data.summary$displaytype1[data.summary$displaytype=="both-rel"]= "Context 3"
+df.data.general <- data %>%
+  group_by(displaytype1, adjtype2) %>%
+  tidyboot_mean(column = target)
 
-data.summary$adjtype2[data.summary$adjtype=="pos"]= "big"
-data.summary$adjtype2[data.summary$adjtype=="cmp"]= "bigger"
+#code below due to MH Tessler
 
-
-cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  
-               "#F0E442", "#0072B2", "#D55E00",  "#999999")
-
-
-results.plot<- ggplot(data.summary, aes(x=displaytype1, y=target, fill=adjtype2)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
-  scale_fill_manual(values=cbPalette) +
-  geom_errorbar(aes(ymin=target-ci, ymax=target+ci),
-                width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=13),
-        axis.text.y = element_text(size=13),  
-        axis.title.x = element_text(size=13),
-        axis.title.y = element_text(size=13),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  xlab("Context Type") +
-  ylab("Probability of bag resoluion") +
-  labs(fill="Adj. Type")
-
-results.plot
-
+plot.general<-df.data.general %>%
+  ggplot(., aes( x = displaytype1, y = mean, fill = adjtype2))+
+  #theme_black()+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'black')+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8,
+           alpha = 0.4,
+           color = 'black')+
+  geom_point(data = df.data.item,
+             position = position_jitterdodge(),
+             inherit.aes = F, aes(x = displaytype1, y = mean, color = adjtype2),
+             alpha = 0.25)+
+  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper),
+              position = position_dodge(0.8), size = 1.2,
+              color = 'black')+ 
+  ylab("Probability of bag resolution")+
+  #facet_wrap(~ me) +
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_manual(values = c("#009E73", "#CC79A7"))+
+  scale_color_manual(values = c("#009E73", "#CC79A7"))+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 20, vjust = 0.55, hjust = 0.5),
+        legend.position = "bottom")
+plot.general
 @
 \caption{Results for Experiment 1. Proportion of responses corresponding to the bag resolution vs. box resolution in each of the six conditions tested.}
 \label{results}
@@ -411,13 +488,9 @@ require("rstan")
 require(brms)
 require(broom)
 
-data<-read.csv("haddock_clean_data.csv", header=TRUE)
-#head(data)
 
 #merge stim and version colum
 data$stim.version<-paste(data$stim, "", data$version)
-
-#96 participants
 
 #remove both-rel condition (context 3) to check relevant interaction
 
@@ -445,7 +518,7 @@ model1<- brm(
     control=list(adapt_delta=0.99),
     iter = 2000,
     chains = 4,
-    cores = 4,
+    cores = 4
 )
 
 
@@ -457,7 +530,7 @@ model2<- brm(
     control=list(adapt_delta=0.99),
     iter = 2000,
     chains = 4,
-    cores = 4,
+    cores = 4
 )
 
 
@@ -465,33 +538,29 @@ model2<- brm(
 #model1
 #model2
 
-##### STUFF WE NO LONGER USE #####
 
-### frequentist analysis ###
-
-#model1.f<-glmer(
-#  target~adjtype*displaytype +
-#    (1+adjtype*displaytype | usernum)+(1+adjtype+displaytype|stim.version), 
-#  data=data.interaction2, 
-#  family=binomial,
-  #glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))
-#) 
-#isSingular(model1, tol = 1e-05)
-#[1] TRUE
-
-# model1<-glmer(
-#   target~displaytype +
-#     (1+displaytype | usernum)+(1+displaytype|stim), 
-#   data=data.pos, 
-#   family=binomial
-#   #glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun=2e5))
-# ) 
-
+#Run model to check that Condition 3 is different from intercept
 
 @
 
+<<Model1-table, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
 
+model1.output<-model1 %>%
+  fixef(.) %>% 
+  kable()
+model1.output
 
+@
+
+<<Model2-table, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+model2.output<- model2 %>% 
+  fixef(.) %>% 
+  kable()
+model2.output
+
+@
+\subsection{Discussion}
 
 \section{Semantic Assumptions}
 
@@ -859,12 +928,10 @@ Simulation results for the model described in Section \ref{computational-model}.
 
 ## Plots ##
 
-bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl")
-
-
 cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
 
-standard<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
+bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl")
+test<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +
   scale_fill_manual(values=cbPalette) +
   theme_bw() +
@@ -881,22 +948,62 @@ standard<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective))
   ggtitle("Standard Meaning") +
   facet_grid(Context ~ Adjective) +
   labs(fill="Adj. Type")
-
-standard
 @
-\caption{Simulation results for model using standard meaning.}
+\caption{Simulation results for model using standard meaning (L1).}
 \end{figure}
 
 \noindent
 \textbf{Open Questions:} I do not understand the comparative results with standard meaning. Why are Contexts 1 and 2 not the same? This needs to be further investigated.\\
 \textbf{With Context 1, there are potentially three bags, depending on how the context is set. This presents a risk that the comparative will be undefined. The comparative requires there to be two bags. --Liz}
 
+I know there's a section in the appendix for L2, but I'm putting it here for convenience --Liz
+
+\begin{figure}[h]
+\centering
+<<Plot-standard2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+
+prag.list2<-read.csv("exp2-models-2levels.csv", header=TRUE)
+
+bags.standard2<-subset(prag.list2, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl" & ListenerLevel==2)
+
+
+
+
+standard2<-ggplot(bags.standard2, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Standard Meaning (L2)") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+standard2
+@
+\caption{Simulation results for model using standard meaning (L2).}
+\end{figure}
+
+Improves positive form, but turns bigger into a context sensitive predicate as well. No difference between the both of them so this won't work.
+
+Now for Bumford's meaning:
+
 \begin{figure}[!htbp]
 \centering
 <<Plot-bumford, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
 
 ## Plots ##
-bags.bumford<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl")
+bags.bumford<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl" & ListenerLevel==1)
 
 bumford<-ggplot(bags.bumford, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +
@@ -912,18 +1019,56 @@ bumford<-ggplot(bags.bumford, aes(x=Condition, y=Probability, fill=Adjective)) +
   ylim(0,1) +
   xlab("Display Type") +
   ylab("Bag Resolution") +
-  ggtitle("Bumford's Meaning") +
+  ggtitle("Bumford's Meaning (L1)") +
   facet_grid(Context ~ Adjective) +
   labs(fill="Adj. Type")
 
 bumford
 #ggarrange(standard, bumford + rremove("x.text"), 
 #          heights = c(2, 2.5),
-#          ncol = 1, nrow = 2)
+ #         ncol = 1, nrow = 2)
 @
-\caption{Simulation results for model using Bumford's meaning.}
+\caption{Simulation results for model using Bumford's meaning (L1).}
 \end{figure}
 
+Bumford/L2:
+
+\begin{figure}[!htbp]
+\centering
+<<Plot-bumford2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+
+bags.bumford2<-subset(prag.list2, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl" & ListenerLevel==2)
+
+
+bumford2<-ggplot(bags.bumford2, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Bumford's Meaning (L2)") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+bumford2
+#ggarrange(standard, bumford + rremove("x.text"), 
+#          heights = c(2, 2.5),
+ #         ncol = 1, nrow = 2)
+@
+\caption{Simulation results for model using Bumford's meaning (L2).}
+\end{figure}
+
+Looks like the effect of the big bag diminishes to the point of invisibility with the doubly pragmatic listener on Bumford's meaning.
 
 \pagebreak 
 
