@@ -1,0 +1,1533 @@
+\documentclass[letterpaper, 12pt]{article}
+%\usepackage{liatex85}
+\usepackage{etex}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+\usepackage{amsmath,amsfonts, amssymb,latexsym, mathtools,mathrsfs, fancyhdr,theorem,  pifont, setspace, verbatim,  qtree, lscape, tipa,  hyperref,verbatimbox, wasysym, natbib,soul, minibox, lipsum, amssymb, color, multirow, multicol, soul,geometry,graphicx, wrapfig,gb4e,booktabs,stmaryrd}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+%\usepackage[backend=bibtex, sorting=none]{biblatex}
+\geometry{hmargin={1in,1in},vmargin={1in,1in}}
+
+\definecolor{Red}{RGB}{255,0,0}
+\newcommand{\red}[1]{\textcolor{Red}{#1}}
+\newcommand{\ha}[1]{\textcolor{Red}{[ha: #1]}} 
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%% Some math symbols used in the text
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Format 
+
+
+\def\>{\rangle}
+\def\<{\langle}
+
+\def\true{1}
+\def\given{\,|\,}
+
+\def\valueof#1{\llbracket #1\rrbracket}
+
+
+\def\ol#1{\textit{#1}}
+
+\def\valueof#1{\ensuremath{\llbracket #1\rrbracket}}
+
+
+\title{How to find {\em the rabbit in the big bag}:\\
+Incremental interpretation and context-sensitive definites}
+\author{Helena, Roger, Liz}
+
+
+\begin{document}
+
+\maketitle
+
+<<Setup, include=FALSE>>=
+
+# Import libraries
+
+#General
+
+require(knitr)
+#library(devtools)
+
+#Stats
+require(lmerTest)
+#devtools::install_github("paul-buerkner/brms")
+require("rstan") 
+require(brms)
+require(broom)
+require(dplyr)
+require(lmerTest)
+
+#Plotting
+#require(Rmisc)
+require(ggplot2)
+require(tidyboot)
+
+#Running models
+require(ggm)
+require(ggpubr)
+require(rlist)
+require(RJSONIO)
+require("rwebppl")
+#to install rwebppl
+#install.packages("devtools")
+#devtools::install_github("mhtess/rwebppl")
+
+# Global settings for chunks
+opts_chunk$set(echo = F, message = F, warning = F, cache=T)
+#fig.path <- "../../" in case we end up needing it
+
+#Repo
+#https://github.com/haparici/haddock-descriptions
+#Add the rest of the libraries here
+
+@
+
+<<Model_Parameters_Variables, echo=FALSE, cache=TRUE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
+
+## Visuals Master ##
+refs_json <- '[
+  {"Animal": "rabbit", "Container": "bag", "Size": 1}
+  , {"Animal": "rabbit", "Container": "bag", "Size": 2}
+  , {"Animal": "frog", "Container": "bag", "Size": 3}
+  , {"Animal": "frog", "Container": "box", "Size": 1}
+  , {"Animal": "rabbit", "Container": "box", "Size": 2}
+  , {"Animal": "frog", "Container": "basket", "Size": 3}
+  , {"Animal": "rabbit", "Container": "box", "Size": 1}
+  ]'
+
+refs <- fromJSON(refs_json)
+refs <- do.call("rbind", refs)
+refs <- data.frame(refs)
+
+## Visual Logical Constructor ##
+conds_idx <- list(
+  c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+  , c(TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE)
+  , c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE)
+)
+
+get_visuals <- function(refs, conds_idx, i){
+  
+  cond_idx <- unlist(conds_idx[i])
+  visual <- refs[cond_idx, ]
+  
+  return(visual)
+  
+}
+
+## Descriptions ##
+modifiers <- c('smaller', 'small', 'big', 'bigger', 'none')
+#modifiers <- c('small', 'big', 'none')
+get_descriptions <- function(visual, modifiers) {
+  
+  visual_unique <- unique(visual[, c("Animal", "Container")])
+  
+  descs <- list()
+  for (ref in 1:nrow(visual_unique)) {
+    for (mod in modifiers) {
+      animal <- visual_unique[ref, "Animal"]
+      container <- visual_unique[ref, "Container"]
+      desc = list(animal, mod, container)
+      descs <- list.append(descs, unlist(desc))
+    }
+  }
+  desc <- list("none", "none", "none")
+  descs <- list.append(descs, unlist(desc))
+  return(descs)
+}
+
+get_costs <- function(descs) {
+  
+  costs <- list()
+  columns <- list()
+  
+  for (i in 1:length(descs)) {
+    
+    desc <- unlist(descs[i])
+    desc_str <- paste(desc[1], desc[2], desc[3])
+    adjective <- desc[2]
+    tail <- substr(adjective, nchar(adjective) - 1, nchar(adjective))
+    
+    if (tail == "er") {
+      
+      cost <- 1.5
+      
+      
+    } else if (adjective %in% c("small", "big")) {
+      
+      cost <- 1
+      
+    } else if (adjective == "none") {
+      
+      cost <- 0.5
+      
+    } else {
+      
+      cost <- 0
+      
+    }
+    costs <- list.append(costs, cost)
+    columns <- list.append(columns, desc_str)
+  }
+  costs <- data.frame(costs)
+  colnames(costs) <- unlist(columns)
+  
+  return(costs)
+}
+
+    
+##Random Variables##
+
+pos<-list(c("rabbit", "big", "bag"),c("rabbit", "big", "box"))
+cmp<-list(c("rabbit", "bigger", "bag"),c("rabbit", "bigger", "box"))
+
+randomVariables<-list(pos,cmp)
+#randomVariables<-list(pos)
+#randomVariables<-list(cmp)
+
+execute_model <- function(randomVariable, cond, model, context, defArt, package, gamma, costCoefficient,highScopeConstrualProb,pragListenerLevel) {
+  
+  # Model
+  visuals <- get_visuals(refs, conds_idx, cond)
+  descs <- get_descriptions(visuals, modifiers)
+  costs <- get_costs(descs)
+  
+  model_data <- list(randomVariable, visuals, descs, costs, context, defArt, gamma, costCoefficient,highScopeConstrualProb,pragListenerLevel)
+  
+  model <- webppl(program_file=model, 
+                  data = model_data, 
+                  data_var = "model_data", 
+                  package=package)
+  
+  return(model)
+  
+}
+
+
+
+@
+
+
+<<Model_Main, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+## Main ##
+# Calling Parameters 
+
+conds <- c(1, 2, 3)
+contexts <- c("cco","no-cc")
+defArtMeanings <- c("bumford", "standard")
+pragListenerLevels <- c(1,2)
+
+#models <- c("haddock_model.wppl","haddock_model_pragmaticListener2.wppl")
+models <- c("haddock_model.wppl") #,"haddock_model_pragmaticListener2.wppl")
+#gamma is probability that any given referent will be included in the context
+gamma <- .5
+#higher cost coefficient increases informativity effect
+costCoefficient <- 3
+highScopeConstrualProb <- 0.5
+
+
+
+test_result <- execute_model(pos, 1, "haddock_model.wppl","cc","standard",".",gamma,costCoefficient,highScopeConstrualProb,1)
+
+
+
+
+# Execute Model
+results <- data.frame()
+
+results <- read.csv("exp2-models-2levels.csv")
+
+
+recalculate_results <- FALSE
+
+if (recalculate_results) {
+for(pragListenerLevel in pragListenerLevels) {
+  for(defArtMeaning in defArtMeanings) { 
+    for (context in contexts) {
+      for (randomVariable in randomVariables) {
+        for (cond in conds) {
+          for (model in models) {
+  
+            result <- execute_model(randomVariable, cond, model, context, defArtMeaning,".",gamma,costCoefficient,highScopeConstrualProb,pragListenerLevel)
+
+            result$Adjective <- randomVariable[[1]][2]
+            result$defArtMeaning <- defArtMeaning
+            result$Context <- context
+            result$Condition <- cond
+            result$Model <- model
+            result$ListenerLevel <- pragListenerLevel
+            results <- rbind(results, result)
+           #print(paste("Processing adjective"
+           #       , randomVariable[[1]][2]
+           #       , "for context"
+          #        , context
+          #        , "for defArtMeaning"
+          #        , defArtMeaning
+          #        , "for condition"
+          #        , cond
+          #        , "with model"
+          #        , model))
+         }
+        }
+      }
+    }
+  }
+}
+  
+colnames(results) <- c(
+  "Animal"
+  , "Container"
+  , "Size"
+  , "Probability"
+  , "Adjective"
+  , "DefArtMeaning"
+  , "Context"
+  , "Condition"
+  , "Model"
+  , "ListenerLevel")
+}
+
+#results
+
+@
+
+
+% <<test-plots, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+% 
+% cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
+% 
+% bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl")
+% test<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
+%   geom_bar(position=position_dodge(), stat="identity") +
+%   scale_fill_manual(values=cbPalette) +
+%   theme_bw() +
+%   theme(axis.text.x = element_text(size=8),
+%         axis.text.y = element_text(size=15),  
+%         axis.title.x = element_text(size=18),
+%         axis.title.y = element_text(size=18),
+%         legend.title=element_text(size=16), 
+%         legend.text=element_text(size=14)
+%   ) +
+%   ylim(0,1) +
+%   xlab("Display Type") +
+%   ylab("Bag Resolution") +
+%   ggtitle("Standard Meaning") +
+%   facet_grid(Context ~ Adjective) +
+%   labs(fill="Adj. Type")
+% 
+% 
+% @
+
+%\begin{abstract}
+%Haddock descriptions (e.g., \emph{the rabbig in the bag}) pose an interesting puzzle w.r.t. the interpretation of the inner definite, as they are felicitous in contexts where the uniqueness requirement of the definite is not met (e.g., contexts with more than one bag). Haddock (1987) provides an incremental semantic account of this puzzle, whereby the set of potential referents is narrowed as the description is processed from left to right. This view aligns well with psycholinguistic theories of incremental semantic interpretation. For instance, in a seminal paper, Sedivy and colleagues (1999) show that participants incrementally use linguistic and contextual information to narrow down the set of potential referents of adjectivally modified definite descriptions such as \emph{the tall glass}. Here we use the same case study of gradable adjectives to test HDs of the form \emph{the rabbit in the big/bigger bag}. Our results show effects of contextual referents that are incompatible with the available linguistic input, arguing against an incremental semantic account of HDs. We use RSA computational modeling to explore the space of alternative potential semantic and pragmatic accounts of HDs. We find that xxxx. 
+%\end{abstract}
+
+\section{\label{intro}Introduction}
+
+%Suppose there are three hats, two rabbits, a frog, and a calculator on a table before you. 
+%One of the rabbits is in one of the hats, and the other two hats contain the frog and the calculator, respectively.
+%You are instructed to point to {\em the hat}. 
+%You might feel a bit squeamish, because the uniqueness requirement of the definite article is not satisfied in this context. 
+%But asked to point to {\em the rabbit in the hat}, you would confidently pick out the rabbit in {\em the hat that has a rabbit in it} (barring unusual circumstances). 
+%Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are called {\em Haddock descriptions}.%
+%\footnote{Fun fact: The same phenomenon can occur when multiple definites are embedded within another. \citet{horacek:1995} observed that {\em the table with the apple and the banana} is felicitous in a context with three tables, one with one apple and one banana (the referent), one with an apple and a mug, and one with a banana and a bowl.}
+
+
+%\citet{haddock:1987} characterized the task of the listener when presented with such descriptions as a {\em constraint satisfaction problem} of the kind studied in Artificial Intelligence: 
+%Find the unique $x$ such that (i) $x$ is a rabbit; (ii) $y$ is a hat; and (iii) $x$ is in $y$. \citet{vaneijck:1993} cast the same idea in dynamic semantics. 
+%The description is felicitous if a unique such $x$ can be found. 
+%But neither \citeauthor{haddock:1987} nor \citeauthor{vaneijck:1993} specified the process by which a listener can determine that this is the problem before her, and in principle, these constraints could be derived either semantically or pragmatically.
+
+%According to \citet{bumford:2017}, the uniqueness requirement of the inner definite in {\em the rabbit in a hat} can be loosened through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above {\em rabbit}. 
+%In that scope position, what the uniqueness requirement demands is that there be no more than one {\em hat containing a rabbit}, even if there is more than one {\em hat} simpliciter.
+%On this semantic approach, the loosening of the uniqueness requirement does not involve elimination of certain referents from consideration through pragmatic reasoning.
+
+%But it is known that the process of identifying a referent for {\em unembedded} definite descriptions involves a flexible conception of uniqueness, on which entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
+%Given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question \citep{chambers+al:2002}, even if there are multiple cans in the display. 
+%These experimental findings bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the hat} or {\em Bill put the rabbit in the hat}.
+%Given this, the disappearance of the uniqueness requirement for the inner definite of a Haddock description might reasonably be seen as an instance of the same phenomenon, involving commonsense reasoning to exclude certain potential referents from consideration. One particular way of caching this out, suggested by \citet{muhlstein+al:2015}, is that the listener reasons probabilistically about the context relative to which a definite description should be interpreted.%
+
+%If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. The question that this paper aims to address is whether or not such a phenomenon occurs, specifically with gradable adjectives.
+
+%To that end, the present paper investigates the interpretation of gradable adjectives embedded inside Haddock descriptions, as in {\em the rabbit in the big hat}.
+%Given that the relevant set of hats for the purpose of the definite description contains only ones with rabbits in them, does that restrict what hats are included in the comparison class for {\em big}?
+%{\em Ceteris paribus,} the semantic approach predicts that the comparison class for {\em big} should not be restricted to rabbit-containing hats, as there is no context narrowing on this view.
+%On the other hand, if Haddock descriptions involve context narrowing, then, depending on how this idea is implemented, we might expect that the comparison class for {\em big} should be restricted to rabbit-containing hats.
+
+%Our experiments show that the comparison class for {\em big} includes all hats, not just the ones containing rabbits. 
+%This is straightforwardly predicted under the semantic approach to Haddock descriptions, and places some constraints on how the pragmatic approach should work. 
+%If the loosening of the uniqueness requirement for definite articles is due to context-narrowing, this narrowing is not so powerful and all-encompassing that it affects comparison classes for gradable adjectives.\\
+
+Suppose there are three bags, two rabbits, a frog, and a calculator on a table before you. 
+One of the rabbits is in one of the bags, and the other two bags contain the frog and the calculator, respectively.
+You are instructed to point to {\em the bag}. 
+You might feel a bit squeamish, because the uniqueness requirement of the definite article is not satisfied in this context. 
+But asked to point to {\em the rabbit in the bag}, you would confidently pick out the rabbit in {\em the bag that has a rabbit in it} (barring unusual circumstances). 
+Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are known as {\em Haddock descriptions}, named after Nicholas J. Haddock, who first pointed out their puzzling behavior (\cite{haddock:1987}.
+
+Haddock proposed that the problem posed by these nested definites disappears if  semantic interpretation proceeds {\em incrementally}, i.e., from left to right. 
+In this view, identifying the referent of a definite description is conceived as a constraint satisfaction task. As the description is interpreted incrementally, the listener narrows down the set of potential referents in the context to those individuals that are compatible with the linguistic information available at any given time. 
+The description is felicitous if upon interpretation of the full string all the necessary constraints are met.
+In the example we started with, this would be the case if the context contains the unique $x$ and the unique $y$, such that (i) $x$ is a rabbit; (ii) $y$ is a bag; and (iii) $x$ is in $y$.
+One can readily see that in our original example incremental interpretation ensures that these constraints are met; by the time the description is fully interpreted, the context is  circumscribed to rabbit-containing bags, thus satisfying the uniqueness requirement of the nested definite.\footnote{A similar solution is cast in dynamic semantic terms by \cite{vaneijck:1993}.} 
+
+Solutions of the sort proposed by Haddock are compatible with psycholinguistic findings of online language comprehension during reference resolution tasks. In seminal work using the Visual World eye-tracking paradigm, Eberhard and colleagues (1995) found that listeners incrementally constrain the set of potential referents when interpreting descriptions of the form {\em the starred yellow square} as new linguistic input unfolds over time. 
+%Other references that we might want to add eventially  Altmann \& Kamide (1999); Kako \& Trueswell (2000). 
+Furthermore, it has also been shown that listeners rapidly integrate other sources of information above and beyond linguistic information. 
+For instance, it has been noted that adjectivally modified definite descriptions such as {\em the tall glass} give rise to inferences about contrast such that the prenominal adjective is expected to disambiguate between two objects of the same category that differ only with respect to the degree to which they bear the adjectival property (e.g., a tall and a short glass). 
+Put in Gricean terms, prenominal adjectives give rise to informativity expectations.
+In a Visual World eye-tracking study, Sedivy et al. (1999) showed that listeners use contextual information about contrast predictively to guide reference resolution during the processing of adjectivally modified Noun Phrases. 
+Their results demonstrated that listeners were faster at identifying the referent of an auditorily presented modified NP such as {\em the tall glass} when the visual context supported a contrastive interpretation of the adjective (i.e., when the visual context contained a contrast set formed by a tall and a short glass) compared to contexts where the adjective was used redundantly (i.e., contexts that only contained a tall glass). 
+Importantly, participants were able to identify the referent of the definite description during the adjective window, before any information about the head-noun was available to them.
+This was the case despite the fact that the visual context also contained a competitor object that could also be described by the prenominal adjective (e.g. a tall pitcher).
+The fact that participants were able to use information about contrast to identify the referent of the description at a point where the linguistic input was still ambiguous between two objects (i.e. the tall glass and the tall pitcher) demonstrates that listeners rapidly integrate both linguistic and pragmatic information, thus supporting the view that language processing proceeds incrementally.  
+
+Accounts of Haddock descriptions that do not rely on incremental semantic processing have also been proposed. \citet{bumford:2017} argues that the uniqueness requirement of the inner definite of a Haddock definite can be satisfied through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above the higher noun (i.e. {\em rabbit} in our original example), thus ensuring that uniqueness is only checked with respect to rabbits that are inside bags. In that scope position, what the uniqueness requirement demands is that there be no more than one {\em bag containing a rabbit}, even if there is more than one {\em bag}.
+
+Finally, a purely pragmatic account of definite reference that does not involve incremental interpretation is suggested by \citet{muhlstein+al:2015}, who propose that listeners reason probabilistically about the context relative to which a definite description should be interpreted. 
+In their proposal, the task of the listener upon hearing a definite description is to infer the referent of the description {\em and} the (partition of the) context that satisfies the semantic requirements of the definite article with respect to uniqueness. 
+This solution differs from the semantic account of Haddock Descriptions put forth by Bumford in that uniqueness is independently checked for each definite article {\em in situ}. 
+This account also differentiates itself from Haddock's proposal in that context-restriction effects are achieved without assuming incremental interpretation.
+Evidence for such type of pragmatic accounts can be found in facts pertaining to the interpretation of unembedded definites, which can also involve a flexible conception of uniqueness. 
+In another eye-tracking study, \citeauthor{chambers+al:2002} find that given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question, even if there are multiple cans in the display.
+This suggests that entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
+These experimental findings also bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the bag} or {\em Bill put the rabbit in the bag}, where the PP containing the second definite is a syntactic argument of the verb.
+
+%These facts show that pragmatic reasoning is needed. Incremental processing alone cannot resolve the uniqueness conflics of unembedded definites.
+
+This paper investigates whether incremental semantic processing is sufficient to explain the uniqueness facts displayed by nested definites in Haddock Descriptions. 
+To address this question, we use relative adjectives (e.g., {\em big}), a class of context-sensitive adjectives whose interpretation is resolved with respect to a contextually salient Comparison Class (CC).
+More precisely, consider the adjectivally modified  Haddock Description {\em the rabbit in the big bag}. 
+The semantic incrementality hypothesis predicts that the CC against which the adjective is evaluated should consist of bags that contain rabbits in them.
+This is because the previously interpreted noun {\em rabbit} ensures that, to the extent that there are any bags left in the domain of reference, they will contain a rabbit in them.
+The description will be semantically defined if and only if, upon semantic evaluation, the domain of reference contains a unique rabbit and a unique bag such that i) the bag's size is bigger than any other bag left in the domain; and ii) the bag contains the unique rabbit that's in a bag.
+On the other hand, if the felicity of Haddock descriptions does not result from incremental semantic interpretation, the CC used to evaluate the relative adjective should consist of all the bags present in the maximal context, regardless of whether they contain a rabbit or not.
+
+We test these hypotheses experimentally by examining the interpretational preferences of adjectivally modified Haddock Descriptions where the nested noun has been masked (e.g., {the rabbit in the big} [masked]).
+These truncated descriptions are evaluated against visual contexts that support two possible resolutions of the noun (e.g., a rabbit inside a big bag and a rabbit inside a big box).
+Our visual displays are designed such that each of the two possible resolutions enforces a CC for the evaluation of the adjective that's compatible only with a local, i.e., non-incremental interpretation of the nested NP (e.g., a CC of bags), or allows both types of CCs (e.g., a CC of bags, and a CC of rabbit-containing bags).
+We use the choice of referent as the dependent measure that allows us to examine how our participants resolve the CC class before having any linguistic information about the head-noun, thus ensuring that referent choice is guided by previous linguistic information, as well as the visual properties of our displays.
+
+Our results show effects of contextual referents that are incompatible with the available linguistic input, thus arguing against an incremental semantic account of Haddock Descriptions.
+Finally, we present simulation results that further explore which of the existing grammatical and pragmatic proposals of Haddock Descriptions that do not involve incremental context narrowing accounts better for our experimental results.
+ 
+
+%If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. That's what we test. We test incremental semantic processing account through our experiments. Our results show that incremental interpretation is wrong. We use computer simulations to further explore which of the gramatical or pragmatic accounts that do not involve incremental context narrowing works best. Our results show that both split-scope definites and context-coordination are needed in order to account for all our experimental results. 
+
+%On this semantic approach, the loosening of the uniqueness requirement does not involve elimination of certain referents from consideration through incremental semantic interpretation and/or pragmatic reasoning.HaddockThese two solutions have in comon that the formulation if uniqueness is left untouched.
+
+
+
+
+
+\section{Experiment}
+\subsection{Design}
+Participants heard auditory instructions while looking at visual displays consisting of five images arranged in a circle. In experimental trials, the auditory instruction consisted of a request of the form `{\em Click on the rabbit in the big} [{\em masked}]', where the second NP had been masked with quite static noise. 
+Each display contained two possible referents compatible with the truncated description (e.g., a rabbit in a medium bag and a rabbit in a medium box in Figure \ref{displays}). 
+Given this ambiguity, participants were instructed to click on the referent that best matched the available linguistic content of the utterance given the visual display.
+By eliciting responses before the semantic integration of the noun takes place, we can tap into the participants' preferences for the CC used for the interpretation of the adjective as a function of the properties of the visual context.
+
+\begin{figure}[h]
+\centering
+    \includegraphics[width=11cm]{images/contexts.png}
+  \caption{Visual Displays tested in Experiment 1.}
+\label{displays}
+\end{figure}
+
+The experimental manipulations targeted the content of the auditory instructions, as well as the features of the visual displays. 
+The first manipulated factor was the adjective type used to modify the masked NP in the auditory instruction.
+This modifier always consisted of the relative adjective {\em big} in either its positive ({\em big}) or comparative form ({\em bigger}). 
+Second, we manipulated the visual properties of the displays with respect to whether they contained a competitor object that was in the same container-type as one of the potential referents of the truncated description (i.e., a bag or a box). However, this competitor was not a possible referent of the global description, since it consisted of an animal that could not be described by the first NP in the description (e.g., a frog inside a bag). 
+Despite not being compatible with the global instruction, this referent acted as a competitor because the size of its container was always greater than the biggest rabbit-containing bag/box in the display.
+Thus, the competitor's container was the most appropriate referent of the nested definite description if interpreted in isolation (see Context 1, or leftmost panel, in Figure \ref{displays}). 
+The second visual manipulation determined whether the smallest box/bag in the display also contained a rabbit in it (e.g., a rabbit vs. a frog in the smallest box. See Contexts 1-2 vs. 3 respectively in Figure \ref{displays}). 
+This manipulation determined whether the use of the adjective in the auditory instruction was informative, i.e., whether the mention of the adjective was required for successful reference resolution. 
+For instance, given Context 1 in Figure \ref{displays}, where the smallest box in the display contains a frog and the smallest bag contains a rabbit, the adjective in the instruction `{\em Click on the rabbit in the big} [masked]' is informative on the bag resolution, but superfluous on the box resolution, since in the latter case the shorter adjectiveless description `{\em Click on the rabbit in the} [masked]' would have sufficed to properly identify the referent in the medium box, but not the referent in the medium bag.\footnote{Once we settle on a meaning for the comparative, we should also be specific about how this applies to the comparative.}
+The experimental manipulations described above were tested through the three visual contexts exemplified in Figure \ref{displays}. 
+
+
+\noindent
+\textbf{Todo:} Change labels Figure 1
+
+\subsection{Materials}
+
+\subsubsection{Visual Stimuli}
+
+Include targets and filler descriptions.
+
+\subsubsection{Auditory Stimuli}
+
+
+\subsection{Participants}
+We collected data from 242 native speakers of English through the crowd-sourcing platforms Amazon Mechanical Turk and Prolific.
+Data from 11 participants was removed from data analysis due to a lack of participants to pass attention checks, i.e., they did more than 5 mistakes in the filler trials.
+Finally, we removed data from three participants who took the experiment twice, resulting on a total of 225 participants.
+
+\subsection{Predictions}
+
+We start with the predictions for Contexts 1 and 2, which differ only in the presence (Context 1) or absence (Context 2) of a competitor object (\emph{e.g.}, the frog in the bag).
+The goal of our experiment was to determine whether the apparent uniqueness violations instantiated by Haddock Descriptions can be explained as a result of incremental interpretation. 
+A positive answer to this question would predict no difference between Contexts 1 and 2 for conditions containing an unmodified adjective, whereas a negative answer would predict a dispreference for the bag resolution in Context 1 compared to Context 2. 
+These predictions are derived from the different nature of the Comparison Classes available to our participants for the evaluation of the relative adjective.  
+
+The incremental semantic interpretation account predicts that when interpreting the positive form adjective, participants should only consider a contextual Comparison Class compatible with the available linguistic information up to and including the adjective. Based on this, the Comparison Class should consist of bags or boxes that crucially contain rabbits in them.
+However, if participants did not incrementally narrow down the domain of referents, the inner NP should receive the same interpretation as if it was interpreted in isolation.
+This entails that the Comparison Class should consist of all the bags in the context, regardless of whether they have a rabbit in them or not.
+
+In the context of our experiment, the latter situation would translate into a lower target selection rate of the rabbit in the medium bag in Context 1 compared to Context 2. This is due to the fact that no competitor effects are expected to arise, since the biggest bag in the display---which does not contain a rabbit---is not factored in to the evaluation of the adjective.
+If, on the other hand, the domain of potential referents is not restricted  incrementally, the inner NP should receive the same interpretation as it would if interpreted in isolation.
+This entails that the Comparison Class constructed by our participants should consist of all the bags in the display, regardless of whether they contain a rabbit or not in them. Regarding the comparative conditions, neither of the two views under evaluation predict differences between Contexts 1 and 2, since comparative adjectives are not interpreted with respect to a Comparison Class, and should therefore not display any context-sensitive effects (See $\S$ \ref{cmp-semantics} for further details).%The predictions for the cmp need to be better spelled out.
+
+Finally, in Context 3 we predict that the positive form but not the comparative adjective should display competitor effects, such that target selection rates for the bag resolution should be at chance in for comparative condition, while they should be below chance in the positive condition. 
+
+\subsection{Results}
+
+Experimental results are shown in Figure \ref{results}, which plots the probability of bag resolution (\emph{i.e.}, proportion of clicks to the rabbit in the medium bag \emph{vs.} clicks on the the rabbit in the medium box)\footnote{this is not completely accurate. this plot still contains the few clicks the non-target objects. If we want to plot clicks to medium bag vs. everything else, the chance line needs to be changed accordingly.} in each of the three contexts tested. 
+%The yellow line corresponds to chance after correcting for responses that did not correspond to any of these two objects (a total of X). 
+
+To analyze Contexts 1 and 2, we constructed a Bayesian hierarchical mixed logistic regression model using the \verb!brm()! function of the \verb!R! package \verb!brms! (B\"urkner, 2017).
+The model predicts clicks to the target referent corresponding to the bag resolution (\emph{i.e.}, the rabbit in the medium bag) using {\sc Adjective Type}, {\sc Display Type} and their interaction as main effect predictors, as well as {\sc Subjects} and {\sc Items} as random effects (see Table \ref{stats-interaction} for the full model specification). 
+The model was fit using 4 chains with 1000 warm-up samples and 1000 posterior samples, for a total of 4000 posterior samples, using uninformative priors and the Bernoulli family. 
+The chains mixed well (\emph{e.g.}, all R-hats were 1.01 or closer to 1) and there were no divergent transitions after warm-up.\footnote{Unless otherwise noted, the same settings were used for all the remaining analyses reported below.} 
+For each of the models described below, we report the mean posterior estimates and 95\% credible condifence intervals, as well as tables containing the full model specification and main effects coefficients.
+
+Our results reveal that participants were less likely to choose the bag resolution in Context 1 compared to Context 2, as shown by the marginally significant interaction of {\sc Adjective Type} x {\sc Context Type} ($\beta$ = $-0.64[-1.32, 0.04]$, see Table \ref{stats-interaction}). 
+To further explore this interaction, we compared the two adjective types in each of the two contexts separately. 
+Results displayed a significant difference for the positive adjective ($\beta$ = $-0.47[-0.93,-0.01]$), see Table \ref{stats-posconds-comparison}), while the same comparison did not reach significance for the comparative form adjective ($\beta$ = $-0.37[-0.58,1.65]$, see Table \ref{stats-cmpconds-comparison}). 
+To analyze Context 3, we constructed a model using {\sc Adjective Type} as main predictor. This comparison showed a marginally significant effect of {\sc Adjective Type} ($\beta$ = $0.24[-0.07,0.56]$, Table \ref{context3-pos-cmp-comparison}), such that participants chose the bag resolution at a marginally significant higher rate in the comparative when compared to the positive form adjective. 
+However, our critical prediction for Context 3 was that participants should be at chance for the bag \emph{vs.} box resolution when the instruction contained a comparative, whereas they should be below chance for the condition containing a positive form adjective.
+To address this prediction, we submitted data from each adjective type separately to a model containing only the intercept (see Tables \ref{context3-pos-intercept-comparison}-\ref{context3-cmp-intercept-comparison}).
+As predicted, model outputs revealed that the behavior displayed by participants was significantly different than chance for the positive form adjective ($\beta$ = $-0.44[-0.69,-0.21]$, see Table \ref{context3-pos-intercept-comparison}) but not for the comparative ($\beta$ = $-0.18[-0.44, 0.06]$, see Table \ref{context3-cmp-intercept-comparison}).
+
+\begin{figure}
+\centering
+<<results1, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 4, fig.height=4.5>>=
+
+data<-read.csv("exp2-m1-p1-p2-p3b-cleaned.csv", header=TRUE) #225 participants
+
+data$displaytype1[data$displaytype=="abs-rel"]= "Context 1"
+data$displaytype1[data$displaytype=="abs-both"]= "Context 2"
+data$displaytype1[data$displaytype=="both-rel"]= "Context 3"
+
+data$adjtype2[data$adjtype=="pos"]= "big"
+data$adjtype2[data$adjtype=="cmp"]= "bigger"
+
+data$stim.version<-paste(data$stimnum,data$version,sep="-")
+
+data$stim.version<-as.factor(data$stim.version)
+data$target<-as.numeric(as.character(data$target))
+
+df.data.item <- data %>%
+  group_by(displaytype1, adjtype2, stimnum) %>%
+  tidyboot_mean(column = target)
+
+df.data.general <- data %>%
+  group_by(displaytype1, adjtype2) %>%
+  tidyboot_mean(column = target)
+
+#code below due to MH Tessler
+
+plot.general<-df.data.general %>%
+  ggplot(., aes( x = displaytype1, y = mean, fill = adjtype2))+
+  #theme_black()+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'black')+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8,
+           alpha = 0.4,
+           color = 'black')+
+  geom_point(data = df.data.item,
+             position = position_jitterdodge(),
+             inherit.aes = F, aes(x = displaytype1, y = mean, color = adjtype2),
+             alpha = 0.25)+
+  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper),
+              position = position_dodge(0.8), size = 1.2,
+              color = 'black')+ 
+  ylab("Probability of bag resolution")+
+  #facet_wrap(~ me) +
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_manual(values = c("#009E73", "#CC79A7"))+
+  scale_color_manual(values = c("#009E73", "#CC79A7"))+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.55, hjust = 0.5),
+        legend.position = "bottom")
+plot.general
+@
+\caption{Results for Experiment 1. Proportion of responses corresponding to the bag resolution vs. box resolution in each of the six conditions tested. The error bars represent Bootstrapped 95\% confidence intervals.}
+\label{results}
+\end{figure}
+
+<<Stats, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+#merge stim and version colum
+data$stim.version<-paste(data$stim, "", data$version)
+
+#remove both-rel condition (context 3) to check relevant interaction
+
+data.interaction = subset(data, displaytype!="both-rel")
+
+#Column we are trying to predict data$target1
+
+#Different labels we've used for the different kinds of displays
+#"abs-rel" same/diff+competitor, aka context 1
+#"abs-both" same/diff-competitor, aka context 2
+#"both-rel" same/same+competitor, aka context 3
+
+
+### Bayesian analysis ###
+#for model comparison loo()
+#data.interaction2 comares contexts 1 and 2
+#https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+
+
+model1<- brm(
+  formula = target ~ adjtype*displaytype +
+    (1+adjtype*displaytype | usernum_unique)+(1+adjtype*displaytype | stim),
+    data = data.interaction,
+    family = "bernoulli",
+    control=list(adapt_delta=0.99),
+    iter = 2000,
+    chains = 4,
+    cores = 4
+)
+
+
+
+#Run model to check that Condition 3 is different from intercept
+
+@
+
+
+\begin{verbbox}target ~ AdjType*DispType + (1 + AdjType*DispType | Sub)+
+              (1 + AdjType*DispType | item)\end{verbbox}
+\begin{table}
+\center
+<<Model1-table, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+model1.output<-model1 %>%
+  fixef(.) %>% 
+  kable()
+model1.output
+
+@
+\theverbbox 
+\caption{Summary of the mixed-effects logistic regression model predicting clicks to the referent corresponding to the the bag resolution in Contexts 1 and 2 for the postive and comparative form adjectives of Experiment 1 (N = 225).}
+\label{stats-interaction}
+\end{table}
+
+<<Model2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+data.pos = subset(data.interaction, adjtype=="pos")
+
+model2<- brm(
+  formula = target ~ displaytype +
+    (1+displaytype | usernum_unique)+(1+displaytype | stim),
+    data = data.pos,
+    family = "bernoulli",
+    control=list(adapt_delta=0.99),
+    iter = 2000,
+    chains = 4,
+    cores = 4,
+)
+
+@
+
+\begin{verbbox}target ~ DispType + (1 + DispType | Sub)+
+              (1 + DispType | item)\end{verbbox}
+\begin{table}
+\center
+<<Model2-table, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+  
+model2.output<- model2 %>% 
+  fixef(.) %>% 
+  kable()
+model2.output
+
+@
+\theverbbox 
+\caption{Summary of the mixed-effects logistic regression model predicting clicks to the referent corresponding to the the bag resolution in Contexts 1 and 2 for the postive form adjective (Experiment 1).}
+\label{stats-posconds-comparison}
+\end{table}
+
+<<Model3, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+data.cmp = subset(data.interaction, adjtype=="cmp")
+
+model3<- brm(
+  formula = target ~ displaytype +
+    (1+displaytype | usernum_unique)+(1+displaytype | stim),
+    data = data.cmp,
+    family = "bernoulli",
+    control=list(adapt_delta=0.99),
+    iter = 2000,
+    chains = 4,
+    cores = 4,
+)
+@
+
+\begin{verbbox}target ~ DispType + (1 + DispType | Sub)+
+              (1 + DispType | item)\end{verbbox}
+\begin{table}
+\center
+<<Model3-table, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+
+model3.output<- model3 %>% 
+  fixef(.) %>% 
+  kable()
+model3.output
+
+@
+\theverbbox
+\caption{Summary of the mixed-effects logistic regression model predicting clicks to the referent corresponding to the the bag resolution in Contexts 1 and 2 for the comparative form adjective (Experiment 1).}
+\label{stats-cmpconds-comparison}
+\end{table}
+
+<<Model4-6, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+data.context3<-subset(data, displaytype1=="Context 3")
+data.pos.context3<-subset(data, displaytype1=="Context 3" & adjtype2=="big")
+data.cmp.context3<-subset(data, displaytype1=="Context 3" & adjtype2=="bigger" )
+
+#comparison pos cmp in condition 3
+m4<- brm(
+  formula = target ~ adjtype2 +
+    (1 + adjtype2| usernum_unique)+(1 + adjtype2| stim),
+    data = data.context3,
+    family = "bernoulli",
+    control=list(adapt_delta=0.99),
+    iter = 2000,
+    chains = 4,
+    cores = 4,
+)
+
+#comparison pos to the intercept
+m5<- brm(
+  formula = target ~ 1 +
+    (1  | usernum_unique)+(1 | stim),
+    data = data.pos.context3,
+    family = "bernoulli",
+    control=list(adapt_delta=0.99),
+    iter = 2000,
+    chains = 4,
+    cores = 4,
+)
+
+data.cmp.context3<-subset(data, displaytype1=="Context 3" & adjtype2=="bigger")
+
+#comparison cmp to the intercept
+m6<- brm(
+  formula = target ~ 1 +
+    (1 | usernum_unique)+(1 | stim),
+    data = data.cmp.context3,
+    family = "bernoulli",
+    control=list(adapt_delta=0.99),
+    iter = 2000,
+    chains = 4,
+    cores = 4,
+)
+
+
+
+@
+
+\begin{verbbox}target ~ AdjType + (1 + AdjType | Sub)+
+              (1 + AdjType | item)\end{verbbox}
+\begin{table}
+\center
+<<Model4-table, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+
+model4.output<- m4 %>% 
+  fixef(.) %>% 
+  kable()
+model4.output
+
+@
+\theverbbox 
+\caption{Summary of the mixed-effects logistic regression model predicting clicks to the referent corresponding to the the bag resolution in Context 3 for the postive and comparative form adjectives (Experiment 1).}
+\label{context3-pos-cmp-comparison}
+\end{table}
+
+
+
+\begin{verbbox}target ~ 1 + (1 | subj)+(1 | stim)\end{verbbox}
+\begin{table}
+\center
+<<Model5-table, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+
+model5.output<- m5 %>% 
+  fixef(.) %>% 
+  kable()
+model5.output
+
+@
+\theverbbox 
+\caption{Context 3 pos comparison to intercept}
+\label{Summary of the mixed-effects logistic regression model predicting clicks to the referent corresponding to the the bag resolution in Contexts 3. Comparison of the positive form adjective to the intercept (Experiment 1).}
+\end{table}
+
+\begin{verbbox}target ~ 1 + (1 | subj)+(1 | stim)\end{verbbox}
+\begin{table}
+\center
+<<Model6-table, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+
+
+model6.output<- m6 %>% 
+  fixef(.) %>% 
+  kable()
+model6.output
+
+@
+\theverbbox 
+\caption{Summary of the mixed-effects logistic regression model predicting clicks to the referent corresponding to the the bag resolution in Contexts 3. Comparison of the comparative form adjective to the intercept (Experiment 1).}
+\label{context3-cmp-intercept-comparison}
+\end{table}
+
+\textbf{TODO:} Make the labels in tables more transparent. Also, each time models are run, numbers change slightly. Find a way to automatically generate results in the body of the text.
+Discuss with Roger what precise inferences we can make by comparing the two adjectives in Context 3 to chance. 
+
+\subsection{Discussion}
+
+Contrary to the predictions made by the incremental semantic account, our results show a clear effect on target selection rates of contextual referents that are incompatible with previous linguistic material.
+Our results are therefore better explained by a theory of Haddock descriptions that does not appeal to incremental semantic processing.
+To our knowledge, this is the first argument against a processing account of Haddock descriptions. More generally, our results suggest that the threshold variable posited as part of the meaning of relative adjectives is resolved by accessing global contexts, regardless of whether the adjective is syntactically nested or not. 
+These results point to an interesting difference between ours and previous work on the interactions between meaning and context.
+Sedivy and others after her found that pragmatic reasoning reasoning of context that leads to 
+Point out that that other interactions between semantic meaning and context result in pragmatic strengthening, whereas in this case we have weakening.
+Future research will need to determine whether this is stacked adjectives (\emph{e.g.}, the pretty big house), or other context-sensitive expressions. 
+
+While our results rule out a processing account of Haddock descriptions, they leave open the question of what precise mechanisms underlie the observed patterns of results. 
+To answer this question, we use computational simulations to test the pragmatic and semantic accounts introduced in $\S$\ref{intro} with the goal of determining which of these models best fits our experimental findings.
+
+\section{Semantic Assumptions}
+
+
+\subsection{Positive (\ol{big})}
+
+Let us begin by discussing our semantics for positive form gradable adjectives like \ol{big}. 
+We assume that such expressions are evaluated relative to a given threshold $\theta$, which must be exceeded in order for the gradable adjective to hold of a given referent. 
+We assume furthermore that what counts as `big' differs depending on the type of object whose size is in question. 
+We therefore have different thresholds for different types of objects. 
+$\theta(\ol{bag})$ is the threshold for bags, for example.
+
+Writing `the denotation of $\alpha$ relative to context $C$ and threshold $\theta$' as $\valueof{\alpha}^{\theta,C}$, we will say that $\valueof{\alpha}^{\theta,C}(r) = \true$ if referent $r$ falls under description $\alpha$, relative to $\theta$ and $C$.
+What it takes for $b$ to count as a \ol{big bag}, relative to threshold $\theta$ and context $C$, is the following:
+\begin{enumerate}
+  \item $b$ is in $C$
+  \item $b$ is a bag:\\
+  $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+  \item $b$'s size exceeds the threshold required for bags to count as \ol{big}:\\
+  $\textsf{size}(b)>\theta$
+\end{enumerate}
+Thus if all of the above conditions are met, then $\valueof{\ol{big bag}}^{\theta,C}(b)=\true$.
+
+\subsection{Definite article}
+
+Now let us consider how to analyze {\em the big bag}.
+We entertain two alternative analyses of the definite article {\em the}. 
+On what we will refer to as the \textbf{standard analysis}, the definite article carries a presupposition of uniqueness relative to some given context.
+Thus, \ol{the big bag} denotes the unique bag in some given context $C$ that counts as `big', as determined by whether or not it exceeds a given threshold $\theta$.  To serve as the referent for a definite description of the form \ol{the NP}, a given referent $r$ must satisfy the following conditions:
+\begin{enumerate}
+\item $r$ satisfies NP, relative to $\theta$ and $C$:\\
+$\valueof{\textnormal{NP}}^{\theta,C}(r) = \true$ 
+\item No distinct $r'\in C$ satisfies NP, relative to $\theta$ and $C$.
+\end{enumerate}
+
+By extension, \ol{the rabbit in the big bag} denotes the unique rabbit (in some given context $C$) that is in $b$, 
+where $b$ is the unique bag in $C$ that is big, according to a given threshold $\theta$.
+Thus, the non-trivial conditions that a given referent $r$ must satisfy in order to fall under the description \ol{the rabbit in the NP}, 
+relative to context $C$ and threshold $\theta$, 
+are the following:
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(r) =\true$
+    \item $r$ is in some $b$ such that:\\
+    $\valueof{\ol{in}}^{\theta,C}(b)(r) =\true$, where:
+    \begin{itemize}
+        \item $b$ satisfies \ol{NP}, relative to $\theta$ and $C$:\\
+        $\valueof{\ol{NP}}^{C,\theta}(b) = \true$ 
+        \item No distinct $b'$  satisfies \ol{NP}, relative to $\theta$ and $C$
+    \end{itemize}
+    \item No distinct $r' \in C$ meets conditions 1-2.
+\end{enumerate}
+%
+Thus uniqueness is enforced at both the inner and outer layers of the description, relative to a given context.
+
+Another analysis of definite descriptions that we will entertain is what we will call \textbf{Bumford's}. \citet{bumford:2017} offers a semantic analysis of Haddock descriptions, building on an analysis of the definite article in which the existence and uniqueness components may enter the composition at different stages, with other material intervening. 
+The existence component ensures that a discourse referent is associated with the nominal. 
+The uniqueness component ensures that the discourse referent cannot be mapped to more than one entity, in light of the restrictions that have been put on it. The restrictions put on the discourse referent may not be limited to the descriptive material within the definite description; 
+surrounding descriptive material may accumulate before uniqueness is checked. In particular, the uniqueness component of the inner definite in an expression of the form \ol{the rabbit in the big bag} may take scope above \ol{rabbit}. 
+Interpreted with such high scope, the definite article serves merely to ensure that there is no more than one rabbit/big-bag pair such that the rabbit is in the big bag. 
+As far as the definite article is concerned, there may well be another big bag, as long as it doesn't contain a rabbit. 
+In other words, this definite article does not require uniqueness with respect to the property `big bag'. 
+
+Under a high-scope construal of the uniqueness component of the definite article,
+is \ol{rabbit in the big bag} synonymous with \ol{rabbit in a big bag}? Almost, but not entirely. The difference in meaning would only be visible in a scenario in which a rabbits was in multiple bags -- something very hard to imagine. But consider an example like \ol{the singer with the gold bracelet}. Even on a high scope construal, this description could only be true of a singer that is wearing a single bracelet, whereas \ol{the singer with a gold bracelet} could truthfully hold of a singer that has multiple bracelets (although pragmatics would suggest that he or she was only wearing one). As this kind of situation (e.g.\ one rabbit - multiple bags) does not occur in our experimental stimuli, the difference effectively disappears in our setting. 
+
+Thus, under this construal, the non-trivial conditions that a given referent $r$ must satisfy in order to fall under the description \ol{the rabbit in the NP}, 
+relative to context $C$ and threshold $\theta$, 
+are just the following:
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(r) =\true$
+    \item $r$ is in some $b$ such that:\\
+    $\valueof{\ol{in}}^{\theta,C}(b)(r) =\true$, where:
+    \begin{itemize}
+      \item $\valueof{\ol{NP}}^{C,\theta}(b) = \true$
+    \end{itemize}
+    \item No distinct $r' \in C$ meets conditions 1-2.
+\end{enumerate}
+The last condition is the contribution of the outer definite article, which we assume is interpreted without any scope-taking placing additional constraints on the rabbit. 
+When these conditions are met, $\valueof{\ol{the rabbit in the NP}}^{\theta,C}(r) =\true$, on Bumford's analysis. The main difference between Bumford's analysis and the standard analysis is what constraints are put on $b$, whether it just has to satisfy the descriptive content of the inner NP (as on Bumford's analysis), or whether it must furthermore be the only entity in $C$ that does so.
+
+\subsection{\label{cmp-semantics}Comparative}
+
+We will consider two alternative analyses of the comparative \ol{bigger} corresponding to the he well-known distinction between {\em relative} and {\em absolute} readings of superlatives \citep{szabolcsi:1986,heim:1999}.
+Although the distinction has mainly been discussed in regards to superlatives, it also applies to comparatives, as argued in the appendix.
+Just as {\em the highest shelf} in {\em the book on the highest shelf} can refer to either the absolutely highest shelf (absolute reading) or the highest shelf {\em that a book is on} (relative reading), {\em the higher shelf} in {\em the book on the higher shelf} can refer to the higher of two shelves (absolute reading), or it can refer to the higher of the two shelves {\em that a book is on} (relative reading).
+
+According to Bumford, superlatives can be interpreted either high, with the determiner, or low, where the positive form adjective is interpreted. A low scope position corresponds to an absolute interpretation. Note that in principle, the superlative can be interpreted low even if the determiner is interpreted high. On a low interpretation of the superlative combined with a high interpretation of the definite article, \ol{the rabbit in the biggest bag} is true of $r$ if and only if:
+%
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+    \item $r$ is in some $b$ such that:\\
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ where
+        \begin{itemize}
+    \item $b$ is a bag in $C$:\\
+     $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+    \item $b$ is bigger than any other bag in $C$:\\
+    For all $b'$ such that $\valueof{\ol{bag}}^{\theta,C}(b') =\true$:
+    \textsf{size}($b$) $>$ \textsf{size}($b'$)
+    \end{itemize}
+\item No referent distinct from $r$ in $C$ meets conditions 1-2.
+\end{enumerate}
+
+On a high interpretation of the superlative, combined with a high interpretation of the definite article, \ol{the rabbit in the biggest bag} is true of $r$ if and only if it is a rabbit in a bag that is bigger than any other {\em rabbit-containing} bag:
+%
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+    \item $r$ is in some $b$:\\
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ where:
+        \begin{itemize}
+          \item $b$ is a bag in $C$:\\
+          $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+          \item $b$ is bigger than any other rabbit-containing bag in $C$:\\
+          For all $b'$ such that:
+            \begin{itemize}
+              \item $\valueof{\ol{bag}}^{\theta,C}(b') =\true$
+              \item and there is some $r'$ such that:
+                \begin{itemize}
+                  \item $\valueof{\ol{rabbit}}^{\theta,C}(r')$
+                  \item $\valueof{\ol{in}}^{\theta,C}(r',b')$
+                \end{itemize}
+            \end{itemize}
+          \textsf{size}($b$) $>$ \textsf{size}($b'$)
+        \end{itemize}
+\item No referent distinct from $r$ in $C$ meets conditions 1-2.
+\end{enumerate}
+
+We assume that the same two possibilities are available for comparatives, and  furthermore that comparatives are only defined when the comparison class contains exactly two elements.%
+\footnote{%
+It is possible to find attestations of {\em the bigger of the three}, but there are very few attestations of {\em the bigger of the $n$} for larger $n$s, and it appears that {\em the larger of the three} is licensed only in contexts where there are two sizes, one larger than the other, and the referent of {\em the larger of the three} bears the larger of the two sizes, while the other two bear the smaller of the two sizes. 
+To account for such cases, we could modify our assumptions so that {\em larger N} means something like {\em larger of the Ns}, where the comparison class consists of two pluralities of Ns, each with their own aggregate size. 
+Because we never had multiple Ns whose sizes could be treated as the same in our experiments, we ignore this wrinkle.%
+}
+The low interpretation of the comparative, then, combined with the high interpretation of the definite article is as follows, for the expression \ol{the rabbit in the bigger bag}:
+%
+\begin{enumerate}
+    \item $r$ is a rabbit in $C$:\\
+     $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+    \item $r$ is in some $b$:\\
+        $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$, where:
+        \begin{itemize}
+          \item $b$ is a bag in $C$:\\
+            $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+          \item $b$ is bigger than the other bag in $C$:
+          \begin{itemize}
+            \item There is exactly one referent $b'\neq b$ such that $\valueof{\ol{bag}}^{\theta,C}(b') =\true$.
+            \item \textsf{size}($b$) $>$ \textsf{size}($b'$)
+          \end{itemize}
+        \end{itemize}
+\item No referent distinct from $r$ in $C$ meets conditions 1-2.
+\end{enumerate}
+The standard analysis of the definite article is also compatible with a low interpretation of the comparative, and this would merely add a uniqueness clause for the referent of the embedded description.
+
+A high interpretation of the comparative necessitates a high interpretation of the definite article. On such an interpretation, \ol{the rabbit in the bigger bag} is true of $r$ if and only if:
+%
+\begin{enumerate}
+  \item $r$ is a rabbit in $C$:\\
+    $\valueof{\ol{rabbit}}^{\theta,C}(b) =\true$
+  \item $r$ is in some $b$:\\
+    $\valueof{\ol{in}}^{\theta,C}(r,b) =\true$ where:
+    \begin{itemize}
+      \item $b$ is a bag in $C$:\\
+        $\valueof{\ol{bag}}^{\theta,C}(b) =\true$
+      \item $b$ is bigger than the other rabbit-containing bag in $C$:
+        \begin{itemize}
+          \item There is exactly one referent $b'\neq b$ such that:
+            \begin{itemize}
+              \item $\valueof{\ol{bag}}^{\theta,C}(b') =\true$
+              \item there is some $r'$ such that:
+                \begin{itemize}
+                  \item $\valueof{\ol{rabbit}}^{\theta,C}(r')$
+                  \item $\valueof{\ol{in}}^{\theta,C}(r',b')$
+                \end{itemize}
+            \end{itemize}
+            \item \textsf{size}($b$) $>$ \textsf{size}($b'$)
+        \end{itemize}
+      \end{itemize}
+    \item No referent distinct from $r$ in $C$ meets conditions 1-2.
+\end{enumerate}
+On the high interpretation of the comparative, then, the comparison class consists of the set of rabbit-containing bags, rather than the full set of bags. No bag that does not contain a rabbit will have any impact on whether the description truthfully and felicitously applies to the referent.
+
+
+
+\section{\label{computational-model}Computational Model}
+
+We implement an RSA model where the pragmatic listener jointly infers a referent, a threshold and a context. Our model includes Context Coordination (CC), which allows the context to be narrowed down in order to accommodate the semantic requirements of the speaker's utterance.
+
+
+\subsection{Literal Listener}
+
+The Literal Listener infers a referent $r$ given a description $d$, a context $C$ and a threshold $\theta$ proportionally to 1) whether the description is true of $r$ in $C$ given the threshold value; and 2) the prior probability of $r$.
+%The threshold $\theta$ is used in the interpretation of the relative adjective {\em big} and its comparative form {\em bigger} (see semantics in the previous section). 
+In other words, the literal listener discards referents that do not satisfy the semantic requirements of the description, and assigns a posterior probability to any remaining referent as a function of the referent's prior probability (\ref{literal-listener}).
+
+\begin{equation}
+  L_0(r\given d,C,\theta) \propto \llbracket d \rrbracket^{C,\theta}(r)\cdot P(r) 
+  \label{literal-listener}
+\end{equation}
+
+
+In this model, both $\theta$ and $C$ are treated as lifted variables, i.e., their value is not resolved at the level of the model where they are first called (i.e., at the Literal Listener level).
+Rather these variables are `lifted' all the way up to the Pragmatic Listener, where its value is resolved.
+%I don't understand this paragraph --Liz
+
+The posterior distribution in (\ref{literal-listener}) is undefinable if the existence and/or uniqueness presuppositions associated with the definite determiner are not satisfied, i.e., if $C$ does not contain exactly one referent $r$ that satisfies the description $d$ for the adjectival threshold $\theta$.
+Presupposition failure is technically implemented by positing a special \textsf{fail} referent, with prior probability $\epsilon$. 
+Otherwise, we assume an uninformative prior over referents, as shown in (\ref{undefined}).
+
+
+\begin{equation} 
+  P(r) =
+    \begin{cases}
+      \epsilon & \text{if } r = \textsf{fail}\\
+      \text{uniform} & \text{otherwise} 
+      \label{undefined}
+    \end{cases}
+\end{equation}
+
+As discussed above, the same string can be assigned two different underlying structures (Logical Forms, as it were). 
+For the comparative, in particular, Bumford's theory allows either a high or low scope construal.
+The choice of construal is determined by a free parameter in the model, set to `r highScopeConstrualProb`.
+%Why isn't this inline code showing up?
+The higher this probability, the more likely the `bag' construal.
+
+
+\begin{figure}
+\includegraphics[width=\linewidth]{litlist-standard.pdf}
+\caption{Literal Listener model outputs for standard meaning and no-cc}
+\label{litlist-standard}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{litlist-standard.pdf}
+\caption{Literal Listener model outputs for Bumford's meaning and no-cc}
+\label{litlist-bumford}
+\end{figure}
+
+
+
+\subsection{Speaker}
+The speaker is modeled as a {\em softMax} agent that chooses a description $d$, given that she wants to convey the referent $r$ in context $C$ for the adjectival threshold $\theta$.
+In choosing utterances, the speaker balances out two constraints: maximizing the likelihood that the Literal Listener will infer the intended referent by choosing informative utterances, while minimizing production cost. 
+Informativity is modeled as negative surprisal (or positive log probability) of the referent in the posterior, whereas utterance cost $C(u)$, is directly proportional to the utterance length.\footnote{Currently, the costs are set as follows: comparative 1.5; positive 1; and 0.5 if the utterance does not contain an adjective. 
+%Should we talk about costCoefficient here?
+} 
+Finally, we assume a rationality parameter $\alpha$ of 1. 
+
+
+\begin{equation} 
+  S_1(d\given r,C,\theta) \propto \text{exp}(\alpha \times \text{ln}(L_0(r\given d,C,\theta)) -    \textsf{cost}(d)) 
+  \label{speaker}
+\end{equation} 
+
+
+\begin{figure}
+\includegraphics[width=\linewidth]{speaker-standard.pdf}
+\caption{Speaker model outputs for standard meaning and no-cc}
+\label{speaker-standard}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{speaker-bumford.pdf}
+\caption{Speaker model model outputs for Bumford's meaning and no-cc}
+\label{speaker-bumford}
+\end{figure}
+
+
+
+\noindent
+\textbf{Questions to consider or to keep in mind:} \\
+
+\noindent
+It seems that the probabilities go down if thetas include n+1\\
+
+\noindent
+speaker model outputs cost coefficient is set to 1, because higher values create a lazy speaker that always prefers silence (wrong result). The lit.listener model outputs was set to 3, but it should not matter because no cost is involved at that level. Things need to be rerun for dinal model outputs though
+
+\subsection{Pragmatic Listener}
+
+The Pragmatic Listener is modeled as a Bayesian agent that assigns posterior probabilities to referents $r$ given a masked description $d$, proportionally to the probability of the speaker using (any possible resolution of) $d$ to describe $r$ given context $C$ and assuming threshold $\theta$ (i.e., the likelihood), times the prior over referents given the context, the prior over thresholds given the context and a full description, and the prior over contexts (see equation \ref{pragmatic-listener}).
+
+
+\begin{equation}
+  \begin{array}{l}
+    L_1(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto \\
+    \sum_C \sum_\theta \sum_{N_2} S_1(d=N_1\textnormal{ in the (Adj) }N_2\given r,C,\theta)\cdot P(r\given C)\cdot P                (\theta\given C,d)\cdot P(C)
+  \end{array}
+  \label{pragmatic-listener}
+\end{equation}
+
+For models without context coordination, the context $C$ always consists of the five referents present in the display ($C = \{r_1,r_2,r_3,r_4,r_5\}$).
+In models that allow for Context Coordination, a context is any $C'$ such that $C'$ is in the powerset of $C$ ($C' \subseteq \mathcal{P}(C)$).
+
+As seen in equation \ref{pragmatic-listener}, different types of priors modulate the probability of a given referent in the posterior; 
+the prior probability of a referent $r$ given a context $C$ is uniform among the referents in the context and undefined otherwise. 
+In the latter case, the referent receives a small but non-negligible probability $\epsilon$. 
+Crucially, this value is fixed in models that do not use context coordination, but will vary in models that assume context coordination as a function of the context-referent pair under consideration. 
+
+\begin{equation}
+  P(r\given C) =
+    \begin{cases}
+      \epsilon & \text{if } r = \textsf{fail}\\
+      \text{uniform among any } r \in C & \text{otherwise}
+      \label{prior-referent-given-context}
+    \end{cases}
+\end{equation}
+
+\textbf{The model results currently (November 4th) are derived using the assumption that the threshold categorically cannot be below the smallest. We are doing this because it seems to be the only way to get a preference for the bag overall; otherwise too much probability mass gets eaten up by non-targets (the smaller bag in particular, which has a rabbit in it). So the below is not accurate. --Liz}
+
+The prior over thresholds is also assumed to be uniform among the possible threshold values licensed by the context and the description. 
+Possible threshold values are obtained by extracting the referents in the context that are in the extension of the nested noun (e.g., bag), which is taken to provide the Comparison Class against which the adjective is evaluated ([reference]).
+This prior derives the dispreference for the bag resolution in conditions that contain more than two bags (i.e., Contexts 1 and 3), even if the biggest bag in the display does not contain an animal that matches the first noun in the description.\footnote{There's something funny about this logic. If Context 1 contained frogs in the two biggest bags, and a rabbit in the smallest bag, it would be off to refer to that referent as the rabbit in the big bag. I think our model does not predict a dispreference agianst this. Both big and small would be equally preferred here. Also, doesn't this logic predict that if we were comparing Context 1 to another context where the frog in the biggest bag is substituted by a rabbit, we would still get lower probability for the bag resolution compared to the box resolution? Is this right?} 
+In such contexts, the prior probability of each of the thresholds licensed by the description and the context will be lower than the condition that only contains two bags (Context 2), since the prior probability is split among three possible thresholds, as opposed to two, as exemplified in Figure \ref{thres-fig}. Each threshold receives higher probability in the prior in context 2 compared to contexts 1 and 3.
+This difference in the prior over threshold values results in higher posterior probabilities for the bag resolution compared to the box resolution, since the number of boxes in any given context is never greater than two.
+
+
+
+\begin{figure}
+\centering
+  \begin{minipage}[c]{0.45\textwidth}
+    \includegraphics[width=3.0in]{images/1thres.pdf}
+    %\caption{Possible thresholds for the positive form adjective {\em big} in a context     including two bags.}
+    \label{2bag-context}
+  \end{minipage}
+  \begin{minipage}[c]{0.45\textwidth}
+    \includegraphics[width=3.0in]{images/2thres.pdf}
+    %\caption{Possible thresholds for the positive form adjective {\em big} in a context     including three bags.}
+    \label{3bag-context}
+  \end{minipage}
+  \label{thres-fig}
+  \caption{Possible thresholds for the positive form adjective {\em big} in contexts     including two (left panel) and three (right panel) bags.}
+\end{figure}
+
+Finally, the last term in equation \ref{pragmatic-listener} corresponds to the prior over contexts.
+In models that do not invoke Context Coordination, there is only one context considered by the listener, and so the prior probability of this context is 1.
+For models that do involve Context Coordination, the prior probability over contexts (i.e., any element in the powerset of the set containing all referents) is determined by 
+%the distribution resulting from the exponential function in \ref{context-prior}. 
+a parameter $\gamma$.
+For each referent, a coin weighted $\gamma$ is flipped in order to determine whether or not the referent is included in the context.
+The higher $\gamma$ is, the greater the preference for larger contexts.
+The resulting probability distribution is renormalized to exclude the empty context;
+this ensures that the probability distribution over referents is well-defined.
+%I got the error "All paths explored by Enumerate have probability zero" when I did not do this, but I don't know why --Liz
+
+%This distribution is supported for the values corresponding to the cardinalities of the possible contexts. 
+%When the parameter $\gamma = 1$, the resulting prior over contexts is the uninformative prior. 
+%When the parameter is set $\gamma > 1$, the result is a skewed prior that places higher prior probability on contexts of bigger cardinalities.
+
+%Finally, the last term in equation \ref{pragmatic-listener} samples contexts from a $beta$ prior with parameters $\alpha=2$ and $\beta =1$ that assigns higher probability to bigger contexts as shown in XX. [\textbf{This needs to be completed}]
+
+% \begin{equation}
+% \begin{multlined}
+%   f(C) =  \frac{1}{Z}2^{\gamma \mid C\mid}\text{, where }Z =\sum_{C \in \mathcal{P}(C)}2^{\gamma\mid C\mid}\text{    , such that} \\
+%   P(C) =
+%   \begin{cases}
+%     \text{Uniform for } \gamma = 0\\
+%     \text{For } \gamma > 0\text{: Bigger contexts receive higher probability in the prior.}
+%   \end{cases}
+% \end{multlined}
+%   \label{context-prior}
+% \end{equation}
+
+
+
+% \begin{verbatim}
+% var referentsPriorGivenContext = function(context) {
+%   return Infer({method: "enumerate"}, function() {
+%      flip(0.01) ? rU : uniformDraw(context)
+%   });
+% };
+% \end{verbatim}
+
+
+
+
+
+\subsection{Simulations}
+
+Simulation results for the model described in Section \ref{computational-model}.\\
+
+\begin{figure}[h]
+\centering
+<<Plot-standard, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+
+cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
+
+bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl")
+test<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Standard Meaning") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+@
+\caption{Simulation results for model using standard meaning (L1).}
+\end{figure}
+
+\noindent
+\textbf{Open Questions:} I do not understand the comparative results with standard meaning. Why are Contexts 1 and 2 not the same? This needs to be further investigated.\\
+\textbf{With Context 1, there are potentially three bags, depending on how the context is set. This presents a risk that the comparative will be undefined. The comparative requires there to be two bags. --Liz}
+
+I know there's a section in the appendix for L2, but I'm putting it here for convenience --Liz
+
+\begin{figure}[h]
+\centering
+<<Plot-standard2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+
+prag.list2<-read.csv("exp2-models-2levels.csv", header=TRUE)
+
+bags.standard2<-subset(prag.list2, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl" & ListenerLevel==2)
+
+
+
+
+standard2<-ggplot(bags.standard2, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Standard Meaning (L2)") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+standard2
+@
+\caption{Simulation results for model using standard meaning (L2).}
+\end{figure}
+
+Improves positive form, but turns bigger into a context sensitive predicate as well. No difference between the both of them so this won't work.
+
+Now for Bumford's meaning:
+
+\begin{figure}[!htbp]
+\centering
+<<Plot-bumford, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+bags.bumford<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl" & ListenerLevel==1)
+
+bumford<-ggplot(bags.bumford, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Bumford's Meaning (L1)") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+bumford
+#ggarrange(standard, bumford + rremove("x.text"), 
+#          heights = c(2, 2.5),
+ #         ncol = 1, nrow = 2)
+@
+\caption{Simulation results for model using Bumford's meaning (L1).}
+\end{figure}
+
+Bumford/L2:
+
+\begin{figure}[!htbp]
+\centering
+<<Plot-bumford2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+
+bags.bumford2<-subset(prag.list2, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl" & ListenerLevel==2)
+
+
+bumford2<-ggplot(bags.bumford2, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Bumford's Meaning (L2)") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+bumford2
+#ggarrange(standard, bumford + rremove("x.text"), 
+#          heights = c(2, 2.5),
+ #         ncol = 1, nrow = 2)
+@
+\caption{Simulation results for model using Bumford's meaning (L2).}
+\end{figure}
+
+Looks like the effect of the big bag diminishes to the point of invisibility with the doubly pragmatic listener on Bumford's meaning.
+
+\pagebreak 
+
+\bibliography{master}
+\bibliographystyle{sp}
+
+\appendix
+ 
+
+\section{Why comparatives have both absolute and relative readings}
+
+
+As with superlatives \citep[i.a.]{szabolcsi:1986,coppock+beaver:salt2014}, 
+relative readings of comparatives obviate definiteness effects:
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex *Bernie has the campaign chairman.
+\ex Bernie has the most enthusiastic campaign chairman.
+\ex Bernie has the more enthusiastic campaign chairman.
+\end{xlist}
+\end{exe}
+
+
+As \citet{bumford:2017} discusses, 
+relative readings blocked by possessives, 
+both for superlatives and for comparatives:
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex Who has read the longest play by Shakespeare?
+\ex Who has read Shakespeare's longest play?
+\end{xlist}
+$\equiv$ Who has read Hamlet?
+\end{exe}
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex Who has read the longer play by Shakespeare?
+\ex Who has read Shakespeare's longer play?
+\end{xlist}
+$\leadsto$ Shakespeare wrote two plays?
+\end{exe}
+
+
+Further evidence comes from ambiguities of the following type,
+observed by \citet{bhatt:2002} for \ref{tolstoy:first} and
+\ref{tolstoy:longest}.
+\ref{tolstoy:longer} is ambiguous in an analogous way.
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex the first book that John said Tolstoy had written\label{tolstoy:first}
+%\b. the only book that John said Tolstoy had written
+\ex the longest book that John said Tolstoy had written\label{tolstoy:longest}
+\ex the longer book that John said Tolstoy had written\label{tolstoy:longer}
+\end{xlist}
+High reading: of the books John said Tolstoy
+wrote, the longer\\
+Low reading: the book John said was longer among Tolstoy's.
+\end{exe}
+
+
+\citet{sleeman:2010}: `identificational focus' \citep{kiss:1998a}
+
+As with superlatives \citep{bhatt:1999,bhatt:2006},
+relative readings of comparatives are blocked by non-modal infinitival relative clauses:
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex John gave Mary the most expensive telescope
+\ex ... to be built in the
+9th century.
+\end{xlist}
+\end{exe}
+
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex John gave Mary the more expensive telescope
+\ex ... to be built in the
+9th century.
+\end{xlist}
+\end{exe}
+
+
+\newpage
+\section{Pragmatic Listener 2}
+
+\noindent
+Below we present a model that includes another level of recursion, i.e. Pragmatic Speaker 2. The details of the model below do not include the literal listener and level 1 speaker.\\
+
+\noindent
+\textbf{Pragmatic Listener}
+
+\begin{equation} 
+  L_1(r\given d) \propto \sum_C \sum_\theta S_1(d\given r,C,\theta) \cdot P(r\given C)\cdot P(\theta\given C,d)\cdot P(C)
+  \label{l1-full}
+\end{equation} 
+
+\noindent
+\textbf{Pragmatic Speaker}
+\begin{equation} 
+  S_2(u\given r) \propto    \text{exp}(\alpha \times \text{ln} (L_1(r\given d) ) -    \textsf{cost}(d)) 
+  \label{pragmatic-speaker}
+\end{equation} 
+
+\noindent
+\textbf{Second Level Pragmatic Listener (L2)}
+\begin{equation} 
+  L_2(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto  \sum_{N_2}S_2(u\given r) \cdot P(r)
+  \label{s2-pragmatic-listener}
+\end{equation} 
+
+
+\subsection{Simulation Results for Pragmatic Listener 2 Models}
+
+\begin{figure}[h]
+\centering
+<<Plot-standard-pragList2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+
+bags.standard.pragList2<-subset(results, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model_pragmaticListener2.wppl")
+
+
+cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
+
+standard.pragList2<-ggplot(bags.standard.pragList2, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Standard Meaning") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+standard.pragList2
+@
+\caption{Simulation results for Model using standard meaning and a second level of embedding (Pragmatic Listener 2)}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+<<Plot-bumford-pragList2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+bags.bumford.pragList2<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model_pragmaticListener2.wppl")
+
+bumford.pragList2<-ggplot(bags.bumford.pragList2, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Bumford's Meaning") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+bumford.pragList2
+#ggarrange(standard, bumford + rremove("x.text"), 
+#          heights = c(2, 2.5),
+#          ncol = 1, nrow = 2)
+@
+\caption{Simulation results for Model using Bumford's meaning and a second level of embedding (Pragmatic Listener 2)}
+\end{figure}
+
+
+\textbf{Questions to consider or to keep in mind:} No inference over thresholds or contexts at L2? I have used a flat prior over contexts here. Something is off with the comparative. These models take a really long time to run!
+
+
+\end{document}
