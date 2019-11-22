@@ -217,7 +217,7 @@ execute_model <- function(randomVariable, cond, model, context, defArt, package,
 conds <- c(1, 2, 3)
 contexts <- c("cco","no-cc")
 defArtMeanings <- c("bumford", "standard")
-pragListenerLevels <- c(1,2)
+pragListenerLevels <- c(1)
 
 #models <- c("haddock_model.wppl","haddock_model_pragmaticListener2.wppl")
 models <- c("haddock_model.wppl") #,"haddock_model_pragmaticListener2.wppl")
@@ -510,28 +510,28 @@ data.interaction = subset(data, displaytype!="both-rel")
 #https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
 
 
-model1<- brm(
-  formula = target ~ adjtype*displaytype +
-    (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype | stim),
-    data = data.interaction,
-    family = "bernoulli",
-    control=list(adapt_delta=0.99),
-    iter = 2000,
-    chains = 4,
-    cores = 4
-)
+# model1<- brm(
+#   formula = target ~ adjtype*displaytype +
+#     (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype | stim),
+#     data = data.interaction,
+#     family = "bernoulli",
+#     control=list(adapt_delta=0.99),
+#     iter = 2000,
+#     chains = 4,
+#     cores = 4
+# )
 
 
-model2<- brm(
-  formula = target ~ adjtype*displaytype +
-    (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype | stim.version),
-    data = data.interaction,
-    family = "bernoulli",
-    control=list(adapt_delta=0.99),
-    iter = 2000,
-    chains = 4,
-    cores = 4
-)
+# model2<- brm(
+#   formula = target ~ adjtype*displaytype +
+#     (1+adjtype*displaytype | usernum)+(1+adjtype*displaytype | stim.version),
+#     data = data.interaction,
+#     family = "bernoulli",
+#     control=list(adapt_delta=0.99),
+#     iter = 2000,
+#     chains = 4,
+#     cores = 4
+# )
 
 
 
@@ -545,19 +545,19 @@ model2<- brm(
 
 <<Model1-table, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
 
-model1.output<-model1 %>%
-  fixef(.) %>% 
-  kable()
-model1.output
+# model1.output<-model1 %>%
+#   fixef(.) %>% 
+#   kable()
+# model1.output
 
 @
 
 <<Model2-table, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
 
-model2.output<- model2 %>% 
-  fixef(.) %>% 
-  kable()
-model2.output
+# model2.output<- model2 %>% 
+#   fixef(.) %>% 
+#   kable()
+# model2.output
 
 @
 \subsection{Discussion}
