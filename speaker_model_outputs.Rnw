@@ -1,0 +1,326 @@
+setwd("~/Documents/haddock_descriptions")
+
+<<Setup, include=FALSE>>=
+  
+# Import libraries
+  
+#General
+  
+require(knitr)
+#library(devtools)
+
+#Stats
+require(lmerTest)
+#devtools::install_github("paul-buerkner/brms")
+require("rstan") 
+require(brms)
+require(broom)
+require(dplyr)
+require(lmerTest)
+
+#Plotting
+#require(Rmisc)
+require(ggplot2)
+require(tidyboot)
+
+#Running models
+require(ggm)
+require(ggpubr)
+require(rlist)
+require(RJSONIO)
+require("rwebppl")
+#to install rwebppl
+#install.packages("devtools")
+#devtools::install_github("mhtess/rwebppl")
+
+# Global settings for chunks
+opts_chunk$set(echo = F, message = F, warning = F, cache=T)
+#fig.path <- "../../" in case we end up needing it
+
+#Repo
+#https://github.com/haparici/haddock-descriptions
+#Add the rest of the libraries here
+
+@
+  
+<<Model_Parameters_Variables, echo=FALSE, cache=TRUE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
+  
+  ## Visuals Master ##
+  refs_json <- '[
+  {"Animal": "rabbit", "Container": "bag", "Size": 1}
+  , {"Animal": "rabbit", "Container": "bag", "Size": 2}
+  , {"Animal": "frog", "Container": "bag", "Size": 3}
+  , {"Animal": "frog", "Container": "box", "Size": 1}
+  , {"Animal": "rabbit", "Container": "box", "Size": 2}
+  , {"Animal": "frog", "Container": "basket", "Size": 3}
+  , {"Animal": "rabbit", "Container": "box", "Size": 1}
+  ]'
+
+refs <- fromJSON(refs_json)
+refs <- do.call("rbind", refs)
+refs <- data.frame(refs)
+
+## Visual Logical Constructor ##
+conds_idx <- list(
+  c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+  , c(TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE)
+  , c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE)
+)
+
+get_visuals <- function(refs, conds_idx, i){
+  
+  cond_idx <- unlist(conds_idx[i])
+  visual <- refs[cond_idx, ]
+  
+  return(visual)
+  
+}
+
+## Descriptions ##
+modifiers <- c('smaller', 'small', 'big', 'bigger', 'none')
+#modifiers <- c('small', 'big', 'none')
+get_descriptions <- function(visual, modifiers) {
+  
+  visual_unique <- unique(visual[, c("Animal", "Container")])
+  
+  descs <- list()
+  for (ref in 1:nrow(visual_unique)) {
+    for (mod in modifiers) {
+      animal <- visual_unique[ref, "Animal"]
+      container <- visual_unique[ref, "Container"]
+      desc = list(animal, mod, container)
+      descs <- list.append(descs, unlist(desc))
+    }
+  }
+  desc <- list("none", "none", "none")
+  descs <- list.append(descs, unlist(desc))
+  return(descs)
+}
+
+get_costs <- function(descs) {
+  
+  costs <- list()
+  columns <- list()
+  
+  for (i in 1:length(descs)) {
+    
+    desc <- unlist(descs[i])
+    desc_str <- paste(desc[1], desc[2], desc[3])
+    adjective <- desc[2]
+    tail <- substr(adjective, nchar(adjective) - 1, nchar(adjective))
+    
+    if (tail == "er") {
+      
+      cost <- 1.5
+      
+      
+    } else if (adjective %in% c("small", "big")) {
+      
+      cost <- 1
+      
+    } else if (adjective == "none") {
+      
+      cost <- 0.5
+      
+    } else {
+      
+      cost <- 0
+      
+    }
+    costs <- list.append(costs, cost)
+    columns <- list.append(columns, desc_str)
+  }
+  costs <- data.frame(costs)
+  colnames(costs) <- unlist(columns)
+  
+  return(costs)
+}
+
+
+##Random Variables##
+
+pos<-list(c("rabbit", "big", "bag"),c("rabbit", "big", "box"))
+cmp<-list(c("rabbit", "bigger", "bag"),c("rabbit", "bigger", "box"))
+
+#randomVariables<-list(pos,cmp)
+#randomVariables<-list(pos)
+#randomVariables<-list(cmp)
+
+descriptions <-list(c("rabbit", "none", "bag"),c("rabbit", "none", "bag"),c("rabbit", "big", "bag"),c("rabbit", "big", "box"),c("rabbit", "bigger", "bag"),c("rabbit", "bigger", "box"))
+
+execute_model <- function(description, cond, model, contexto, defArt, package,
+                          gamma, costCoefficient,highScopeConstrualProb,
+                          pragListenerLevel,threshold,referent) {
+  
+  # Model
+  visuals <- get_visuals(refs, conds_idx, cond)
+  descs <- get_descriptions(visuals, modifiers)
+  costs <- get_costs(descs)
+  
+  model_data <- list(description, visuals, descs, costs, contexto, defArt, 
+                     gamma, costCoefficient,highScopeConstrualProb,pragListenerLevel,threshold,referent)
+  
+  model <- webppl(program_file=model, 
+                  data = model_data, 
+                  data_var = "model_data", 
+                  package=package)
+  
+  return(model)
+  
+}
+
+
+
+@
+  
+  
+<<lit_listener_Main, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+  
+  ## Main ##
+  # Calling Parameters 
+  
+conds <- c(1, 2, 3)
+
+contextos <-c("foo")
+defArtMeanings <- c("bumford", "standard")
+pragListenerLevels <- c(1)
+threshold_value <- c(1,2)
+referents <- c("Undefined")
+
+#models <- c("haddock_model.wppl","haddock_model_pragmaticListener2.wppl")
+models <- c("haddock_model_speaker.wppl") #,"haddock_model_pragmaticListener2.wppl")
+#gamma is probability that any given referent will be included in the context
+gamma <- .5
+#higher cost coefficient increases informativity effect
+costCoefficient <- 1 #makes the speaker behave weird w.r.t. informativity choosing silence over overinformative utt
+highScopeConstrualProb <- 0.5
+
+
+test_result <- execute_model(c("rabbit", "big", "bag"), 1, "haddock_model_speaker.wppl",
+                            contextos,"bumford",".",gamma,costCoefficient,
+                            highScopeConstrualProb,1,1,referents)
+test_result
+  
+
+# Execute Model
+results <- data.frame()
+
+#results <- read.csv("exp2-models-2levels.csv")
+
+
+recalculate_results <- TRUE
+
+if (recalculate_results) {
+for(referent in referents){ 
+for(threshold in threshold_value){ 
+  for(pragListenerLevel in pragListenerLevels) {
+    for(defArtMeaning in defArtMeanings) { 
+      for (contexto in contextos) {
+        for (description in descriptions) {
+          for (cond in conds) {
+            for (model in models) {
+              
+              result <- execute_model(description, cond, model, contexto, defArtMeaning,".",gamma,costCoefficient,highScopeConstrualProb,pragListenerLevel,threshold,referent)
+              
+              result$Description <- paste(description[1],description[2],description[3])
+              result$defArtMeaning <- defArtMeaning
+              result$Context <- contexto
+              result$Condition <- cond
+              result$Model <- model
+              result$ListenerLevel <- pragListenerLevel
+              result$Threshold <- threshold
+              result$Referent <- referent
+              results <- rbind(results, result)
+              #print(paste("Processing adjective"
+              #       , description[2]
+              #       , "for context"
+              #        , contexto
+              #        , "for defArtMeaning"
+              #        , defArtMeaning
+              #        , "for condition"
+              #        , cond
+              #        , "with model"
+              #        , model
+              #        , threshold
+              #        , "threshold"))
+            }
+          }
+        }
+      }
+    }
+  }
+  } 
+}
+}
+
+  colnames(results) <- c(
+    "Animal"
+    , "Container"
+    , "Size"
+    , "Probability"
+    , "Description"
+    , "DefArtMeaning"
+    , "Context"
+    , "Condition"
+    , "Model"
+    , "ListenerLevel"
+    , "Threshold"
+    , "Referent")
+
+
+#results
+undefined<-results
+ 
+
+@
+
+
+<<literal-listener-outputs, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+library(dplyr)
+library(tibble)
+
+model.results <- rbind(rabbit.bag.2, rabbit.box.2,undefined)  
+  
+model.results$Description1 <- paste(model.results$Animal, model.results$Container, model.results$Size, sep = " ")
+
+model.results <-subset(model.results, model.results$Description1%in%c("none none none","rabbit big bag", "rabbit bigger bag", "rabbit big box", "rabbit bigger box","rabbit none box", "rabbit none bag"))
+
+
+model.results$Condition[model.results$Condition=="1"]="Context 1"
+model.results$Condition[model.results$Condition=="2"]="Context 2"
+model.results$Condition[model.results$Condition=="3"]="Context 3"
+
+model.results$Threshold[model.results$Threshold=="1"]="Thres 1"
+model.results$Threshold[model.results$Threshold=="2"]="Thres 2"
+
+model.results$Referent[model.results$Referent==""]="Undefined"
+
+model.results$Referent<-as.factor(model.results$Referent)
+model.results$Referent <- factor(model.results$Referent, levels = c("Undefined", "rabbit box 2", "rabbit bag 2"))
+
+write.csv(model.results, "model.results.speaker.csv")
+
+bumford<-subset(model.results, DefArtMeaning=="bumford")
+standard<-subset(model.results, DefArtMeaning=="standard")
+
+ggplot(bumford, aes(Description1, Referent, fill= Probability)) + 
+  theme_bw() +
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))+
+  geom_tile() +
+  scale_fill_gradient(low="lavender", high="blue") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  facet_grid(vars(Threshold),vars(Condition)) 
+  #ggtitle("Bumford Literal Listener Model Outputs (no-cc)")
+
+ggplot(standard, aes(Description1, Referent, fill= Probability)) + 
+  theme_bw() +
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))+
+  geom_tile() +
+  scale_fill_gradient(low="lavender", high="blue") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  facet_grid(vars(Threshold),vars(Condition)) 
+  #ggtitle("Standard Literal Listener Model Outputs (no-cc)") 
+@
+
