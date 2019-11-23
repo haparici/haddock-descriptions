@@ -212,38 +212,36 @@ execute_model <- function(randomVariable, cond, model, context, defArt, package,
 @
 
 
-<<Model_Main, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+<<Model_Main, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
 
 ## Main ##
 # Calling Parameters 
 
-conds <- c(1, 2, 3)
+conds <- c(2,1, 3)
 contexts <- c("cco","no-cc")
 defArtMeanings <- c("bumford", "standard")
-pragListenerLevels <- c(1,2)
-
+#pragListenerLevels <- c(1,2)
+pragListenerLevels <- c(1)
 #models <- c("haddock_model.wppl","haddock_model_pragmaticListener2.wppl")
 models <- c("haddock_model.wppl") #,"haddock_model_pragmaticListener2.wppl")
 #gamma is probability that any given referent will be included in the context
 gamma <- .5
 #higher cost coefficient increases informativity effect
-costCoefficient <- 3
+costCoefficient <- 1
 highScopeConstrualProb <- 0.5
 
 
 
-test_result <- execute_model(pos, 1, "haddock_model.wppl","cc","standard",".",gamma,costCoefficient,highScopeConstrualProb,1)
-
-
+test_result <- execute_model(pos, 1, "haddock_model.wppl","cc","bumford",".",gamma,costCoefficient,highScopeConstrualProb,1)
 
 
 # Execute Model
 results <- data.frame()
 
-results <- read.csv("exp2-models-2levels.csv")
+#results <- read.csv("exp2-models-2levels.csv")
 
 
-recalculate_results <- FALSE
+recalculate_results <- TRUE
 
 if (recalculate_results) {
 for(pragListenerLevel in pragListenerLevels) {
@@ -253,8 +251,9 @@ for(pragListenerLevel in pragListenerLevels) {
         for (cond in conds) {
           for (model in models) {
   
-            result <- execute_model(randomVariable, cond, model, context, defArtMeaning,".",gamma,costCoefficient,highScopeConstrualProb,pragListenerLevel)
-
+            result <- execute_model(randomVariable, cond, model, context
+                                    , defArtMeaning,".",gamma,costCoefficient
+                                    , highScopeConstrualProb,pragListenerLevel)
             result$Adjective <- randomVariable[[1]][2]
             result$defArtMeaning <- defArtMeaning
             result$Context <- context
@@ -262,23 +261,24 @@ for(pragListenerLevel in pragListenerLevels) {
             result$Model <- model
             result$ListenerLevel <- pragListenerLevel
             results <- rbind(results, result)
-           #print(paste("Processing adjective"
-           #       , randomVariable[[1]][2]
-           #       , "for context"
-          #        , context
-          #        , "for defArtMeaning"
-          #        , defArtMeaning
-          #        , "for condition"
-          #        , cond
-          #        , "with model"
-          #        , model))
+           print(paste("Processing adjective"
+                  , randomVariable[[1]][2]
+                  , "for context"
+                  , context
+                  , "for defArtMeaning"
+                  , defArtMeaning
+                  , "for condition"
+                  , cond
+                  , "with model"
+                  , model))
          }
         }
       }
     }
   }
 }
-  
+}
+    
 colnames(results) <- c(
   "Animal"
   , "Container"
@@ -290,7 +290,7 @@ colnames(results) <- c(
   , "Condition"
   , "Model"
   , "ListenerLevel")
-}
+
 
 #results
 
@@ -814,7 +814,7 @@ To answer this question, we use computational simulations to test the pragmatic 
 Let us begin by discussing our semantics for positive form gradable adjectives like \ol{big}. 
 We assume that such expressions are evaluated relative to a given threshold $\theta$, which must be exceeded in order for the gradable adjective to hold of a given referent. 
 We assume furthermore that what counts as `big' differs depending on the type of object whose size is in question. 
-We therefore have different thresholds for different types of objects. 
+We therefore have different thresholds for different types of objects, or Comparison Classes. 
 $\theta(\ol{bag})$ is the threshold for bags, for example.
 
 Writing `the denotation of $\alpha$ relative to context $C$ and threshold $\theta$' as $\valueof{\alpha}^{\theta,C}$, we will say that $\valueof{\alpha}^{\theta,C}(r) = \true$ if referent $r$ falls under description $\alpha$, relative to $\theta$ and $C$.
@@ -860,7 +860,7 @@ are the following:
 %
 Thus uniqueness is enforced at both the inner and outer layers of the description, relative to a given context.
 
-Another analysis of definite descriptions that we will entertain is what we will call \textbf{Bumford's}. \citet{bumford:2017} offers a semantic analysis of Haddock descriptions, building on an analysis of the definite article in which the existence and uniqueness components may enter the composition at different stages, with other material intervening. 
+Another analysis of definite descriptions that we will entertain is what we will call \textbf{Bumford's}. \citet{bumford:2017} offers a semantic analysis of Haddock descriptions that builds on Coppock and Beaver's (201X) analysis of the definite article in which the existence and uniqueness components may enter the composition at different stages, with other material intervening. 
 The existence component ensures that a discourse referent is associated with the nominal. 
 The uniqueness component ensures that the discourse referent cannot be mapped to more than one entity, in light of the restrictions that have been put on it. The restrictions put on the discourse referent may not be limited to the descriptive material within the definite description; 
 surrounding descriptive material may accumulate before uniqueness is checked. In particular, the uniqueness component of the inner definite in an expression of the form \ol{the rabbit in the big bag} may take scope above \ol{rabbit}. 
@@ -869,7 +869,7 @@ As far as the definite article is concerned, there may well be another big bag, 
 In other words, this definite article does not require uniqueness with respect to the property `big bag'. 
 
 Under a high-scope construal of the uniqueness component of the definite article,
-is \ol{rabbit in the big bag} synonymous with \ol{rabbit in a big bag}? Almost, but not entirely. The difference in meaning would only be visible in a scenario in which a rabbits was in multiple bags -- something very hard to imagine. But consider an example like \ol{the singer with the gold bracelet}. Even on a high scope construal, this description could only be true of a singer that is wearing a single bracelet, whereas \ol{the singer with a gold bracelet} could truthfully hold of a singer that has multiple bracelets (although pragmatics would suggest that he or she was only wearing one). As this kind of situation (e.g.\ one rabbit - multiple bags) does not occur in our experimental stimuli, the difference effectively disappears in our setting. 
+is \ol{rabbit in the big bag} synonymous with \ol{rabbit in a big bag}? Almost, but not entirely. The difference in meaning would only be visible in a scenario in which a rabbit was in multiple bags -- something very hard to imagine. But consider an example like \ol{the singer with the gold bracelet}. Even on a high scope construal, this description could only be true if a singer is wearing a single bracelet, whereas \ol{the singer with a gold bracelet} could truthfully hold of a singer that has multiple bracelets (although pragmatics would suggest that he or she was only wearing one). As this kind of situation (e.g.\ one rabbit - multiple bags) does not occur in our experimental stimuli, the difference effectively disappears in our setting. 
 
 Thus, under this construal, the non-trivial conditions that a given referent $r$ must satisfy in order to fall under the description \ol{the rabbit in the NP}, 
 relative to context $C$ and threshold $\theta$, 
@@ -1026,22 +1026,44 @@ Otherwise, we assume an uninformative prior over referents, as shown in (\ref{un
     \end{cases}
 \end{equation}
 
+
+
+
+\subsubsection{Implementation of Reference Failure}
+
+Reference failure is implemented by adding a sixth referent to the prior over referents, rU, that receives a small amount of probability mass. In the model predictions reported in this paper, failure referent receives a probability of $\sim 0.04$, with the remaining referents reciving slightly less than $20\%$ of probability in the prior respectively. 
+
+Always compatible with the meaning. This is why in Figures XX, it always receives some amount of proability in the posterior. To the extent that some other referent is compatible with the utterance, it will always receive less probability than any other referent.
+Despite its low prior probability, the literal listener assigns probability of 1 to rU when no other referent is compatible with the utterance.
+
+\subsubsection{Implementation of Scopal Ambiguities}
+
 As discussed above, the same string can be assigned two different underlying structures (Logical Forms, as it were). 
 For the comparative, in particular, Bumford's theory allows either a high or low scope construal.
-The choice of construal is determined by a free parameter in the model, set to `r highScopeConstrualProb`.
-%Why isn't this inline code showing up?
+The choice of construal is determined by a free parameter in the model (highScopeConstrualProb), that determines the mixture.
 The higher this probability, the more likely the `bag' construal.
+In the simulations reported here, that parameter is set to .5 such that none of the two scopal configurtions is favord over the other.
+In Standard meaning the definite does not take scope. This means that there's only one possible reading for the , namely low scope construal. 
+This can be observed in Figures \ref{litlist-standard} and \ref{litlist-bumford}, where the description {\em the rabbit in the bigger bag} given threshold 1 and the maximal context 1 is undefined for the rabbit in the medium bag when the standard meaning is considered (upper leftmost pannel of Figure \ref{litlist-standard}), but it's definted for that very same referent when Bumford's meaning is considered (upper leftmost pannel of Figure \ref{litlist-bumford}). 
+This is due to the fact that only the 
+This also means that the comparative and the positive form adjectives receive the same interpretation for standard but not for comparative across the three contexts for the utterances {\em the rabbit in the big(ger) bag}. 
+Whereas this is not the case for Bumford's meaning, which allows for more scopal configurations.
+What these facts suggest, is that standard meaning requires context-coordination.
 
+Similarily, in contexts 1 and 3, the positive form adjective is undefined for threshold 2 because the cardinality of two is only met for Bumfords meaning which allows high scope not for standard meaning.
+
+\noindent
+\textbf{TODO:} Why can't the positive form adjective take scope?
 
 \begin{figure}
 \includegraphics[width=\linewidth]{litlist-standard.pdf}
-\caption{Literal Listener model outputs for standard meaning and no-cc}
+\caption{Literal Listener model predictions for standard meaning and no-cc}
 \label{litlist-standard}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\linewidth]{litlist-standard.pdf}
-\caption{Literal Listener model outputs for Bumford's meaning and no-cc}
+\includegraphics[width=\linewidth]{litlist-bumford.pdf}
+\caption{Literal Listener model predictions for Bumford's meaning and no-cc}
 \label{litlist-bumford}
 \end{figure}
 
@@ -1050,10 +1072,11 @@ The higher this probability, the more likely the `bag' construal.
 \subsection{Speaker}
 The speaker is modeled as a {\em softMax} agent that chooses a description $d$, given that she wants to convey the referent $r$ in context $C$ for the adjectival threshold $\theta$.
 In choosing utterances, the speaker balances out two constraints: maximizing the likelihood that the Literal Listener will infer the intended referent by choosing informative utterances, while minimizing production cost. 
-Informativity is modeled as negative surprisal (or positive log probability) of the referent in the posterior, whereas utterance cost $C(u)$, is directly proportional to the utterance length.\footnote{Currently, the costs are set as follows: comparative 1.5; positive 1; and 0.5 if the utterance does not contain an adjective. 
-%Should we talk about costCoefficient here?
-} 
+Informativity is modeled as negative surprisal (or positive log probability) of the referent in the posterior, whereas utterance cost $C(u)$, is directly proportional to the utterance length. Currently, the costs are set as follows: comparative 1.5; positive 1; and 0.5 if the utterance does not contain an adjective. 
 Finally, we assume a rationality parameter $\alpha$ of 1. 
+
+
+
 
 
 \begin{equation} 
@@ -1074,16 +1097,17 @@ Finally, we assume a rationality parameter $\alpha$ of 1.
 \label{speaker-bumford}
 \end{figure}
 
-
+\noindent
+The fact that xxxx was undefined for contexts 1 and 3 percolates for standard threshold 1.
+Rabbit in the box is only possible for Bumford, again because standard is never defined in this circumstance.
 
 \noindent
-\textbf{Questions to consider or to keep in mind:} \\
-
+\textbf{Questions:} \\
 \noindent
-It seems that the probabilities go down if thetas include n+1\\
+Discussion about assumed costs?
 
-\noindent
-speaker model outputs cost coefficient is set to 1, because higher values create a lazy speaker that always prefers silence (wrong result). The lit.listener model outputs was set to 3, but it should not matter because no cost is involved at that level. Things need to be rerun for dinal model outputs though
+%\noindent
+%speaker model outputs cost coefficient is set to 1, because higher values create a lazy speaker that always prefers silence (wrong result). The lit.listener model outputs was set to 3, but it should not matter because no cost is involved at that level. Things need to be rerun for dinal model outputs though
 
 \subsection{Pragmatic Listener}
 
@@ -1117,12 +1141,12 @@ Crucially, this value is fixed in models that do not use context coordination, b
 
 \textbf{The model results currently (November 4th) are derived using the assumption that the threshold categorically cannot be below the smallest. We are doing this because it seems to be the only way to get a preference for the bag overall; otherwise too much probability mass gets eaten up by non-targets (the smaller bag in particular, which has a rabbit in it). So the below is not accurate. --Liz}
 
-The prior over thresholds is also assumed to be uniform among the possible threshold values licensed by the context and the description. 
+The prior over thresholds is also assumed to be uniform among the possible threshold values licensed by the context and the description. ????
 Possible threshold values are obtained by extracting the referents in the context that are in the extension of the nested noun (e.g., bag), which is taken to provide the Comparison Class against which the adjective is evaluated ([reference]).
 This prior derives the dispreference for the bag resolution in conditions that contain more than two bags (i.e., Contexts 1 and 3), even if the biggest bag in the display does not contain an animal that matches the first noun in the description.\footnote{There's something funny about this logic. If Context 1 contained frogs in the two biggest bags, and a rabbit in the smallest bag, it would be off to refer to that referent as the rabbit in the big bag. I think our model does not predict a dispreference agianst this. Both big and small would be equally preferred here. Also, doesn't this logic predict that if we were comparing Context 1 to another context where the frog in the biggest bag is substituted by a rabbit, we would still get lower probability for the bag resolution compared to the box resolution? Is this right?} 
 In such contexts, the prior probability of each of the thresholds licensed by the description and the context will be lower than the condition that only contains two bags (Context 2), since the prior probability is split among three possible thresholds, as opposed to two, as exemplified in Figure \ref{thres-fig}. Each threshold receives higher probability in the prior in context 2 compared to contexts 1 and 3.
 This difference in the prior over threshold values results in higher posterior probabilities for the bag resolution compared to the box resolution, since the number of boxes in any given context is never greater than two.
-
+Threshold prior is not uniform???
 
 
 \begin{figure}
@@ -1190,14 +1214,16 @@ Simulation results for the model described in Section \ref{computational-model}.
 
 \begin{figure}[h]
 \centering
-<<Plot-standard, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+<<Plot-standard, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
 
 ## Plots ##
 
 cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
 
-bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl")
-test<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
+bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="standard")
+                      & DefArtMeaning=="standard" & Model=="haddock_model.wppl", ListenerLevel=="1")
+
+ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +
   scale_fill_manual(values=cbPalette) +
   theme_bw() +
@@ -1214,6 +1240,7 @@ test<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) +
   ggtitle("Standard Meaning") +
   facet_grid(Context ~ Adjective) +
   labs(fill="Adj. Type")
+
 @
 \caption{Simulation results for model using standard meaning (L1).}
 \end{figure}
@@ -1224,8 +1251,8 @@ test<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) +
 
 I know there's a section in the appendix for L2, but I'm putting it here for convenience --Liz
 
-\begin{figure}[h]
-\centering
+%\begin{figure}[h]
+%\centering
 <<Plot-standard2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
 
 ## Plots ##
@@ -1255,12 +1282,12 @@ standard2<-ggplot(bags.standard2, aes(x=Condition, y=Probability, fill=Adjective
   facet_grid(Context ~ Adjective) +
   labs(fill="Adj. Type")
 
-standard2
+#standard2
 @
-\caption{Simulation results for model using standard meaning (L2).}
-\end{figure}
+%\caption{Simulation results for model using standard meaning (L2).}
+%\end{figure}
 
-Improves positive form, but turns bigger into a context sensitive predicate as well. No difference between the both of them so this won't work.
+%Improves positive form, but turns bigger into a context sensitive predicate as well. No difference between the both of them so this won't work.
 
 Now for Bumford's meaning:
 
@@ -1297,10 +1324,10 @@ bumford
 \caption{Simulation results for model using Bumford's meaning (L1).}
 \end{figure}
 
-Bumford/L2:
+%Bumford/L2:
 
-\begin{figure}[!htbp]
-\centering
+%\begin{figure}[!htbp]
+%\centering
 <<Plot-bumford2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
 
 ## Plots ##
@@ -1326,15 +1353,20 @@ bumford2<-ggplot(bags.bumford2, aes(x=Condition, y=Probability, fill=Adjective))
   facet_grid(Context ~ Adjective) +
   labs(fill="Adj. Type")
 
-bumford2
+#bumford2
 #ggarrange(standard, bumford + rremove("x.text"), 
 #          heights = c(2, 2.5),
  #         ncol = 1, nrow = 2)
 @
-\caption{Simulation results for model using Bumford's meaning (L2).}
-\end{figure}
+%\caption{Simulation results for model using Bumford's meaning (L2).}
+%\end{figure}
 
-Looks like the effect of the big bag diminishes to the point of invisibility with the doubly pragmatic listener on Bumford's meaning.
+%Looks like the effect of the big bag diminishes to the point of invisibility with the doubly pragmatic listener on Bumford's meaning.
+
+
+
+\subsection{Model Comparisons}
+
 
 \pagebreak 
 

@@ -10,6 +10,8 @@ var gamma = model_data[6][0]
 var costCoefficient = model_data[7][0]
 var highScopeConstrualProb = model_data[8][0]
 var listenerLevel = model_data[9][0]
+display(cont)
+
 
 var r1 = [visuals[0]["Animal"][0], visuals[0]["Container"][0], visuals[0]["Size"][0]]
 var r2 = [visuals[1]["Animal"][0], visuals[1]["Container"][0], visuals[1]["Size"][0]]
@@ -29,6 +31,7 @@ var refs = {
 
 
 var cont1 = [[r1,r2,r3,r4,r5]]
+
 var globalContext = cont1[0]
 
 var cont2 = [
@@ -84,6 +87,7 @@ var conts = function(cont) {
 
 
 var contexts = conts(cont)
+display(contexts)
 
 
 
