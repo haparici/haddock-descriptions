@@ -222,11 +222,10 @@ contexts <- c("cco","no-cc")
 defArtMeanings <- c("bumford", "standard")
 #pragListenerLevels <- c(1,2)
 pragListenerLevels <- c(1)
-#models <- c("haddock_model.wppl","haddock_model_pragmaticListener2.wppl")
 models <- c("haddock_model.wppl") #,"haddock_model_pragmaticListener2.wppl")
 #gamma is probability that any given referent will be included in the context
 gamma <- .5
-#higher cost coefficient increases informativity effect
+#higher cost coefficient increases informativity effect but 
 costCoefficient <- 1
 highScopeConstrualProb <- 0.5
 
@@ -1220,8 +1219,7 @@ Simulation results for the model described in Section \ref{computational-model}.
 
 cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
 
-bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="standard")
-                      & DefArtMeaning=="standard" & Model=="haddock_model.wppl", ListenerLevel=="1")
+bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="standard" & DefArtMeaning=="standard" & Model=="haddock_model.wppl", ListenerLevel=="1")
 
 ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
   geom_bar(position=position_dodge(), stat="identity") +

@@ -10,7 +10,7 @@ var gamma = model_data[6][0]
 var costCoefficient = model_data[7][0]
 var highScopeConstrualProb = model_data[8][0]
 var listenerLevel = model_data[9][0]
-display(cont)
+
 
 
 var r1 = [visuals[0]["Animal"][0], visuals[0]["Container"][0], visuals[0]["Size"][0]]
@@ -87,8 +87,6 @@ var conts = function(cont) {
 
 
 var contexts = conts(cont)
-display(contexts)
-
 
 
 var thresholds = ["0", "1", "2", "3"]
