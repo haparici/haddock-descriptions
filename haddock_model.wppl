@@ -313,7 +313,7 @@ var pragmaticListener = function(description) {
 	var description = randomVariablePrior();
 	//var context = sample(priorContextSkewed);
 	var context = sample(priorContextLevyStyle);
-	condition(fitsFirstNoun(description,context))
+	// condition(fitsFirstNoun(description,context)) //"incremental" listener
 	//var context = contextsPrior(); 
 	var referent = sample(referentsPriorGivenContext(context));
 	var theta = sample(thresholdPriorGivenContext(context,description));
