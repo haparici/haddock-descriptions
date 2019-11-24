@@ -365,18 +365,22 @@ colnames(results) <- c(
 Suppose there are three bags, two rabbits, a frog, and a calculator on a table before you. 
 One of the rabbits is in one of the bags, and the other two bags contain the frog and the calculator, respectively.
 You are instructed to point to {\em the bag}. 
-You might feel a bit squeamish, because the uniqueness requirement of the definite article is not satisfied in this context. 
+You might object, because the uniqueness requirement of the definite article is not satisfied in this context. 
 But asked to point to {\em the rabbit in the bag}, you would confidently pick out the rabbit in {\em the bag that has a rabbit in it} (barring unusual circumstances). 
-Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are known as {\em Haddock descriptions}, named after Nicholas J. Haddock, who first pointed out their puzzling behavior (\cite{haddock:1987}.
+Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are known as {\em Haddock descriptions}, named after Nicholas J. Haddock, who first pointed out their puzzling behavior \citep{haddock:1987}.
 
 Haddock proposed that the problem posed by these nested definites disappears if  semantic interpretation proceeds {\em incrementally}, i.e., from left to right. 
-In this view, identifying the referent of a definite description is conceived as a constraint satisfaction task. As the description is interpreted incrementally, the listener narrows down the set of potential referents in the context to those individuals that are compatible with the linguistic information available at any given time. 
-The description is felicitous if upon interpretation of the full string all the necessary constraints are met.
-In the example we started with, this would be the case if the context contains the unique $x$ and the unique $y$, such that (i) $x$ is a rabbit; (ii) $y$ is a bag; and (iii) $x$ is in $y$.
-One can readily see that in our original example incremental interpretation ensures that these constraints are met; by the time the description is fully interpreted, the context is  circumscribed to rabbit-containing bags, thus satisfying the uniqueness requirement of the nested definite.\footnote{A similar solution is cast in dynamic semantic terms by \cite{vaneijck:1993}.} 
+In this view, identifying the referent of a definite description is conceived as a constraint satisfaction task, in which constraints are added incrementally as comprehension proceeds.
+As new information about the referent comes in, the listener narrows down the set of potential referents to those individuals that are compatible with the linguistic information.  
+The description is felicitous if there is only one individual who satisfies all the necessary constraints, including those imposed internally to the noun phrase (e.g.\ being a hat), and those imposed externally (e.g.\ containing a rabbit).
+%In the example we started with, this would be the case if there is only one $y$ such that (i) $x$ is a rabbit; (ii) $y$ is a bag; and (iii) $x$ is in $y$.
+%One can readily see that in our original example incremental interpretation ensures that these constraints are met; by the time the description is fully interpreted, the context is  circumscribed to rabbit-containing bags, thus satisfying the uniqueness requirement of the nested definite.
 
-Solutions of the sort proposed by Haddock are compatible with psycholinguistic findings of online language comprehension during reference resolution tasks. In seminal work using the Visual World eye-tracking paradigm, Eberhard and colleagues (1995) found that listeners incrementally constrain the set of potential referents when interpreting descriptions of the form {\em the starred yellow square} as new linguistic input unfolds over time. 
+
+Solutions of the sort proposed by Haddock are compatible with psycholinguistic findings of online language comprehension during reference resolution tasks. In seminal work using the Visual World eye-tracking paradigm, Eberhard and colleagues (1995) found that listeners incrementally constrain the set of potential referents when interpreting descriptions of the form {\em the starred yellow square} as new linguistic input unfolds over time.
 %Other references that we might want to add eventially  Altmann \& Kamide (1999); Kako \& Trueswell (2000). 
+
+
 Furthermore, it has also been shown that listeners rapidly integrate other sources of information above and beyond linguistic information. 
 For instance, it has been noted that adjectivally modified definite descriptions such as {\em the tall glass} give rise to inferences about contrast such that the prenominal adjective is expected to disambiguate between two objects of the same category that differ only with respect to the degree to which they bear the adjectival property (e.g., a tall and a short glass). 
 Put in Gricean terms, prenominal adjectives give rise to informativity expectations.
@@ -384,37 +388,55 @@ In a Visual World eye-tracking study, Sedivy et al. (1999) showed that listeners
 Their results demonstrated that listeners were faster at identifying the referent of an auditorily presented modified NP such as {\em the tall glass} when the visual context supported a contrastive interpretation of the adjective (i.e., when the visual context contained a contrast set formed by a tall and a short glass) compared to contexts where the adjective was used redundantly (i.e., contexts that only contained a tall glass). 
 Importantly, participants were able to identify the referent of the definite description during the adjective window, before any information about the head-noun was available to them.
 This was the case despite the fact that the visual context also contained a competitor object that could also be described by the prenominal adjective (e.g. a tall pitcher).
-The fact that participants were able to use information about contrast to identify the referent of the description at a point where the linguistic input was still ambiguous between two objects (i.e. the tall glass and the tall pitcher) demonstrates that listeners rapidly integrate both linguistic and pragmatic information, thus supporting the view that language processing proceeds incrementally.  
+The fact that participants were able to use information about contrast to identify the referent of the description at a point where the linguistic input was still ambiguous between two objects (i.e. the tall glass and the tall pitcher) demonstrates that listeners rapidly integrate both linguistic and pragmatic information, thus supporting the view that language processing proceeds incrementally.
 
-Accounts of Haddock descriptions that do not rely on incremental semantic processing have also been proposed. \citet{bumford:2017} argues that the uniqueness requirement of the inner definite of a Haddock definite can be satisfied through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above the higher noun (i.e. {\em rabbit} in our original example), thus ensuring that uniqueness is only checked with respect to rabbits that are inside bags. In that scope position, what the uniqueness requirement demands is that there be no more than one {\em bag containing a rabbit}, even if there is more than one {\em bag}.
 
-Finally, a purely pragmatic account of definite reference that does not involve incremental interpretation is suggested by \citet{muhlstein+al:2015}, who propose that listeners reason probabilistically about the context relative to which a definite description should be interpreted. 
-In their proposal, the task of the listener upon hearing a definite description is to infer the referent of the description {\em and} the (partition of the) context that satisfies the semantic requirements of the definite article with respect to uniqueness. 
-This solution differs from the semantic account of Haddock Descriptions put forth by Bumford in that uniqueness is independently checked for each definite article {\em in situ}. 
-This account also differentiates itself from Haddock's proposal in that context-restriction effects are achieved without assuming incremental interpretation.
-Evidence for such type of pragmatic accounts can be found in facts pertaining to the interpretation of unembedded definites, which can also involve a flexible conception of uniqueness. 
+Without being fully explicit about the mechanisms, \citet{vaneijck:1993} offers a variation on Haddock's idea in terms of dynamic semantics: The inner noun phrase is associated with a discourse referent, upon which constraints are added sequentially in the manner that dynamic meanings update contexts. 
+\citet{bumford:2017} offers a fully explicit dynamic semantic account. 
+Bumford proposes that the uniqueness requirement of the inner definite of a Haddock definite can be satisfied through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above the higher noun (i.e. {\em rabbit} in our original example), thus ensuring that uniqueness is only checked with respect to rabbits that are inside bags. 
+In that scope position, what the uniqueness requirement demands is that there be no more than one {\em bag containing a rabbit}, even if there is more than one {\em bag}. Bumford's dynamic semantic account does not rely on incremental processing, but it does implement Haddock's idea that uniqueness is checked relative to a conglomeration of internal constraints (being a bag) and external constraints (containing a rabbit).
+
+A possible challenge to a scope-based account such as Bumford's can be found in facts pertaining to the interpretation of unembedded definites, which can also involve a flexible conception of uniqueness. 
 In another eye-tracking study, \citeauthor{chambers+al:2002} find that given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question, even if there are multiple cans in the display.
 This suggests that entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
 These experimental findings also bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the bag} or {\em Bill put the rabbit in the bag}, where the PP containing the second definite is a syntactic argument of the verb.
 
-%These facts show that pragmatic reasoning is needed. Incremental processing alone cannot resolve the uniqueness conflics of unembedded definites.
+%Under all of these views, it is not only the descriptive content of the noun phrase that uniqueness is determined relative to; it is the sum of all of the constraints imposed on the referent, including those imposed externally. 
+A view that is consistent with these kinds of uses is offered by \citet{muhlstein+al:2015}.
+They propose that listeners reason probabilistically about the context relative to which a definite description should be interpreted. 
+Under this proposal, the task of the listener, upon hearing a definite description, is to infer the referent of the description {\em and} the (partition of the) context that satisfies the uniqueness requirement of the definite article, relative to the descriptive content of the noun phrase.
+%Although uniqueness is only checked relative to the description-internal constraints, the description-external constraints play a role in restricting the context.
 
-This paper investigates whether incremental semantic processing is sufficient to explain the uniqueness facts displayed by nested definites in Haddock Descriptions. 
+
+%This solution differs from the semantic account of Haddock Descriptions put forth by Bumford in that uniqueness is independently checked for each definite article {\em in situ}. 
+%This account also differentiates itself from Haddock's proposal in that context-restriction effects are achieved without assuming incremental interpretation.
+
+Putting this idea of context flexibility together with incremental processing, we might imagine a view on which context narrowing occurs incrementally, so that referents that are not compatible with the linguistic input are automatically eliminated from the context. For example, after hearing {\em the rabbit in the}, all referents that do not contain a rabbit are eliminated from the current context.\footnote{A question arises then as to how something like {\em the rabbit in the hat with the bow on top} would be interpreted. The bow would have been eliminated from the context, if it didn't contain a rabbit. To handle such things, it would seem necessary to assume a `resetting' of the context for every new noun phrase.}
+If the loosening of the uniqueness requirement is due to a tightening of the context in this fashion, then context-sensitive expressions other than the definite article should be affected. Let's call this the \textbf{incremental context-narrowing hypothesis}.
+
+The question we address here is whether the externally-imposed constraints on a  referent have constrain the interpretation of gradable adjectives characterizing that referent, as the incremental context-narrowing hypothesis predicts.
+When a gradable adjective modifies a noun, the noun constrains the comparison class ({\em tall building} vs.\ {\em tall stack of paper}), so description-internal constraints on the discourse referent clearly restrict the comparison class for a gradable adjective. 
+Do external constraints (e.g.\ containing a rabbit) constrain comparison classes for adjectives as well?
+
 To address this question, we use relative adjectives (e.g., {\em big}), a class of context-sensitive adjectives whose interpretation is resolved with respect to a contextually salient Comparison Class (CC).
 More precisely, consider the adjectivally modified  Haddock Description {\em the rabbit in the big bag}. 
-The semantic incrementality hypothesis predicts that the CC against which the adjective is evaluated should consist of bags that contain rabbits in them.
+The incremental context-narrowing hypothesis predicts that the CC against which the adjective is evaluated should consist of bags that contain rabbits in them.
 This is because the previously interpreted noun {\em rabbit} ensures that, to the extent that there are any bags left in the domain of reference, they will contain a rabbit in them.
-The description will be semantically defined if and only if, upon semantic evaluation, the domain of reference contains a unique rabbit and a unique bag such that i) the bag's size is bigger than any other bag left in the domain; and ii) the bag contains the unique rabbit that's in a bag.
-On the other hand, if the felicity of Haddock descriptions does not result from incremental semantic interpretation, the CC used to evaluate the relative adjective should consist of all the bags present in the maximal context, regardless of whether they contain a rabbit or not.
+%The description will be semantically defined if and only if, upon semantic evaluation, the domain of reference contains a unique rabbit and a unique bag such that i) the bag's size is bigger than any other bag left in the domain; and ii) the bag contains the unique rabbit that's in a bag.
+%On the other hand, if the felicity of Haddock descriptions does not result from incremental semantic interpretation, the CC used to evaluate the relative adjective should consist of all the bags present in the maximal context, regardless of whether they contain a rabbit or not.
 
 We test these hypotheses experimentally by examining the interpretational preferences of adjectivally modified Haddock Descriptions where the nested noun has been masked (e.g., {the rabbit in the big} [masked]).
 These truncated descriptions are evaluated against visual contexts that support two possible resolutions of the noun (e.g., a rabbit inside a big bag and a rabbit inside a big box).
-Our visual displays are designed such that each of the two possible resolutions enforces a CC for the evaluation of the adjective that's compatible only with a local, i.e., non-incremental interpretation of the nested NP (e.g., a CC of bags), or allows both types of CCs (e.g., a CC of bags, and a CC of rabbit-containing bags).
+%Our visual displays are designed such that each of the two possible resolutions enforces a CC for the evaluation of the adjective that's compatible only with a local, i.e., non-incremental interpretation of the nested NP (e.g., a CC of bags), or allows both types of CCs (e.g., a CC of bags, and a CC of rabbit-containing bags).
 We use the choice of referent as the dependent measure that allows us to examine how our participants resolve the CC class before having any linguistic information about the head-noun, thus ensuring that referent choice is guided by previous linguistic information, as well as the visual properties of our displays.
 
-Our results show effects of contextual referents that are incompatible with the available linguistic input, thus arguing against an incremental semantic account of Haddock Descriptions.
-Finally, we present simulation results that further explore which of the existing grammatical and pragmatic proposals of Haddock Descriptions that do not involve incremental context narrowing accounts better for our experimental results.
+Our results show effects of referents that are incompatible with the available linguistic input.
+This argues against an incremental context-narrowing account of Haddock descriptions, and has implications for alternative approaches as well.
+We present simulation results that further explore semantic and pragmatic accounts of Haddock descriptions that do not involve incremental context narrowing.
  
+
+
+
 
 %If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. That's what we test. We test incremental semantic processing account through our experiments. Our results show that incremental interpretation is wrong. We use computer simulations to further explore which of the gramatical or pragmatic accounts that do not involve incremental context narrowing works best. Our results show that both split-scope definites and context-coordination are needed in order to account for all our experimental results. 
 
