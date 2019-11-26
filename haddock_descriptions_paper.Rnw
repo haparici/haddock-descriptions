@@ -1426,11 +1426,12 @@ $\equiv$ Who has read Hamlet?
 \ex
 \begin{xlist}
 \ex Who has read the longer play by Shakespeare?
-\ex Who has read the long play by Shakespeare?
-\ex Who has read Shakespeare's longer play?
-\ex Who has read Shakespeare's long play?
-\end{xlist}
+\ex Who has read Shakespeare's longer play?\\
 $\leadsto$ Shakespeare wrote two plays?
+\ex Who has read Shakespeare's long play?
+\ex Who has read the long play by Shakespeare?
+
+\end{xlist}
 \end{exe}
 
 
