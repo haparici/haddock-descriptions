@@ -291,34 +291,7 @@ colnames(results) <- c(
 @
 
 
-% <<test-plots, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
-% 
-% cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
-% 
-% bags.standard<-subset(results, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl")
-% test<-ggplot(bags.standard, aes(x=Condition, y=Probability, fill=Adjective)) + 
-%   geom_bar(position=position_dodge(), stat="identity") +
-%   scale_fill_manual(values=cbPalette) +
-%   theme_bw() +
-%   theme(axis.text.x = element_text(size=8),
-%         axis.text.y = element_text(size=15),  
-%         axis.title.x = element_text(size=18),
-%         axis.title.y = element_text(size=18),
-%         legend.title=element_text(size=16), 
-%         legend.text=element_text(size=14)
-%   ) +
-%   ylim(0,1) +
-%   xlab("Display Type") +
-%   ylab("Bag Resolution") +
-%   ggtitle("Standard Meaning") +
-%   facet_grid(Context ~ Adjective) +
-%   labs(fill="Adj. Type")
-% 
-% 
-% @
-
 %\begin{abstract}
-%Haddock descriptions (e.g., \emph{the rabbig in the bag}) pose an interesting puzzle w.r.t. the interpretation of the inner definite, as they are felicitous in contexts where the uniqueness requirement of the definite is not met (e.g., contexts with more than one bag). Haddock (1987) provides an incremental semantic account of this puzzle, whereby the set of potential referents is narrowed as the description is processed from left to right. This view aligns well with psycholinguistic theories of incremental semantic interpretation. For instance, in a seminal paper, Sedivy and colleagues (1999) show that participants incrementally use linguistic and contextual information to narrow down the set of potential referents of adjectivally modified definite descriptions such as \emph{the tall glass}. Here we use the same case study of gradable adjectives to test HDs of the form \emph{the rabbit in the big/bigger bag}. Our results show effects of contextual referents that are incompatible with the available linguistic input, arguing against an incremental semantic account of HDs. We use RSA computational modeling to explore the space of alternative potential semantic and pragmatic accounts of HDs. We find that xxxx. 
 %\end{abstract}
 
 
@@ -365,7 +338,7 @@ You might object, because the uniqueness requirement of the definite article is 
 But asked to point to {\em the rabbit in the bag}, you would confidently pick out the rabbit in {\em the bag that has a rabbit in it} (barring unusual circumstances). 
 Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are known as {\em Haddock descriptions}, named after Nicholas J. Haddock, who first pointed out their puzzling behavior \citep{haddock:1987}.
 
-Haddock proposed that the problem posed by these nested definites disappears if  semantic interpretation proceeds {\em incrementally}, i.e., from left to right. 
+Haddock proposed that the problem posed by these nested definites disappears if  semantic interpretation proceeds incrementally, i.e., from left to right. 
 In this view, identifying the referent of a definite description is conceived as a constraint satisfaction task, in which constraints are added incrementally as comprehension proceeds.
 As new information about the referent comes in, the listener narrows down the set of potential referents to those individuals that are compatible with the linguistic information.  
 The description is felicitous if there is only one individual who satisfies all the necessary constraints, including those imposed internally to the noun phrase (e.g.\ being a hat), and those imposed externally (e.g.\ containing a rabbit).
@@ -409,7 +382,9 @@ Under this proposal, the task of the listener, upon hearing a definite descripti
 
 %Putting this idea of context flexibility together with incremental processing, we might imagine a view on which context narrowing occurs incrementally, so that referents that are not compatible with the linguistic input are automatically eliminated from the context. For example, after hearing {\em the rabbit in the}, all referents that do not contain a rabbit are eliminated from the current context.\footnote{A question arises then as to how something like {\em the rabbit in the hat with the bow on top} would be interpreted. The bow would have been eliminated from the context, if it didn't contain a rabbit. To handle such things, it would seem necessary to assume a `resetting' of the context for every new noun phrase.}
 
-The semantic and the pragmatic accounts described so far differ in that modified Haddock Descriptions with a comparative adjective or a superlative are ambiguous between a relative and an absolute reading.
+
+
+
 
 The interpretation of gradable adjectives is usually assumed to depend on a contextually salient CC that is provided by the head noun. 
 Split-scope theories of Haddock Descriptions predict that the positive form adjective, just like the comparative, could be interpreted low or high.
@@ -1429,12 +1404,13 @@ relative readings of comparatives obviate definiteness effects:
 \ex *Bernie has the campaign chairman.
 \ex Bernie has the most enthusiastic campaign chairman.
 \ex Bernie has the more enthusiastic campaign chairman.
+\ex Pointing at two campaign chairmans having a conversation. \\Bernie has the enthusiastic campaign chairman.
 \end{xlist}
 \end{exe}
 
 
 As \citet{bumford:2017} discusses, 
-relative readings blocked by possessives, 
+relative readings are blocked by possessives, 
 both for superlatives and for comparatives:
 
 \begin{exe}
@@ -1450,7 +1426,9 @@ $\equiv$ Who has read Hamlet?
 \ex
 \begin{xlist}
 \ex Who has read the longer play by Shakespeare?
+\ex Who has read the long play by Shakespeare?
 \ex Who has read Shakespeare's longer play?
+\ex Who has read Shakespeare's long play?
 \end{xlist}
 $\leadsto$ Shakespeare wrote two plays?
 \end{exe}
@@ -1467,11 +1445,15 @@ observed by \citet{bhatt:2002} for \ref{tolstoy:first} and
 \ex the first book that John said Tolstoy had written\label{tolstoy:first}
 %\b. the only book that John said Tolstoy had written
 \ex the longest book that John said Tolstoy had written\label{tolstoy:longest}
-\ex the longer book that John said Tolstoy had written\label{tolstoy:longer}
-\end{xlist}
+\ex the longer book that John said Tolstoy had written\label{tolstoy:longer}\\
 High reading: of the books John said Tolstoy
 wrote, the longer\\
-Low reading: the book John said was longer among Tolstoy's.
+Low reading: the book John said was longer among the ones written by Tolstoy.
+\ex the long book that John said Tolstoy had written\\
+High reading: of the books John said Tolstoy
+wrote, the long one\\
+Low reading: the book John said was long among the ones written by Tolstoy.
+\end{xlist}
 \end{exe}
 
 
@@ -1499,7 +1481,14 @@ relative readings of comparatives are blocked by non-modal infinitival relative 
 \end{xlist}
 \end{exe}
 
-
+\begin{exe}
+\ex
+\begin{xlist}
+\ex John gave Mary the long telescope
+\ex ... *to be built in the
+9th century.
+\end{xlist}
+\end{exe}
 
 
 \end{document}
