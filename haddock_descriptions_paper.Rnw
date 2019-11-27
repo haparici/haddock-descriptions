@@ -34,8 +34,7 @@
 \def\valueof#1{\ensuremath{\llbracket #1\rrbracket}}
 
 
-\title{How to find {\em the rabbit in the big bag}:\\
-Incremental interpretation and context-sensitive definites}
+\title{Haddock Descriptions and Relative Readings of Relative (Comparative) Adjectives}
 \author{Helena, Roger, Liz}
 
 
@@ -383,45 +382,61 @@ Under this proposal, the task of the listener, upon hearing a definite descripti
 %Putting this idea of context flexibility together with incremental processing, we might imagine a view on which context narrowing occurs incrementally, so that referents that are not compatible with the linguistic input are automatically eliminated from the context. For example, after hearing {\em the rabbit in the}, all referents that do not contain a rabbit are eliminated from the current context.\footnote{A question arises then as to how something like {\em the rabbit in the hat with the bow on top} would be interpreted. The bow would have been eliminated from the context, if it didn't contain a rabbit. To handle such things, it would seem necessary to assume a `resetting' of the context for every new noun phrase.}
 
 
+The singularities of Haddock Descriptions with respect to uniqueness requirements renders them ambiguous between two readings: a relative and an absolute one. These two readings can be clearly teased apart when the second NP of a Haddock Description is modified by a superlative adjective as in (\ref{superlative}).
 
+\begin{exe}
+\ex\label{superlative} The rabbit in the biggest bag.
+\end{exe}
 
+On its absolute reading, sentence (\ref{superlative}) is true iff the context contains a unique rabbit that is in the unique biggest bag. On its relative reading, the sentence is true as long as there is a unique rabbit that is inside the biggest rabbit-containing bag, even if the context contains bigger rabbitless bags. 
 
-The interpretation of gradable adjectives is usually assumed to depend on a contextually salient CC that is provided by the head noun. 
-Split-scope theories of Haddock Descriptions predict that the positive form adjective, just like the comparative, could be interpreted low or high.
-If prenominal adjectives are interpreted with respect to a Comparison Class that is determined by the material in the scope of the adjective.
+Here we ask the question of whether relative readings are also present in Haddock Descriptions that contain positive and comparative form relative adjectives (\ref{poscmp}).
 
-The question we address here is whether the externally-imposed constraints on a referent constrain the interpretation of gradable adjectives characterizing that referent.
-When a gradable adjective modifies a noun, the noun constrains the comparison class ({\em tall building} vs.\ {\em tall stack of paper}), so description-internal constraints on the discourse referent clearly restrict the comparison class for a gradable adjective. 
-Do external constraints (e.g.\ containing a rabbit) constrain comparison classes for adjectives as well? This would correspond to the high scope reading.
+\begin{exe}
+\ex\label{poscmp}
+\begin{xlist}
+\ex\label{pos} The rabbit in the big bag.
+\ex\label{cmp} The rabbit in the bigger bag.
+\end{xlist}
+\end{exe}
+
+%The interpretation of gradable adjectives is usually assumed to depend on a contextually salient CC that is provided by the head noun. 
+%Split-scope theories of Haddock Descriptions predict that the positive form adjective, just like the comparative, could be interpreted low or high.
+%If prenominal adjectives are interpreted with respect to a Comparison Class that is determined by the material in the scope of the adjective.
+
+Such relative readings could be detected if externally-imposed constraints on a referent constrain the interpretation of gradable adjectives characterizing that referent.
+For instance, on its relative reading (\ref{cmp}) is true iff the context contains exactly two rabbits in bags and exactly two rabbit-containing bags, as long as such bags differ in size.
+The case of positive form gradable adjective is different, as these predicates have been argued to be context-sensitive such that their interpretation involves resolving an adjectival threshold with respect to a contextually salient Comparison Class determined by the head noun. 
+%In particulat, the noun constrains the comparison class ({\em tall building} vs.\ {\em tall stack of paper}), so description-internal constraints on the discourse referent clearly restrict the comparison class for a gradable adjective. 
+A relative reading for a positive form relative adjective like (\ref{pos}) arises if further external constraints beyond the meaning of the head-noun (e.g.\ containing a rabbit) constrain the comparison class used for the evaluation of the adjective.
+More specifically, the relative reading of (\ref{pos}) is true iff there is a unique rabbit that is in the unique rabbit-containing bag that is big in the context.
 
 %If the loosening of the uniqueness requirement is due to a tightening of the context in this fashion, then context-sensitive expressions other than the definite article should be affected. Let's call this the \textbf{incremental context-narrowing hypothesis}.
 
-To address this question, we use relative adjectives (e.g., {\em big}), a class of context-sensitive adjectives whose interpretation is resolved with respect to a contextually salient Comparison Class (CC).
-More precisely, consider the adjectivally modified  Haddock Description {\em the rabbit in the big bag}. 
-High Scope Interpretation: the inner DP is further restricted to rabbit-containing bags therefore resulting in the complex CC.
-Low Scope Interprtation: the inner DP is not further restricted.
+%To address this question, we use relative adjectives (e.g., {\em big}), a class of context-sensitive adjectives whose interpretation is resolved with respect to a contextually salient Comparison Class (CC), and their comparative form (e.g., {\em bigger}).
+%More precisely, consider the adjectivally modified  Haddock Description {\em the rabbit in the big bag}. 
+%High Scope Interpretation: the inner DP is further restricted to rabbit-containing bags therefore resulting in the complex CC.
+%Low Scope Interprtation: the inner DP is not further restricted.
 
-This discussion gets murked because absolute readings are confounded with informativity, and because the following is possible:
 
-Note that in the case of adjectives, contextual variables: you can have low scope for adjective and still result in a relative-like interpretation. Here we seek to tease the contribution of these two components apart.
-We seek to tease apart whether the apparent relative reading results from true scopal ambiguities or through context-sensitivity.
 
-Are apparent relative readings for pos modified Haddock Descriptions the result of true high scope readings, or the result of threshold uncertainty, i.e., context-sensitivity.
+
 
 %The incremental context-narrowing hypothesis predicts that the CC against which the adjective is evaluated should consist of bags that contain rabbits in them.
 %This is because the previously interpreted noun {\em rabbit} ensures that, to the extent that there are any bags left in the domain of reference, they will contain a rabbit in them.
 %The description will be semantically defined if and only if, upon semantic evaluation, the domain of reference contains a unique rabbit and a unique bag such that i) the bag's size is bigger than any other bag left in the domain; and ii) the bag contains the unique rabbit that's in a bag.
 %On the other hand, if the felicity of Haddock descriptions does not result from incremental semantic interpretation, the CC used to evaluate the relative adjective should consist of all the bags present in the maximal context, regardless of whether they contain a rabbit or not.
 
-We test these hypotheses experimentally by examining the interpretational preferences of adjectivally modified Haddock Descriptions where the nested noun has been masked (e.g., {the rabbit in the big} [masked]).
-These truncated descriptions are evaluated against visual contexts that support two possible resolutions of the noun (e.g., a rabbit inside a big bag and a rabbit inside a big box).
+We test this question experimentally by examining the interpretational preferences of positive and comparative modified Haddock Descriptions where the nested noun has been masked (e.g., {the rabbit in the big/ger} [masked]).
+In our experiment, these truncated descriptions are evaluated against visual contexts that support two possible resolutions of the noun (e.g., a rabbit inside a big/ger bag and a rabbit inside a big/ger box).
 %Our visual displays are designed such that each of the two possible resolutions enforces a CC for the evaluation of the adjective that's compatible only with a local, i.e., non-incremental interpretation of the nested NP (e.g., a CC of bags), or allows both types of CCs (e.g., a CC of bags, and a CC of rabbit-containing bags).
-We use the choice of referent as the dependent measure that allows us to examine how our participants resolve the CC class before having any linguistic information about the head-noun, thus ensuring that referent choice is guided by previous linguistic information, as well as the visual properties of our displays.
+We use the choice of referent as the dependent measure that allows us to examine how our participants chose to resolve the meaning of the adjective before any linguistic information about the head-noun is available, thus ensuring that referent choice is guided by previous linguistic information, as well as the visual properties of our displays.
 
-Our results show effects of referents that are incompatible with the available linguistic input.
-This argues against an incremental context-narrowing account of Haddock descriptions, and has implications for alternative approaches as well.
-We present simulation results that further explore semantic and pragmatic accounts of Haddock descriptions that do not involve incremental context narrowing, particularly with respect to the scopal preferences of the comparative vs. the positive form adjective. We show that, at least when part of a description, comparatives prefer to be interpreted high, while postive form adjectives prefer to be interpreted low.
- 
+Our results show that referent choice is modulated by referents that are incompatible with the available linguistic input (i.e., bags that do not contain rabbits in them when participants opted for the bag resolution) for positive but not for comparative form adjectives.
+These findings suggest that, while comparative adjectives display genuine relative readings, positive form adjectives do not give rise to such readings, despite surface appearances.
+%Are apparent relative readings for pos modified Haddock Descriptions the result of true high scope readings, or the result of threshold uncertainty, i.e., context-sensitivity.
+We present computational simulations showing that apparent relative readings for positive form adjectives result from a crucial difference in the lexical semantics of relative positive form adjectives and their comparative counterparts, namely that only the former involve resolving a contextual threshold variable. 
+In particular, our simulations show that the appearance of relative readings for positive form adjectives can be explained as the result of higher uncertainty about the adjectival threshold value in the relevant contexts.
 
 
 
@@ -1429,7 +1444,7 @@ $\equiv$ Who has read Hamlet?
 \ex Who has read Shakespeare's longer play?\\
 $\leadsto$ Shakespeare wrote two plays?
 \ex Who has read Shakespeare's long play?
-\ex Who has read the long play by Shakespeare?
+\ex Who has read the long play by Shakespeare?\\
 $\leadsto$ All other plays were short.
 \end{xlist}
 \end{exe}
