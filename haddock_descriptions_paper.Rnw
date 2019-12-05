@@ -228,7 +228,7 @@ gamma <- .5
 costCoefficient <- 1
 highScopeConstrualProb <- 0.5
 
-#test_result <- execute_model(pos, 1, "haddock_model.wppl","no-cc","bumford",".",gamma,costCoefficient,highScopeConstrualProb,1)
+test_result <- execute_model(pos, 3, "haddock_model.wppl","no-cc","bumford",".",gamma,costCoefficient,highScopeConstrualProb,1)
 
 
 # Execute Model
@@ -382,7 +382,7 @@ Under this proposal, the task of the listener, upon hearing a definite descripti
 %Putting this idea of context flexibility together with incremental processing, we might imagine a view on which context narrowing occurs incrementally, so that referents that are not compatible with the linguistic input are automatically eliminated from the context. For example, after hearing {\em the rabbit in the}, all referents that do not contain a rabbit are eliminated from the current context.\footnote{A question arises then as to how something like {\em the rabbit in the hat with the bow on top} would be interpreted. The bow would have been eliminated from the context, if it didn't contain a rabbit. To handle such things, it would seem necessary to assume a `resetting' of the context for every new noun phrase.}
 
 
-The singularities of Haddock Descriptions with respect to uniqueness requirements renders them ambiguous between two readings: a relative and an absolute one. These two readings can be clearly teased apart when the nested NP of a Haddock Description is modified by a superlative adjective as in (\ref{superlative}).
+Readings were the uniqueness requirement of the nesded DP seems to be relaxed are referred to as {\em relative readings}, in contrast to {\em absolute readings}, where uniqueness is satisfied for both determiners. Relative and absolute readings can be clearly teased apart when the nested NP of a Haddock Description is modified by a superlative adjective as in (\ref{superlative}).
 
 \begin{exe}
 \ex\label{superlative} The rabbit in the biggest bag.
@@ -408,7 +408,7 @@ Here we ask the question of whether relative readings are also present in Haddoc
 Such relative readings could be detected if externally-imposed constraints on a referent constrain the interpretation of gradable adjectives characterizing that referent. 
 Put it differently, relative readings arise if both the comparative and the positve form adjectives can take high scope above the higher NP.
 For instance, on its relative reading (\ref{cmp}) is true iff the context contains exactly two rabbits in bags and exactly two rabbit-containing bags, as long as such bags differ in size.
-The case of positive form gradable adjective is different, as these predicates have been argued to be context-sensitive such that their interpretation involves resolving an adjectival threshold with respect to a contextually salient Comparison Class determined by the head noun. 
+The case of positive form gradable adjectives is different, as these predicates have been argued to be context-sensitive such that their interpretation involves resolving an adjectival threshold with respect to a contextually salient Comparison Class determined by the head noun. 
 %In particulat, the noun constrains the comparison class ({\em tall building} vs.\ {\em tall stack of paper}), so description-internal constraints on the discourse referent clearly restrict the comparison class for a gradable adjective. 
 A relative reading for a positive form relative adjective like (\ref{pos}) arises if further external constraints beyond the meaning of the head-noun (e.g.\ containing a rabbit) constrain the comparison class used for the evaluation of the adjective.
 More specifically, the relative reading of (\ref{pos}) is true iff there is a unique rabbit that is in the unique rabbit-containing bag that is big in the context.
@@ -434,7 +434,7 @@ In our experiment, these truncated descriptions are evaluated against visual con
 %Our visual displays are designed such that each of the two possible resolutions enforces a CC for the evaluation of the adjective that's compatible only with a local, i.e., non-incremental interpretation of the nested NP (e.g., a CC of bags), or allows both types of CCs (e.g., a CC of bags, and a CC of rabbit-containing bags).
 We use the choice of referent as the dependent measure that allows us to examine how our participants chose to resolve the meaning of the adjective before any linguistic information about the head-noun is available, thus ensuring that referent choice is guided by previous linguistic information, as well as the visual properties of our displays.
 
-Our results show that referent choice is modulated by referents that are incompatible with the available linguistic input (i.e., bags that do not contain rabbits in them when participants opted for the bag resolution) for positive but not for comparative form adjectives.
+Our results show that referent choice is modulated by referents that are incompatible with the available linguistic input (e.g., for the bag resolution, bags that do not contain rabbits in them) for positive but not for comparative form adjectives.
 These findings suggest that, while comparative adjectives display genuine relative readings, positive form adjectives do not give rise to such readings, despite surface appearances.
 %Are apparent relative readings for pos modified Haddock Descriptions the result of true high scope readings, or the result of threshold uncertainty, i.e., context-sensitivity.
 We present computational simulations showing that apparent relative readings for positive form adjectives result from a crucial difference in the lexical semantics of relative positive form adjectives and their comparative counterparts, namely that only the former involve resolving a contextual threshold variable. 
@@ -1429,7 +1429,7 @@ relative readings of comparatives obviate definiteness effects:
 \ex *Bernie has the campaign chairman.
 \ex Bernie has the most enthusiastic campaign chairman.
 \ex Bernie has the more enthusiastic campaign chairman.
-\ex Pointing at two campaign chairmans having a conversation. \\Bernie has the enthusiastic campaign chairman.
+\ex Pointing at two campaign chairmans having a conversation. \\*Bernie has the enthusiastic campaign chairman.
 \end{xlist}
 \end{exe}
 
@@ -1453,9 +1453,10 @@ $\equiv$ Who has read Hamlet?
 \ex Who has read the longer play by Shakespeare?
 \ex Who has read Shakespeare's longer play?\\
 $\leadsto$ Shakespeare wrote two plays?
-\ex Who has read Shakespeare's long play?
-\ex Who has read the long play by Shakespeare?\\
-$\leadsto$ All other plays were short.
+\ex\label{test3a} Who has read Shakespeare's long play?
+\ex\label{test3b} Who has read the long play by Shakespeare?\\
+$\leadsto$ All other plays were short.\\
+Note: Liz's intuitions is that the last two sentences mean the same
 \end{xlist}
 \end{exe}
 
