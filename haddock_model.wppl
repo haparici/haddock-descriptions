@@ -158,20 +158,58 @@ var referentsPrior = function() {
 // };
 
 
-var thresholdPriorGivenContext  = function(context,description) {
+//var thresholdPriorGivenContext  = function(context,description) {
 
     // find all the elements in the context with the same inner noun
-    var cc = function(context, description){
-	filter(function(rf){
-	    rf[1] == description[2]
+//    var cc = function(context, description){
+//	filter(function(rf){
+//	    rf[1] == description[2]
+//	}, context) 
+//    };
+
+//    // subset of the context with same inner noun
+//    var result = cc(context,description);
+
+//    var getThres = map(function(result){ return result[2] }, result )
+
+//    return Infer({method: "enumerate"}, function() {
+      
+//	var getThres = map(function(result){ return result[2] }, result )
+	
+//	 var extendThres = getThres.slice(0)
+//	 extendThres.push(extendThres[0] - 1) 
+//	 var addThres = getThres.length == 1 ? extendThres : getThres
+//      uniformDraw(addThres)
+	
+//});
+//};
+
+var thresholdPriorGivenContext  = function(context,description,scope) {
+
+    var cc = function(context, description,scope){
+      
+    if (scope == "high"){ 
+	return filter(function(rf){
+	    rf[1] == description[2]  & 
+        rf[0] == description[0] 
 	}, context) 
-    };
-
-    // subset of the context with same inner noun
-    var result = cc(context,description);
-
+    }
+    
+    else {
+    	return filter(function(rf){
+	    rf[1] == description[2] 
+	}, context) 
+    }
+        
+   };
+ 
+   var result = cc(context, description,scope)
+    
+   // subset of the context with same inner noun
+    
     var getThres = map(function(result){ return result[2] }, result )
 
+ 
     return Infer({method: "enumerate"}, function() {
       
 	var getThres = map(function(result){ return result[2] }, result )
@@ -179,11 +217,11 @@ var thresholdPriorGivenContext  = function(context,description) {
 	 var extendThres = getThres.slice(0)
 	 extendThres.push(extendThres[0] - 1) 
 	 var addThres = getThres.length == 1 ? extendThres : getThres
-      uniformDraw(addThres)
+      
+     uniformDraw(addThres)
 	
     });
 };
-
 
 
 var referentsPriorGivenContext = function(context) {

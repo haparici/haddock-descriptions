@@ -1,5 +1,5 @@
 \newcommand{\SortNoop}[1]{}
-\begin{thebibliography}{15}
+\begin{thebibliography}{14}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{}
@@ -61,12 +61,6 @@ Haddock, Nicholas~J. 1987.
 Heim, Irene. 1999.
 \newblock Notes on superlatives.
 \newblock {M}anuscript, {MIT}.
-
-\bibitem[{Horacek(1995)}]{horacek:1995}
-Horacek, Helmut. 1995.
-\newblock More on generating referring expressions.
-\newblock In \emph{Proceedings of the fifth {European} workshop on natural
-  language generation}, 43--58. Leiden, Netherlands.
 
 \bibitem[{Muhlstein et~al.(2015)Muhlstein, Potts, Frank \&
   Levy}]{muhlstein+al:2015}
