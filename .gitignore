@@ -59,3 +59,4 @@ scratch.wppl
 #macOS index folders
 .DS_Store
 *.bbl
+*.bbl
