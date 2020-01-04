@@ -107,6 +107,75 @@ var referentsPrior = function() {
   return categorical(refs.probabilities, refs.referents);
 };
 
+
+//threshold prior relativized to the descriptions's relevant comparison class, k+1 thresholds only for singleton contexts
+// var thresholdPriorGivenContext = function(context, description) {
+//   var cc = function(context, description){
+//   filter(function(rf){
+//   rf[1] == description[2]
+//   }, context) 
+//   };
+//   var result = cc(context,description);
+//   display(result)
+//   var getThres = map(function(result){ return result[2] }, result )
+//   // getThres.sort()
+//   // display(getThres)
+//   // var extendThres = getThres.slice(0)
+//   // extendThres.push(extendThres[0] - 1) 
+//   // display(getThres)
+//   // display(getThres.length)
+//   // var addThres = getThres.length == 1 ? extendThres : getThres
+//   // display(addThres)
+//   return Infer({method: "enumerate"}, function() {
+//   uniformDraw(getThres)
+//   });
+// };
+
+
+
+// var thresholdPriorGivenContext  = function(context,description) {
+    
+//   var cc = function(context, description){
+//     filter(function(rf){
+//     rf[1] == description[2]
+//     }, context) 
+//     };
+//   var result = cc(context,description);
+//     return Infer({method: "enumerate"}, function() {
+//       var getThres = map(function(result){ return result[2] }, result )
+//       var extendThres = getThres.slice(0)
+//       extendThres.push(extendThres[0] - 1) 
+//       uniformDraw(extendThres)
+//   });
+// };
+
+
+// var thresholdPriorGivenContext  = function(context,description,scope) {
+
+//    // find all the elements in the context with the same inner noun
+//    var cc = function(context, description){
+// 	filter(function(rf){
+// 	    rf[1] == description[2]
+// 	}, context) 
+//    };
+
+//    // subset of the context with same inner noun
+//    var result = cc(context,description);
+
+//    var getThres = map(function(result){ return result[2] }, result )
+
+//    return Infer({method: "enumerate"}, function() {
+      
+// 	var getThres = map(function(result){ return result[2] }, result )
+	
+// 	 var extendThres = getThres.slice(0)
+// 	 extendThres.push(extendThres[0] - 1) 
+// 	 var addThres = getThres.length == 1 ? extendThres : getThres
+//      uniformDraw(addThres)
+	
+//    });
+// };
+
 var thresholdPriorGivenContext  = function(context,description,scope_pos) {
 
     var cc = function(context, description,scope_pos){      
