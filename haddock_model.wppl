@@ -8,8 +8,10 @@ var cont = model_data[4]
 var def_art = model_data[5]
 var gamma = model_data[6][0]
 var costCoefficient = model_data[7][0]
-var highScopeConstrualProb = model_data[8][0]
-var listenerLevel = model_data[9][0]
+var cmpHighScopeConstrualProb = model_data[8][0]
+var posHighScopeConstrualProb = model_data[9][0]
+var allowUninformativeThresholds = model_data[10][0]
+var listenerLevel = model_data[11][0]
 
 
 
@@ -158,13 +160,13 @@ var referentsPrior = function() {
 // };
 
 
-//var thresholdPriorGivenContext  = function(context,description) {
+// var thresholdPriorGivenContext  = function(context,description,scope) {
 
-    // find all the elements in the context with the same inner noun
+//    // find all the elements in the context with the same inner noun
 //    var cc = function(context, description){
-//	filter(function(rf){
-//	    rf[1] == description[2]
-//	}, context) 
+// 	filter(function(rf){
+// 	    rf[1] == description[2]
+// 	}, context) 
 //    };
 
 //    // subset of the context with same inner noun
@@ -174,53 +176,45 @@ var referentsPrior = function() {
 
 //    return Infer({method: "enumerate"}, function() {
       
-//	var getThres = map(function(result){ return result[2] }, result )
+// 	var getThres = map(function(result){ return result[2] }, result )
 	
-//	 var extendThres = getThres.slice(0)
-//	 extendThres.push(extendThres[0] - 1) 
-//	 var addThres = getThres.length == 1 ? extendThres : getThres
+// 	 var extendThres = getThres.slice(0)
+// 	 extendThres.push(extendThres[0] - 1) 
+// 	 var addThres = getThres.length == 1 ? extendThres : getThres
 //      uniformDraw(addThres)
 	
-//});
-//};
+//    });
+// };
 
-var thresholdPriorGivenContext  = function(context,description,scope) {
+var thresholdPriorGivenContext  = function(context,description,scope_pos) {
 
-    var cc = function(context, description,scope){
-      
-    if (scope == "high"){ 
-	return filter(function(rf){
-	    rf[1] == description[2]  & 
-        rf[0] == description[0] 
-	}, context) 
-    }
+    var cc = function(context, description,scope_pos){      
+	if (scope_pos == "high"){ 
+	    return filter(function(rf){
+		rf[1] == description[2]  & 
+		    rf[0] == description[0] 
+	    }, context) 
+	}
+	else {
+    	    return filter(function(rf){
+		rf[1] == description[2] 
+	    }, context) 
+	}
+    };
     
-    else {
-    	return filter(function(rf){
-	    rf[1] == description[2] 
-	}, context) 
-    }
-        
-   };
- 
-   var result = cc(context, description,scope)
-    
-   // subset of the context with same inner noun
-    
-    var getThres = map(function(result){ return result[2] }, result )
-
- 
+    var result = cc(context, description,scope_pos)
+    // subset of the context with same inner noun
+    //var getThres = map(function(result){ return result[2] }, result )
     return Infer({method: "enumerate"}, function() {
-      
 	var getThres = map(function(result){ return result[2] }, result )
-	
-	 var extendThres = getThres.slice(0)
-	 extendThres.push(extendThres[0] - 1) 
-	 var addThres = getThres.length == 1 ? extendThres : getThres
-      
-     uniformDraw(addThres)
-	
+	var extendThres = getThres.slice(0)
+	extendThres.push(extendThres[0] - 1)
+	var finalThres = (allowUninformativeThresholds=="allow") ? extendThres : getThres
+	//var addThres = getThres.length == 1 ? extendThres : getThres
+	//var addThres = extendThres
+	uniformDraw(finalThres)
     });
+    
 };
 
 
@@ -320,33 +314,26 @@ var descriptionPrior1 = function() {
 };
 
 
-var literalListener = function(description, context, theta) {
+var literalListener = function(description, context, theta, scope_cmp, scope_pos) {
     return Infer({method: "enumerate"}, function() {
 	var referent = referentsPrior();
-	var scope = sample(Infer({method: "enumerate"}, function() {
-	    if (def_art=="standard") {
-		"low"
-	    } else {
-		flip(highScopeConstrualProb) ? "high" : "low"
-	    }
-	}))
-  	condition(meaning(description, referent, theta, context, def_art, scope))
+  	condition(meaning(description, referent, theta, context, def_art, scope_cmp, scope_pos))
 	//testing old meaning
 	//condition(meaning1(description, referent, context, theta, context))
 	return referent;
     });
 }
 
-var speaker = function(referent, context, theta) {
+var speaker = function(referent, context, theta, scope_cmp, scope_pos) {
     return Infer({method: "enumerate"}, function() {
 	var description = descriptionPrior();
-	factor( alpha * literalListener(description, context, theta).score(referent));
+	factor( alpha * literalListener(description, context, theta, scope_cmp, scope_pos).score(referent));
 	return description;
     });
 }
 
 
-var pragmaticListener = function(description) {
+var pragmaticListener = function() {
     return Infer({method: "enumerate"}, function() {
 	var description = randomVariablePrior();
 	//var context = sample(priorContextSkewed);
@@ -354,9 +341,19 @@ var pragmaticListener = function(description) {
 	// condition(fitsFirstNoun(description,context)) //"incremental" listener
 	//var context = contextsPrior(); 
 	var referent = sample(referentsPriorGivenContext(context));
-	var theta = sample(thresholdPriorGivenContext(context,description));
+	var scope_cmp = sample(Infer({method: "enumerate"}, function() {
+	    if (def_art=="standard") {
+		"low"
+	    } else {
+		flip(cmpHighScopeConstrualProb) ? "high" : "low"
+	    }
+	}))
+	var scope_pos = sample(Infer({method: "enumerate"}, function() {
+	    flip(posHighScopeConstrualProb) ? "high" : "low"
+	}))
+	var theta = sample(thresholdPriorGivenContext(context, description, scope_pos));
 	//var theta = uniformDraw([0,1,2,3]);
-	var speakerdist = speaker(referent, context, theta);
+	var speakerdist = speaker(referent, context, theta, scope_cmp, scope_pos);
 	//display(speakerdist);
 	factor(speakerdist.score(description));
 	condition(referent[0]=="rabbit")
@@ -372,8 +369,18 @@ var pragmaticListenerFullDescription = function(description) {
 	var context = sample(priorContextLevyStyle);
 	//var referent = referentsPrior();
 	var referent = sample(referentsPriorGivenContext(context));
-	var theta = sample(thresholdPriorGivenContext(context,description));
-      var speakerdist = speaker(referent, context, theta);
+	var scope_cmp = sample(Infer({method: "enumerate"}, function() {
+	    if (def_art=="standard") {
+		"low"
+	    } else {
+		flip(cmpHighScopeConstrualProb) ? "high" : "low"
+	    }
+	}))
+	var scope_pos = sample(Infer({method: "enumerate"}, function() {
+	    flip(posHighScopeConstrualProb) ? "high" : "low"
+	}))
+	var theta = sample(thresholdPriorGivenContext(context, description, scope_pos));
+	var speakerdist = speaker(referent, context, theta);
 	//display(speakerdist);
 	factor(speakerdist.score(description));
 	// condition(referent[0]=="rabbit")
@@ -393,7 +400,7 @@ var speaker1 = function(referent) {
 
 
 
-var pragmaticListener2 = function(description) {
+var pragmaticListener2 = function() {
     display("pragmaticListener2")
     return Infer({method: "enumerate"}, function() {
 	var description = randomVariablePrior();
@@ -416,6 +423,9 @@ var pragmaticListener2 = function(description) {
 
 
 var doPragmaticListener = function(description,level) {
+
+    display(model_data)
+
     if (level == 2) {
 	return (pragmaticListener2(description))
     } else {
