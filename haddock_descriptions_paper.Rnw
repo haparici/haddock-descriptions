@@ -89,7 +89,7 @@ opts_chunk$set(echo = F, message = F, warning = F, cache=T)
 
 @
 
-<<Model_Parameters_Variables, echo=FALSE, cache=TRUE,warning=FALSE, message=FALSE, fig.width = 13,fig.height=3>>=
+<<Model_Parameters_Variables, echo=FALSE, cache=TRUE,warning=FALSE, message=FALSE, include=FALSE>>=
 
 ## Visuals Master ##
 refs_json <- '[
@@ -215,7 +215,7 @@ execute_model <- function(randomVariable, cond, model, context, defArt, package,
 @
 
 
-<<Model_Main, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 13, fig.height=3>>=
+<<Model_Main, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, include=FALSE>>=
 
 ## Main ##
 # Calling Parameters 
@@ -231,20 +231,21 @@ gamma <- .5
 #higher cost coefficient increases informativity effect but speaker always prefers silence for higher values of costCoefficient 
 costCoefficient <- 1
 cmpHighScopeConstrualProb <- 0
-posHighScopeConstrualProb <- 0
+posHighScopeConstrualProb <- 1
+cmpHighScopeConstrualProbs <- c(0,1)
 posHighScopeConstrualProbs <- c(0,1)
 
 allowUninformativeThresholds <- "disallow"
-allowUninformativeThresholdLevels <- c("lastresort")
+allowUninformativeThresholdLevels <- c("allow","disallow","lastresort")
 
 
 #randomVariable, cond, model, context, defArt, package, gamma, costCoefficient,highScopeConstrualProb,pragListenerLevel
 
-test_result <- execute_model(cmp, 
+test_result <- execute_model(pos, 
                              1, #cond
                              "haddock_model.wppl",
                              "no-cc",
-                             "bumford",
+                             "standard",
                              ".", #package
                              gamma,
                              costCoefficient,
@@ -253,59 +254,66 @@ test_result <- execute_model(cmp,
                              allowUninformativeThresholds,
                              1) #pragListenerLevel
 
-test_result #cmp:0 pos:0 cond:1
+test_result 
+
+#Do we want to calculate the model results?
+#Or read them from a file?
+
+recalculate_model_results <- FALSE
+read_model_results <- TRUE
 
 # Execute Model
 
-recalculate_results <- TRUE
 results <- data.frame()
-if (recalculate_results) {
+if (recalculate_model_results) {
   for(allowUninformativeThresholds in allowUninformativeThresholdLevels) {
-    for(posHighScopeConstrualProb in posHighScopeConstrualProbs) {
-      for(pragListenerLevel in pragListenerLevels) {
-        for(defArtMeaning in defArtMeanings) { 
-          for (context in contexts) {
-            for (randomVariable in randomVariables) {
-              for (cond in conds) {
-                for (model in models) {
-                  
-                  result <- execute_model(randomVariable, 
-                                          cond, 
-                                          model, 
-                                          context,
-                                          defArtMeaning,
-                                          ".",
-                                          gamma,
-                                          costCoefficient,
-                                          cmpHighScopeConstrualProb,
-                                          posHighScopeConstrualProb,
-                                          allowUninformativeThresholds,
-                                          pragListenerLevel) 
-                  
-                  if (!(is.null(result))) {
+    for (cmpHighScopeConstrualProb in cmpHighScopeConstrualProbs) {
+      for(posHighScopeConstrualProb in posHighScopeConstrualProbs) {
+        for(pragListenerLevel in pragListenerLevels) {
+          for(defArtMeaning in defArtMeanings) { 
+            for (context in contexts) {
+              for (randomVariable in randomVariables) {
+                for (cond in conds) {
+                  for (model in models) {
                     
-                    result$Adjective <- randomVariable[[1]][2]
-                    result$defArtMeaning <- defArtMeaning
-                    result$Context <- context
-                    result$Condition <- cond
-                    result$Model <- model
-                    result$ListenerLevel <- pragListenerLevel
-                    result$cmpHighScopeConstrualProb <- cmpHighScopeConstrualProb
-                    result$posHighScopeConstrualProb <- posHighScopeConstrualProb
-                    result$allowUninformativeThresholds <- allowUninformativeThresholds
-                    results <- rbind(results, result)
+                    result <- execute_model(randomVariable, 
+                                            cond, 
+                                            model, 
+                                            context,
+                                            defArtMeaning,
+                                            ".",
+                                            gamma,
+                                            costCoefficient,
+                                            cmpHighScopeConstrualProb,
+                                            posHighScopeConstrualProb,
+                                            allowUninformativeThresholds,
+                                            pragListenerLevel) 
                     
+                    if (!(is.null(result))) {
+                      
+                      result$Adjective <- randomVariable[[1]][2]
+                      result$defArtMeaning <- defArtMeaning
+                      result$Context <- context
+                      result$Condition <- cond
+                      result$Model <- model
+                      result$ListenerLevel <- pragListenerLevel
+                      result$cmpHighScopeConstrualProb <- cmpHighScopeConstrualProb
+                      result$posHighScopeConstrualProb <- posHighScopeConstrualProb
+                      result$allowUninformativeThresholds <- allowUninformativeThresholds
+                      results <- rbind(results, result)
+                      
+                    }
+                    #print(paste("Processing adjective"
+                    #      , randomVariable[[1]][2]
+                    #      , "for context"
+                    #      , context
+                    #      , "for defArtMeaning"
+                    #      , defArtMeaning
+                    #      , "for condition"
+                    #      , cond
+                    #      , "with model"
+                    #      , model))
                   }
-                  #print(paste("Processing adjective"
-                  #      , randomVariable[[1]][2]
-                  #      , "for context"
-                  #      , context
-                  #      , "for defArtMeaning"
-                  #      , defArtMeaning
-                  #      , "for condition"
-                  #      , cond
-                  #      , "with model"
-                  #      , model))
                 }
               }
             }
@@ -314,256 +322,51 @@ if (recalculate_results) {
       }
     }
   }
+  
+  colnames(results) <- c(
+    "Animal",
+    "ContainerType",
+    "Size",
+    "Probability",
+    "Adjective",
+    "DefArtMeaning",
+    "Context",
+    "Condition",
+    "Model",
+    "ListenerLevel",
+    "cmpHighScopeConstrualProb",
+    "posHighScopeConstrualProb",
+    "allowUninformativeThresholds")
+  
+  results$Container <- paste0(results$ContainerType,results$Size)
+  View(results)
+
+  #write results to file
+  
+  write.csv(results, "model-outputs.csv")
+
 }
 
-colnames(results) <- c(
-  "Animal",
-  "ContainerType",
-  "Size",
-  "Probability",
-  "Adjective",
-  "DefArtMeaning",
-  "Context",
-  "Condition",
-  "Model",
-  "ListenerLevel",
-  "cmpHighScopeConstrualProb",
-  "posHighScopeConstrualProb",
-  "allowUninformativeThresholds")
+#save a copy for posterity
+#today <- Sys.Date()
+#write.csv(results, paste0("model-outputs-",today,".csv"))
 
-results$Container <- paste0(results$ContainerType,results$Size)
 
-View(results)
+if (read_model_results) {
+  results <- read.csv("model-outputs.csv")
+}
 
-#results
-#write.csv(results, "model-outputs-Nov25")
+
 @
-
-
-%\begin{abstract}
-%\end{abstract}
-
 
 \section{\label{intro}Introduction}
 
-%Suppose there are three hats, two rabbits, a frog, and a calculator on a table before you. 
-%One of the rabbits is in one of the hats, and the other two hats contain the frog and the calculator, respectively.
-%You are instructed to point to {\em the hat}. 
-%You might feel a bit squeamish, because the uniqueness requirement of the definite article is not satisfied in this context. 
-%But asked to point to {\em the rabbit in the hat}, you would confidently pick out the rabbit in {\em the hat that has a rabbit in it} (barring unusual circumstances). 
-%Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are called {\em Haddock descriptions}.%
-%\footnote{Fun fact: The same phenomenon can occur when multiple definites are embedded within another. \citet{horacek:1995} observed that {\em the table with the apple and the banana} is felicitous in a context with three tables, one with one apple and one banana (the referent), one with an apple and a mug, and one with a banana and a bowl.}
-
-
-%\citet{haddock:1987} characterized the task of the listener when presented with such descriptions as a {\em constraint satisfaction problem} of the kind studied in Artificial Intelligence: 
-%Find the unique $x$ such that (i) $x$ is a rabbit; (ii) $y$ is a hat; and (iii) $x$ is in $y$. \citet{vaneijck:1993} cast the same idea in dynamic semantics. 
-%The description is felicitous if a unique such $x$ can be found. 
-%But neither \citeauthor{haddock:1987} nor \citeauthor{vaneijck:1993} specified the process by which a listener can determine that this is the problem before her, and in principle, these constraints could be derived either semantically or pragmatically.
-
-%According to \citet{bumford:2017}, the uniqueness requirement of the inner definite in {\em the rabbit in a hat} can be loosened through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above {\em rabbit}. 
-%In that scope position, what the uniqueness requirement demands is that there be no more than one {\em hat containing a rabbit}, even if there is more than one {\em hat} simpliciter.
-%On this semantic approach, the loosening of the uniqueness requirement does not involve elimination of certain referents from consideration through pragmatic reasoning.
-
-%But it is known that the process of identifying a referent for {\em unembedded} definite descriptions involves a flexible conception of uniqueness, on which entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
-%Given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question \citep{chambers+al:2002}, even if there are multiple cans in the display. 
-%These experimental findings bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the hat} or {\em Bill put the rabbit in the hat}.
-%Given this, the disappearance of the uniqueness requirement for the inner definite of a Haddock description might reasonably be seen as an instance of the same phenomenon, involving commonsense reasoning to exclude certain potential referents from consideration. One particular way of caching this out, suggested by \citet{muhlstein+al:2015}, is that the listener reasons probabilistically about the context relative to which a definite description should be interpreted.%
-
-%If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. The question that this paper aims to address is whether or not such a phenomenon occurs, specifically with gradable adjectives.
-
-%To that end, the present paper investigates the interpretation of gradable adjectives embedded inside Haddock descriptions, as in {\em the rabbit in the big hat}.
-%Given that the relevant set of hats for the purpose of the definite description contains only ones with rabbits in them, does that restrict what hats are included in the comparison class for {\em big}?
-%{\em Ceteris paribus,} the semantic approach predicts that the comparison class for {\em big} should not be restricted to rabbit-containing hats, as there is no context narrowing on this view.
-%On the other hand, if Haddock descriptions involve context narrowing, then, depending on how this idea is implemented, we might expect that the comparison class for {\em big} should be restricted to rabbit-containing hats.
-
-%Our experiments show that the comparison class for {\em big} includes all hats, not just the ones containing rabbits. 
-%This is straightforwardly predicted under the semantic approach to Haddock descriptions, and places some constraints on how the pragmatic approach should work. 
-%If the loosening of the uniqueness requirement for definite articles is due to context-narrowing, this narrowing is not so powerful and all-encompassing that it affects comparison classes for gradable adjectives.\\
-
-Suppose there are three bags, two rabbits, a frog, and a calculator on a table before you. 
-One of the rabbits is in one of the bags, and the other two bags contain the frog and the calculator, respectively.
-You are instructed to point to {\em the bag}. 
-You might object, because the uniqueness requirement of the definite article is not satisfied in this context. 
-But asked to point to {\em the rabbit in the bag}, you would confidently pick out the rabbit in {\em the bag that has a rabbit in it} (barring unusual circumstances). 
-Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are known as {\em Haddock descriptions}, named after Nicholas J. Haddock, who first pointed out their puzzling behavior \citep{haddock:1987}.
-
-
-Readings were the uniqueness requirement of the nesded DP seems to be relaxed are referred to as {\em relative readings}, in contrast to {\em absolute readings}, where uniqueness is satisfied for both determiners. The clearest empirical point for the existence Relative and absolute readings can be teased apart when the nested NP of a Haddock Description is modified by a superlative adjective as in (\ref{superlative}).
-
-\begin{exe}
-\ex\label{superlative} The rabbit in the biggest bag.
-\end{exe}
-
-The absolute reading obtains when the superlative adjective is interpreted in its base position. Under this reading, sentence (\ref{superlative}) is true iff the context contains a unique rabbit that is in the unique biggest bag. 
-On the other hand, the relative reading arises when the superlative adjective scopes out above the higher NP. In this case, the sentence is true as long as there is a unique rabbit that is inside the biggest rabbit-containing bag, even if the context contains bigger rabbitless bags. Put it differently, the scope of the superlative determines the Comparison Class (CC) against which the adjective is interpreted: low scope, CC of bags. High scole, CC of rabbit-containing bags. Comparison Class calculation tracks scope of the definite.\foornote{This depends on the assumption that the scope of the definite marks the upper bound.}
-
-
-
-
-Superlative adjectives are however not the only adjectives that are interpreted w.r.t. a CC.\footnote{Discussion will be restricted to relative adjectives, since among gradable adjectives this is the only class that is generally agreed to be interpreted w.r.t. a CC.}
-
-\begin{exe}
-\ex\label{poscmp}
-\begin{xlist}
-\ex\label{pos} The rabbit in the big bag.
-\ex\label{cmp} The rabbit in the bigger bag.
-\end{xlist}
-\end{exe}
-
-
-Positive and Comparative form adjectives resemble superlatives in that they are also interpreted w.r.t. a CC. However, these three types of predicates also differ in fundamental ways. Firs, the threshold of a pos form adjective is not semantically bound. Interpreted w.r.t. context:\footnote{Here we use POS but could also be using typeshifting for this.} CC argument semantically provided?
-
-\begin{exe}
-\ex \valueof{A}=\lambda \theta_A\lambda x[\mu_A(x) > \theta_A]
-\end{exe}
-\begin{exe}
-\ex \valueof{POS}= \lambda A\lambda x[A(s_A) > s_A]
-\end{exe}
-
-This meaning is by Heim (1999). Liz? reasoning for having CC argument in the semantics?
-\begin{exe}
-\ex \valueof{-est}=  \lambda C\lambda A\lambda x\exists d[A(d)(x) \wedge \forall y \in C[y \neq x \rightarrow \sim A(d)(y)]]\\
-     Presupposes that x $\in$ C and that all other members in C have some degree of the adjectival property.
-\end{exe}
-
-\begin{exe}
-\ex \valueof{-er}=
-\end{exe}
-
-
-\begin{exe}
-\ex \valueof{POS A}=\lambda x[\mu_A(x) > s_A]
-\end{exe}
-
-\begin{exe}
-\ex \valueof{A-[est C]}= \lambda x\exists d[\mu_A(x) > d \wedge \forall y \in C[y \neq x \rightarrow \sim \mu_A(y) > d]]
-\end{exe}
-
-\begin{exe}
-\ex \valueof{A-er}=
-\end{exe}
-
-Because as see in XX, pos and rel do not have uniqueness, it could be the case that CC does not track definite (2b-c):
-
-\begin{exe}
-\ex
-\begin{xlist}
-\ex uniqueness(Adj(N1 N2)) \hfill Det: HIGH; Adj: HIGH [Allows Relative Reading]
-\ex uniqueness(N1 Adj N2) \hfill Det: HIGH; Adj: LOW [Allows Relative Reading]
-\ex uniqueness(N1 uniqueness(Adj N2)) \hfill Det: LOW; Adj: LOW [Does not Allow Relative Reading]
-\end{xlist}
-\end{exe}
-
-
-Here we ask the question of whether unmodified and comparative relative adjectives give rise to relative readings (\ref{poscmp}).
-Such relative readings could be detected if externally-imposed constraints on a referent constrain the interpretation of gradable adjectives characterizing that referent. 
-Put it differently, relative readings arise if both the comparative and the positve form adjectives can take high scope above the higher NP.
-For instance, on its relative reading (\ref{cmp}) is true iff the context contains exactly two rabbits in bags and exactly two rabbit-containing bags, as long as such bags differ in size.
-The case of positive form gradable adjectives is different, as these predicates have been argued to be context-sensitive such that their interpretation involves resolving an adjectival threshold with respect to a contextually salient Comparison Class determined by the head noun. 
-
-A relative reading for a positive form relative adjective like (\ref{pos}) arises if further external constraints beyond the meaning of the head-noun (e.g.\ containing a rabbit) constrain the comparison class used for the evaluation of the adjective.
-More specifically, the relative reading of (\ref{pos}) is true iff there is a unique rabbit that is in the unique rabbit-containing bag that is big in the context.
-
-
-%Haddock proposed that the problem posed by these nested definites disappears if  semantic interpretation proceeds incrementally, i.e., from left to right. 
-%In this view, identifying the referent of a definite description is conceived as a constraint satisfaction task, in which constraints are added incrementally as comprehension proceeds.
-%As new information about the referent comes in, the listener narrows down the set of potential referents to those individuals that are compatible with the linguistic information.  
-%The description is felicitous if there is only one individual who satisfies all the necessary constraints, including those imposed internally to the noun phrase (e.g.\ being a hat), and those imposed externally (e.g.\ containing a rabbit).
-
-%In the example we started with, this would be the case if there is only one $y$ such that (i) $x$ is a rabbit; (ii) $y$ is a bag; and (iii) $x$ is in $y$.
-%One can readily see that in our original example incremental interpretation ensures that these constraints are met; by the time the description is fully interpreted, the context is  circumscribed to rabbit-containing bags, thus satisfying the uniqueness requirement of the nested definite.
-
-
-%Solutions of the sort proposed by Haddock are compatible with psycholinguistic findings of online language comprehension during reference resolution tasks. In seminal work using the Visual World eye-tracking paradigm, Eberhard and colleagues (1995) found that listeners incrementally constrain the set of potential referents when interpreting descriptions of the form {\em the starred yellow square} as new linguistic input unfolds over time.
-%Other references that we might want to add eventially  Altmann \& Kamide (1999); Kako \& Trueswell (2000). 
-
-
-%Furthermore, it has also been shown that listeners rapidly integrate other sources of information above and beyond linguistic information. 
-%For instance, it has been noted that adjectivally modified definite descriptions such as {\em the tall glass} give rise to inferences about contrast such that the prenominal adjective is expected to disambiguate between two objects of the same category that differ only with respect to the degree to which they bear the adjectival property (e.g., a tall and a short glass). 
-%Put in Gricean terms, prenominal adjectives give rise to informativity expectations.
-%In a Visual World eye-tracking study, Sedivy et al. (1999) showed that listeners use contextual information about contrast predictively to guide reference resolution during the processing of adjectivally modified Noun Phrases. 
-%Their results demonstrated that listeners were faster at identifying the referent of an auditorily presented modified NP such as {\em the tall glass} when the visual context supported a contrastive interpretation of the adjective (i.e., when the visual context contained a contrast set formed by a tall and a short glass) compared to contexts where the adjective was used redundantly (i.e., contexts that only contained a tall glass). 
-%Importantly, participants were able to identify the referent of the definite description during the adjective window, before any information about the head-noun was available to them.
-%This was the case despite the fact that the visual context also contained a competitor object that could also be described by the prenominal adjective (e.g. a tall pitcher).
-%The fact that participants were able to use information about contrast to identify the referent of the description at a point where the linguistic input was still ambiguous between two objects (i.e. the tall glass and the tall pitcher) demonstrates that listeners rapidly integrate both linguistic and pragmatic information, thus supporting the view that language processing proceeds incrementally.
-
-
-%Without being fully explicit about the mechanisms, \citet{vaneijck:1993} offers a variation on Haddock's idea in terms of dynamic semantics: The inner noun phrase is associated with a discourse referent, upon which constraints are added sequentially in the manner that dynamic meanings update contexts. 
-%\citet{bumford:2017} offers a fully explicit dynamic semantic account. 
-%Bumford proposes that the uniqueness requirement of the inner definite of a Haddock definite can be satisfied through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above the higher noun (i.e. {\em rabbit} in our original example), thus ensuring that uniqueness is only checked with respect to rabbits that are inside bags. 
-%In that scope position, what the uniqueness requirement demands is that there be no more than one {\em bag containing a rabbit}, even if there is more than one {\em bag}. Bumford's dynamic semantic account does not rely on incremental processing, but it does implement Haddock's idea that uniqueness is checked relative to a conglomeration of internal constraints (being a bag) and external constraints (containing a rabbit).
-
-%A possible challenge to a scope-based account such as Bumford's can be found in facts pertaining to the interpretation of unembedded definites, which can also involve a flexible conception of uniqueness. 
-%In an eye-tracking study, \citeauthor{chambers+al:2002} find that given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question, even if there are multiple cans in the display.
-%This suggests that entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
-%These experimental findings also bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the bag} or {\em Bill put the rabbit in the bag}, where the PP containing the second definite is a syntactic argument of the verb.
-
-%Under all of these views, it is not only the descriptive content of the noun phrase that uniqueness is determined relative to; it is the sum of all of the constraints imposed on the referent, including those imposed externally. 
-
-%A view that is consistent with these kinds of uses is offered by \citet{muhlstein+al:2015}.
-%They propose that listeners reason probabilistically about the context relative to which a definite description should be interpreted. 
-%Under this proposal, the task of the listener, upon hearing a definite description, is to infer the referent of the description {\em and} the (partition of the) context that satisfies the uniqueness requirement of the definite article, relative to the descriptive content of the noun phrase.
-
-%Although uniqueness is only checked relative to the description-internal constraints, the description-external constraints play a role in restricting the context.
-
-
-%This solution differs from the semantic account of Haddock Descriptions put forth by Bumford in that uniqueness is independently checked for each definite article {\em in situ}. 
-%This account also differentiates itself from Haddock's proposal in that context-restriction effects are achieved without assuming incremental interpretation.
-
-%Putting this idea of context flexibility together with incremental processing, we might imagine a view on which context narrowing occurs incrementally, so that referents that are not compatible with the linguistic input are automatically eliminated from the context. For example, after hearing {\em the rabbit in the}, all referents that do not contain a rabbit are eliminated from the current context.\footnote{A question arises then as to how something like {\em the rabbit in the hat with the bow on top} would be interpreted. The bow would have been eliminated from the context, if it didn't contain a rabbit. To handle such things, it would seem necessary to assume a `resetting' of the context for every new noun phrase.}
-
-
-
-
-%The interpretation of gradable adjectives is usually assumed to depend on a contextually salient CC that is provided by the head noun. 
-%Split-scope theories of Haddock Descriptions predict that the positive form adjective, just like the comparative, could be interpreted low or high.
-%If prenominal adjectives are interpreted with respect to a Comparison Class that is determined by the material in the scope of the adjective.
-
-
-%In particulat, the noun constrains the comparison class ({\em tall building} vs.\ {\em tall stack of paper}), so description-internal constraints on the discourse referent clearly restrict the comparison class for a gradable adjective. 
-
-%If the loosening of the uniqueness requirement is due to a tightening of the context in this fashion, then context-sensitive expressions other than the definite article should be affected. Let's call this the \textbf{incremental context-narrowing hypothesis}.
-
-%To address this question, we use relative adjectives (e.g., {\em big}), a class of context-sensitive adjectives whose interpretation is resolved with respect to a contextually salient Comparison Class (CC), and their comparative form (e.g., {\em bigger}).
-%More precisely, consider the adjectivally modified  Haddock Description {\em the rabbit in the big bag}. 
-%High Scope Interpretation: the inner DP is further restricted to rabbit-containing bags therefore resulting in the complex CC.
-%Low Scope Interprtation: the inner DP is not further restricted.
-
-
-
-
-
-%The incremental context-narrowing hypothesis predicts that the CC against which the adjective is evaluated should consist of bags that contain rabbits in them.
-%This is because the previously interpreted noun {\em rabbit} ensures that, to the extent that there are any bags left in the domain of reference, they will contain a rabbit in them.
-%The description will be semantically defined if and only if, upon semantic evaluation, the domain of reference contains a unique rabbit and a unique bag such that i) the bag's size is bigger than any other bag left in the domain; and ii) the bag contains the unique rabbit that's in a bag.
-%On the other hand, if the felicity of Haddock descriptions does not result from incremental semantic interpretation, the CC used to evaluate the relative adjective should consist of all the bags present in the maximal context, regardless of whether they contain a rabbit or not.
-
-We test this question experimentally by examining the interpretational preferences of positive and comparative modified Haddock Descriptions where the nested noun has been masked (e.g., {the rabbit in the big/ger} [masked]).
-In our experiment, these truncated descriptions are evaluated against visual contexts that support two possible resolutions of the noun (e.g., a rabbit inside a big/ger bag and a rabbit inside a big/ger box).
-%Our visual displays are designed such that each of the two possible resolutions enforces a CC for the evaluation of the adjective that's compatible only with a local, i.e., non-incremental interpretation of the nested NP (e.g., a CC of bags), or allows both types of CCs (e.g., a CC of bags, and a CC of rabbit-containing bags).
-We use the choice of referent as the dependent measure that allows us to examine how our participants chose to resolve the meaning of the adjective before any linguistic information about the head-noun is available, thus ensuring that referent choice is guided by previous linguistic information, as well as the visual properties of our displays.
-
-Our results show that referent choice is modulated by referents that are incompatible with the available linguistic input (e.g., for the bag resolution, bags that do not contain rabbits in them) for positive but not for comparative form adjectives.
-These findings suggest that, while comparative adjectives display genuine relative readings, positive form adjectives do not give rise to such readings, despite surface appearances.
-%Are apparent relative readings for pos modified Haddock Descriptions the result of true high scope readings, or the result of threshold uncertainty, i.e., context-sensitivity.
-We present computational simulations showing that apparent relative readings for positive form adjectives result from a crucial difference in the lexical semantics of relative positive form adjectives and their comparative counterparts, namely that only the former involve resolving a contextual threshold variable. 
-In particular, our simulations show that the appearance of relative readings for positive form adjectives can be explained as the result of higher uncertainty about the adjectival threshold value in the relevant contexts.
-
-
-
-
-%If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. That's what we test. We test incremental semantic processing account through our experiments. Our results show that incremental interpretation is wrong. We use computer simulations to further explore which of the gramatical or pragmatic accounts that do not involve incremental context narrowing works best. Our results show that both split-scope definites and context-coordination are needed in order to account for all our experimental results. 
-
-%On this semantic approach, the loosening of the uniqueness requirement does not involve elimination of certain referents from consideration through incremental semantic interpretation and/or pragmatic reasoning.HaddockThese two solutions have in comon that the formulation if uniqueness is left untouched.
-
-
-
-
-
-
+STRATEGY: There is evidence to suggest that both definite descriptions and superlative adjectives can scope both high and low. Are ``mixed readings'' possible, where the definite scopes high and the adjective scopes low? With superlatives, it's not possible to tell. With positive adjectives, you can tell. We will show this by comparing positive adjectives to comparatives behave like superlatives in all relevant respects but are more amenable to use in Visual World experiments.
 
 \section{Experiment}
+
 \subsection{Design}
+
 Participants heard auditory instructions while looking at visual displays consisting of five images arranged in a circle. In experimental trials, the auditory instruction consisted of a request of the form `{\em Click on the rabbit in the big} [{\em masked}]', where the second NP had been masked with quite static noise. 
 Each display contained two possible referents compatible with the truncated description (e.g., a rabbit in a medium bag and a rabbit in a medium box in Figure \ref{displays}). 
 Given this ambiguity, participants were instructed to click on the referent that best matched the available linguistic content of the utterance given the visual display.
@@ -1355,657 +1158,6 @@ this ensures that the probability distribution over referents is well-defined.
 \textbf{The model results currently (November25th) are derived using the assumption that the threshold categorically cannot be below the smallest. We are doing this because it seems to be the only way to get a preference for the bag overall; otherwise too much probability mass gets eaten up by non-targets (the smaller bag in particular, which has a rabbit in it)}
 
 
-\section{Simulations}
-
-In what follows, we present simulation results for the model described in $\S$\ref{computational-model}. We start with the standard meaning for the definite article. Figure \ref{model-output-standard-poslow} shows the standard meaning for the definite article combined with low scope for the positive morpheme. That figure shows results for two models, one where uninformative thresholds (which fail to distinguish among the objects of the relevant sort, because they fall below the minimum) are allowed, and other where they are disallowed. 
-
-Figure \ref{model-output-standard-poshigh} shows the standard meaning for the definite article combined with high scope for the positive morpheme. When the positive morpheme takes high scope in {\em rabbit in the big bag}, the comparison class consists of bags containing rabbits. The threshold for {\em big} is then set relative to this comparison class. When the positive morpheme takes low scope, the comparison class is not restricted to rabbit-containing bags; frog-containing bags will also do.
-
-
-\begin{figure}[h]
-\centering
-<<Plot-standard-poslow, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
-
-#color blind palette
-#cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
-
-# "#009E73" is a nice green
-# "#CC79A7" is dark pink
-# "#E69F00" is gold
-# "#56B4E9" is sky blue
-# "#F0E442" is yellow
-# "#0072B2" is a darker blue
-# "#D55E00" is a burnt orange
-# "#999999" is grey
-
-#pink and blue
-#myColors <- c("#56B4E9","lightblue","pink","#CC79A7")
-
-#pink and teal
-#myColors <- c("#009AA3","#00CFC6","pink","#CC79A7")
-
-#orange/yellow and blue
-myColors <- c("#56B4E9","lightblue","#F0E442","#C44D00")
-
-results$Container <- factor(results$Container,levels=c("box2","box1","bag1","bag2"))
-
-#Create a custom fill scale 
-#so that colors will be consistent even if not all levels are always present
-names(myColors) <- levels(results$Container)
-fillScale <- scale_fill_manual(name = "Container",values = myColors)
-
-############################################################
-## Plot standard, pos:low, allow uninformative thresholds ##
-############################################################
-
-df.standardPosLowAllow <-subset(results, Adjective=="big" & 
-                            DefArtMeaning=="standard" & 
-                            Model=="haddock_model.wppl"  & 
-                            ListenerLevel==1 & 
-                            posHighScopeConstrualProb==0 & 
-                            allowUninformativeThresholds=="allow")
-
-View(df.standardPosLowAllow)
-            
-plot.standardPosLowAllow <- ggplot(df.standardPosLowAllow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Standard-the + big","Pragmatic L1, Pos scope: low, Allow uninformative thresholds") +
-  facet_wrap(~Context)
-
-plot.standardPosLowAllow
-
-###############################################################
-## Plot standard, pos:low, disallow uninformative thresholds ##
-###############################################################
-
-
-df.standardPosLowDisallow <-subset(results, Adjective=="big" & 
-                            DefArtMeaning=="standard" & 
-                            Model=="haddock_model.wppl"  & 
-                            ListenerLevel==1 & 
-                            posHighScopeConstrualProb==0 & 
-                            allowUninformativeThresholds=="disallow")
-            
-plot.standardPosLowDisallow <- ggplot(df.standardPosLowAllow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Standard-the + big","Pragmatic L1, Pos scope: low, Disallow uninformative thresholds") +
-  facet_wrap(~Context)
-
-plot.standardPosLowDisallow
-
-
-###############################################################
-## Plot standard, pos:low, uninformative thresholds last resort ##
-###############################################################
-
-
-df.standardPosLowLastresort <-subset(results, Adjective=="big" & 
-                            DefArtMeaning=="standard" & 
-                            Model=="haddock_model.wppl"  & 
-                            ListenerLevel==1 & 
-                            posHighScopeConstrualProb==0 & 
-                            allowUninformativeThresholds=="lastresort")
-            
-plot.standardPosLowLastresort <- ggplot(df.standardPosLowLastresort, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Standard-the + big","Pragmatic L1, Pos scope: low, Uninformative thresholds last resort") +
-  facet_wrap(~Context)
-
-plot.standardPosLowLastresort
-
-@
-\caption{Simulation results for model using standard meaning (L1) and low scope for positive morpheme. Left: Allow uninformative thresholds. Right: Disallow.}
-\label{model-output-standard-poslow}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-<<Plot-standard-poshigh, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
-
-##############################################################
-## Plot standard, pos:high, allow uninformative thresholds ##
-##############################################################
-
-df.standardPosHighAllow <- subset(results, Adjective=="big" & 
-                               DefArtMeaning=="standard" & 
-                               Model=="haddock_model.wppl"  & 
-                               ListenerLevel==1 & 
-                               posHighScopeConstrualProb==1 &
-                               allowUninformativeThresholds=="allow")
-
-View(df.standardPosHighAllow)
-
-plot.standardPosHighAllow <- ggplot(df.standardPosHighAllow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Standard-the + big","Pragmatic L1, High scope for pos, Allow uninformative thresholds") +
-  facet_wrap(~Context)
-
-plot.standardPosHighAllow
-
-#################################################################
-## Plot standard, pos:high, disallow uninformative thresholds ##
-#################################################################
-
-
-df.standardPosHighDisallow <- subset(results, Adjective=="big" & 
-                               DefArtMeaning=="standard" & 
-                               Model=="haddock_model.wppl"  & 
-                               ListenerLevel==1 & 
-                               posHighScopeConstrualProb==1 &
-                               allowUninformativeThresholds=="disallow")
-
-View(df.standardPosHighDisallow)
-
-plot.standardPosHighDisallow <- ggplot(df.standardPosHighDisallow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Standard-the + big","Pragmatic L1, High scope for pos, Disallow uninformative thresholds") +
-  facet_wrap(~Context)
-
-plot.standardPosHighDisallow
-
-
-
-#################################################################
-## Plot standard, pos:high, uninformative thresholds last resort ##
-#################################################################
-
-
-df.standardPosHighLastresort <- subset(results, Adjective=="big" & 
-                               DefArtMeaning=="standard" & 
-                               Model=="haddock_model.wppl"  & 
-                               ListenerLevel==1 & 
-                               posHighScopeConstrualProb==1 &
-                               allowUninformativeThresholds=="lastresort")
-
-View(df.standardPosHighLastresort)
-
-plot.standardPosHighLastresort <- ggplot(df.standardPosHighLastresort, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Standard-the + big","Pragmatic L1, High scope for pos, Uninformative thresholds last resort") +
-  facet_wrap(~Context)
-
-plot.standardPosHighLastresort
-
-
-@
-\caption{Simulation results for model using standard meaning (L1) and high scope for positive morpheme. Upper: Allow uninformative thresholds. Lower: Disallow.}
-\label{model-output-standard-poshigh}
-\end{figure}
-
-The results for the comparative with the standard meaning are shown in Figure \ref{model-output-standard-cmp}.
-
-\begin{figure}[h]
-\centering
-<<Plot-standard-cmp, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
-
-df.standardCmpLow<-subset(results, Adjective=="bigger" & 
-                            DefArtMeaning=="standard" & 
-                            Model=="haddock_model.wppl"  & 
-                            ListenerLevel==1 & 
-                            allowUninformativeThresholds=="allow" #arbitrary
-)
-#Should we pick an arbitrary value for "allow uninformative thresholds"? It's n/a.
-#Otherwise we are combining both runs.
-
-plot.standardCmpLow <- ggplot(df.standardCmpLow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Standard-the + bigger","Pragmatic L1") +
-  facet_wrap(~Context)
-
-plot.standardCmpLow
-@
-\caption{Simulation results for comparative using standard meaning (L1).}
-\label{model-output-standard-cmp}
-\end{figure}
-
-%Figure \ref{model-output-standard} lower panel shows that for both the positive form and the comparative 0\% probability for the bag resolution. 
-%The uniqueness requirement in these two contexts is never met because there there are more than two bags in the display. Furthermore, since both definites are interpreted in situ for both the positive and the comparative. 
-%Figure \ref{model-output-standard} upper panel shows that standard with CCo treats both the positive form and the comparative as context-sensitive. This is due to . It's an unwanted result. context-coordination causes the comparative to also behave as a context-sensitive predicate.
-
-
-%Improves positive form, but turns bigger into a context sensitive predicate as well. No difference between the both of them so this won't work.
-
-Turning to Bumford's meaning, Figure \ref{model-output-bumford-lowpos} shows the results when the positive form takes low scope, both with and without the assumption that thresholds may be uninformative. Figure \ref{model-output-bumford-highpos} shows what is predicted when the positive form takes high scope, in conjunction with Bumford's theory, again under both assumptions.
-
-%shows that both models with and without Context Coordination can derive our behavioral results.
-
-\begin{figure}[!htbp]
-\centering
-<<Plot-bumford-lowpos, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
-
-############################################################
-## Plot Bumford, pos:low, allow uninformative thresholds ##
-############################################################
-
-df.bumfordLowPosAllow <- subset(results, Adjective=="big" & 
-                             DefArtMeaning=="bumford" & 
-                             Model=="haddock_model.wppl" & 
-                             ListenerLevel==1 & 
-                             posHighScopeConstrualProb==0 &
-                             allowUninformativeThresholds=="allow")
-
-plot.bumfordLowPosAllow<-ggplot(df.bumfordLowPosAllow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Bumford-the + big","Pragmatic Listener 1, Pos scope: low, Allow uninformative thresholds") +
-  facet_wrap(~Context)
-
-plot.bumfordLowPosAllow
-
-
-
-###############################################################
-## Plot Bumford, pos:low, disallow uninformative thresholds ##
-###############################################################
-
-df.bumfordLowPosDisallow <- subset(results, Adjective=="big" & 
-                             DefArtMeaning=="bumford" & 
-                             Model=="haddock_model.wppl" & 
-                             ListenerLevel==1 & 
-                             posHighScopeConstrualProb==0 &
-                             allowUninformativeThresholds=="disallow")
-
-plot.bumfordLowPosDisallow <- ggplot(df.bumfordLowPosAllow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Bumford-the + big","Pragmatic Listener 1, Pos scope: low, Disallow uninformative thresholds") +
-  facet_wrap(~Context)
-
-plot.bumfordLowPosDisallow
-
-
-
-###############################################################
-## Plot Bumford, pos:low, uninformative thresholds last resort ##
-###############################################################
-
-df.bumfordLowPosLastresort <- subset(results, Adjective=="big" & 
-                             DefArtMeaning=="bumford" & 
-                             Model=="haddock_model.wppl" & 
-                             ListenerLevel==1 & 
-                             posHighScopeConstrualProb==0 &
-                             allowUninformativeThresholds=="lastresort")
-
-plot.bumfordLowPosLastresort <- ggplot(df.bumfordLowPosLastresort, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Bumford-the + big","Pragmatic Listener 1, Pos scope: low, Uninformative thresholds last resort") +
-  facet_wrap(~Context)
-
-plot.bumfordLowPosLastresort
-
-@
-\caption{Simulation results for positive using Bumford meaning (L1). Low scope for pos. Upper: Allow uninformative thresholds. Lower: Disallow.}
-\label{model-output-bumford-lowpos}
-\end{figure}
-
-\begin{figure}[!htbp]
-\centering
-<<Plot-bumford-highpos, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
-
-############################################################
-## Plot Bumford, pos:high, allow uninformative thresholds ##
-############################################################
-
-df.bumfordHighPosAllow <- subset(results, Adjective=="big" & 
-                                   DefArtMeaning=="bumford" & 
-                                   Model=="haddock_model.wppl" & 
-                                   ListenerLevel==1 & 
-                                   posHighScopeConstrualProb==1 &
-                                   allowUninformativeThresholds=="allow")
-
-plot.bumfordHighPosAllow <-ggplot(df.bumfordHighPosAllow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Bumford-the + big","Pragmatic L1, High scope for pos, Allow uninformative thresholds") +
-    facet_wrap(~Context)
-
-plot.bumfordHighPosAllow
-
-
-
-############################################################
-## Plot Bumford, pos:high, allow uninformative thresholds ##
-############################################################
-
-df.bumfordHighPosDisallow <- subset(results, Adjective=="big" & 
-                                   DefArtMeaning=="bumford" & 
-                                   Model=="haddock_model.wppl" & 
-                                   ListenerLevel==1 & 
-                                   posHighScopeConstrualProb==1 &
-                                   allowUninformativeThresholds=="disallow")
-
-plot.bumfordHighPosDisallow <-ggplot(df.bumfordHighPosDisallow, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Bumford-the + big","Pragmatic L1, High scope for pos, Disallow uninformative thresholds") +
-    facet_wrap(~Context)
-
-plot.bumfordHighPosDisallow
-
-
-
-
-##################################################################
-## Plot Bumford, pos:high, uninformative thresholds last resort ##
-#################################################################
-
-df.bumfordHighPosLastresort <- subset(results, Adjective=="big" & 
-                                   DefArtMeaning=="bumford" & 
-                                   Model=="haddock_model.wppl" & 
-                                   ListenerLevel==1 & 
-                                   posHighScopeConstrualProb==1 &
-                                   allowUninformativeThresholds=="lastresort")
-
-plot.bumfordHighPosLastresort <-ggplot(df.bumfordHighPosLastresort, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Bumford-the + big","Pragmatic L1, High scope for pos, Uninformative thresholds last resort") +
-    facet_wrap(~Context)
-
-plot.bumfordHighPosLastresort
-
-@
-\caption{Simulation results for positive using Bumford meaning (L1). High scope for pos. Left: Disallow uninformative thresholds. Right: Disallow.}
-\label{model-output-bumford-highpos}
-\end{figure}
-
-Finally, \ref{model-output-bumford-cmp} shows the results for the comparative on Bumford's theory. The comparative can take either high or low scope; what is shown here is the predictions when there is a 50\% chance of high scope.
-
-\begin{figure}[!htbp]
-\centering
-<<Plot-bumford-cmp, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
-
-df.bumfordCmp<-subset(results, Adjective=="bigger" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl" & ListenerLevel==1 & allowUninformativeThresholds=="lastresort")
-
-plot.bumfordCmp<-ggplot(df.bumfordCmp, aes(x=Condition, y=Probability, fill=Container)) + 
-  geom_bar(position="fill", stat="identity") +
-  fillScale +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Probability of Referent Choice") +
-  ggtitle("Bumford-the + bigger","Pragmatic L1, 50% chance of high comparative scope") +
-    facet_wrap(~Context)
-  
-
-plot.bumfordCmp
-
-#ggarrange(standard, bumford + rremove("x.text"), 
-#          heights = c(2, 2.5),
- #         ncol = 1, nrow = 2)
-@
-\caption{Simulation results for model using Bumford's meaning (L1).}
-\label{model-output-bumford-cmp}
-\end{figure}
-
-
-\pagebreak
-
-
-\subsection{Pragmatic Listener 2}
-
-\noindent
-Below we present a model that includes another level of recursion, i.e. Pragmatic Speaker 2. The details of the model below do not include the literal listener and level 1 speaker.\\
-
-\noindent
-\textbf{Pragmatic Listener}
-
-\begin{equation} 
-  L_1(r\given d) \propto \sum_C \sum_\theta S_1(d\given r,C,\theta) \cdot P(r\given C)\cdot P(\theta\given C,d)\cdot P(C)
-  \label{l1-full}
-\end{equation} 
-
-\noindent
-\textbf{Pragmatic Speaker}
-\begin{equation} 
-  S_2(u\given r) \propto    \text{exp}(\alpha \times \text{ln} (L_1(r\given d) ) -    \textsf{cost}(d)) 
-  \label{pragmatic-speaker}
-\end{equation} 
-
-\noindent
-\textbf{Second Level Pragmatic Listener (L2)}
-\begin{equation} 
-  L_2(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto  \sum_{N_2}S_2(u\given r) \cdot P(r)
-  \label{s2-pragmatic-listener}
-\end{equation} 
-
-
-\subsection{Simulation Results for Pragmatic Listener 2 Models}
-
-\begin{figure}[h]
-\centering
-<<Plot-standard2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
-
-## Plots ##
-
-prag.list2<-read.csv("model-outputs-Nov25.csv", header=TRUE)
-
-bags.standard2<-subset(prag.list2, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl" & ListenerLevel==2)
-
-standard2<-ggplot(bags.standard2, aes(x=Condition, y=Probability, fill=Adjective)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
-  scale_fill_manual(values=cbPalette) +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Bag Resolution") +
-  ggtitle("Standard Meaning (L2)") +
-  facet_grid(Context ~ Adjective) +
-  labs(fill="Adj. Type")
-
-standard2
-@
-\caption{Simulation results for model using standard meaning (L2).}
-\end{figure}
-
-\begin{figure}[!htbp]
-\centering
-<<Plot-bumford2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
-
-## Plots ##
-
-bags.bumford2<-subset(prag.list2, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl" & ListenerLevel==2)
-
-bumford2<-ggplot(bags.bumford2, aes(x=Condition, y=Probability, fill=Adjective)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
-  scale_fill_manual(values=cbPalette) +
-  theme_bw() +
-  theme(axis.text.x = element_text(size=8),
-        axis.text.y = element_text(size=15),  
-        axis.title.x = element_text(size=18),
-        axis.title.y = element_text(size=18),
-        legend.title=element_text(size=16), 
-        legend.text=element_text(size=14)
-  ) +
-  ylim(0,1) +
-  xlab("Display Type") +
-  ylab("Bag Resolution") +
-  ggtitle("Bumford's Meaning (L2)") +
-  facet_grid(Context ~ Adjective) +
-  labs(fill="Adj. Type")
-
-bumford2
-#ggarrange(standard, bumford + rremove("x.text"), 
-#          heights = c(2, 2.5),
- #         ncol = 1, nrow = 2)
-@
-\caption{Simulation results for model using Bumford's meaning (L2).}
-\end{figure}
-
-
-%\textbf{Questions to consider or to keep in mind:} No inference over thresholds or contexts at L2? I have used a flat prior over contexts here. Something is off with the comparative. These models take a really long time to run!
-
-
-\subsection{Model Comparisons}
-\subsection{Optimization of Free Parameters}
-
-
-
 \bibliography{master}
 \bibliographystyle{sp}
 
@@ -2111,6 +1263,331 @@ relative readings of comparatives are blocked by non-modal infinitival relative 
 9th century.
 \end{xlist}
 \end{exe}
+
+\appendix
+
+
+
+\section{Simulations}
+
+%In what follows, we present simulation results for the model described in $\S$\ref{computational-model}. 
+
+\pagebreak
+\subsection{Standard / low scope for pos}
+
+\setlength\parindent{0em}
+<<Plot-standard-poslow, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+#color blind palette
+#cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
+
+# "#009E73" is a nice green
+# "#CC79A7" is dark pink
+# "#E69F00" is gold
+# "#56B4E9" is sky blue
+# "#F0E442" is yellow
+# "#0072B2" is a darker blue
+# "#D55E00" is a burnt orange
+# "#999999" is grey
+
+#pink and blue
+#myColors <- c("#56B4E9","lightblue","pink","#CC79A7")
+
+#pink and teal
+#myColors <- c("#009AA3","#00CFC6","pink","#CC79A7")
+
+#orange/yellow and blue
+myColors <- c("#2392E9","lightblue","#F0E442","#C44D00")
+
+results$Container <- factor(results$Container,levels=c("box2","box1","bag1","bag2"))
+
+#Create a custom fill scale 
+#so that colors will be consistent even if not all levels are always present
+names(myColors) <- levels(results$Container)
+fillScale <- scale_fill_manual(name = "Container",values = myColors)
+
+plot_result <- function (pragListenerLevel,
+                         defArtMeaning,
+                         adj,
+                         cmpHighScopeConstrualProbValue,
+                         posHighScopeConstrualProbValue,
+                         allowUninformativeThresholdsValue) {
+  gg_df <- subset(results, Adjective==adj & 
+                    DefArtMeaning==defArtMeaning & 
+                    Model=="haddock_model.wppl"  & 
+                    ListenerLevel==pragListenerLevel & 
+                    posHighScopeConstrualProb==posHighScopeConstrualProbValue & 
+                    cmpHighScopeConstrualProb==cmpHighScopeConstrualProbValue &
+                    allowUninformativeThresholds==allowUninformativeThresholdsValue)
+  
+  ggplot(gg_df, aes(x=Condition, y=Probability, fill=Container)) + 
+    geom_bar(position="fill", stat="identity") +
+    fillScale +
+    theme_bw() +
+    theme(axis.text.x = element_text(size=8),
+          axis.text.y = element_text(size=10),  
+          axis.title.x = element_text(size=10),
+          axis.title.y = element_text(size=10),
+          legend.title=element_text(size=10), 
+          legend.text=element_text(size=10)
+    ) +
+    ylim(0,1) +
+    xlab("Display Type") +
+    ylab("Probability of Referent Choice") +
+    ggtitle(paste("Model predictions for", adj),paste(defArtMeaning,paste0("L",pragListenerLevel),paste0("posHiScope:", posHighScopeConstrualProbValue),paste0("cmpHiScope:", cmpHighScopeConstrualProbValue),allowUninformativeThresholdsValue,sep=", ")) +
+    facet_wrap(~Context)
+
+}
+
+##now start plotting
+
+pragListenerLevel <- 1
+defArtMeaning <- "standard"
+adj <- "big"
+cmpHighScopeConstrualProbValue <- 0
+posHighScopeConstrualProbValue <- 0
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+\pagebreak
+
+\subsection{Standard / high scope for pos}
+
+<<Plot-standard-poshigh, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "standard"
+adj <- "big"
+cmpHighScopeConstrualProbValue <- 0
+posHighScopeConstrualProbValue <- 1
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+  
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+\pagebreak
+
+\subsection{Standard / low scope for cmp}
+
+<<Plot-standard-cmplow, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "standard"
+adj <- "bigger"
+cmpHighScopeConstrualProbValue <- 0
+posHighScopeConstrualProbValue <- 0
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+  
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+\pagebreak
+
+\subsection{Standard / high scope for cmp}
+
+<<Plot-standard-cmphigh, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "standard"
+adj <- "bigger"
+cmpHighScopeConstrualProbValue <- 1
+posHighScopeConstrualProbValue <- 0
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+  
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+
+\pagebreak
+\subsection{Bumford / low scope for pos + low scope for cmp}
+
+\setlength\parindent{0em}
+<<Plot-bumford-poslow-cmplow, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "bumford"
+adj <- "big"
+cmpHighScopeConstrualProbValue <- 0
+posHighScopeConstrualProbValue <- 0
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+\pagebreak
+\subsection{Bumford / low scope for pos + high scope for cmp}
+
+\setlength\parindent{0em}
+<<Plot-bumford-poslow-cmphigh, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "bumford"
+adj <- "big"
+cmpHighScopeConstrualProbValue <- 1
+posHighScopeConstrualProbValue <- 0
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+\pagebreak
+
+\subsection{Bumford / high scope for pos + low scope for cmp}
+
+<<Plot-bumford-poshigh-cmplow, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "bumford"
+adj <- "big"
+cmpHighScopeConstrualProbValue <- 0
+posHighScopeConstrualProbValue <- 1
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+  
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+
+\pagebreak
+
+\subsection{Bumford / high scope for pos + high scope for cmp}
+
+<<Plot-bumford-poshigh-cmphigh, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "bumford"
+adj <- "big"
+cmpHighScopeConstrualProbValue <- 1
+posHighScopeConstrualProbValue <- 1
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+  
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+
+\pagebreak
+
+\subsection{Bumford / low scope for cmp}
+
+<<Plot-bumford-cmplow, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "bumford"
+adj <- "bigger"
+cmpHighScopeConstrualProbValue <- 0
+posHighScopeConstrualProbValue <- 0
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+  
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+\pagebreak
+
+\subsection{Bumford / high scope for cmp}
+
+<<Plot-bumford-cmphigh, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "bumford"
+adj <- "bigger"
+cmpHighScopeConstrualProbValue <- 1
+posHighScopeConstrualProbValue <- 0
+allowUninformativeThresholdsValue <- "allow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+  
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "lastresort"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
 
 
 \end{document}

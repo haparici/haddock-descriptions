@@ -129,7 +129,7 @@ var thresholdPriorGivenContext  = function(context,description,scope_pos) {
     var extendThres = getThres.slice(0)
     extendThres.push(extendThres[0] - 1)
     var finalThres = (allowUninformativeThresholds=="allow") ? extendThres :
-	((allowUninformativeThresholds=="lastresort") && (getThres.length == 1)) ?
+	((allowUninformativeThresholds=="lastresort") & (getThres.length == 1)) ?
 	extendThres : getThres 
 
     Infer({method: "enumerate"}, function() {

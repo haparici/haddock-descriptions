@@ -1,0 +1,698 @@
+Figure \ref{model-output-standard-poshigh} shows the standard meaning for the definite article combined with high scope for the positive morpheme. When the positive morpheme takes high scope in {\em rabbit in the big bag}, the comparison class consists of bags containing rabbits. The threshold for {\em big} is then set relative to this comparison class. When the positive morpheme takes low scope, the comparison class is not restricted to rabbit-containing bags; frog-containing bags will also do.
+
+We start with the standard meaning for the definite article. Figure \ref{model-output-standard-poslow} shows the standard meaning for the definite article combined with low scope for the positive morpheme. That figure shows results for two models, one where uninformative thresholds (which fail to distinguish among the objects of the relevant sort, because they fall below the minimum) are allowed, and other where they are disallowed. 
+
+
+\begin{figure}[h]
+\centering
+<<Plot-standard-poslow, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6>>=
+  
+  
+  
+############################################################
+## Plot standard, pos:low, allow uninformative thresholds ##
+############################################################
+
+df.standardPosLowAllow <-subset(results, Adjective=="big" & 
+                            DefArtMeaning=="standard" & 
+                            Model=="haddock_model.wppl"  & 
+                            ListenerLevel==1 & 
+                            posHighScopeConstrualProb==0 & 
+                            allowUninformativeThresholds=="allow")
+
+#View(df.standardPosLowAllow)
+            
+plot.standardPosLowAllow <- ggplot(df.standardPosLowAllow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Standard-the + big","Pragmatic L1, Pos scope: low, Allow uninformative thresholds") +
+  facet_wrap(~Context)
+
+plot.standardPosLowAllow
+
+###############################################################
+## Plot standard, pos:low, disallow uninformative thresholds ##
+###############################################################
+
+
+df.standardPosLowDisallow <-subset(results, Adjective=="big" & 
+                            DefArtMeaning=="standard" & 
+                            Model=="haddock_model.wppl"  & 
+                            ListenerLevel==1 & 
+                            posHighScopeConstrualProb==0 & 
+                            allowUninformativeThresholds=="disallow")
+            
+plot.standardPosLowDisallow <- ggplot(df.standardPosLowAllow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Standard-the + big","Pragmatic L1, Pos scope: low, Disallow uninformative thresholds") +
+  facet_wrap(~Context)
+
+plot.standardPosLowDisallow
+
+
+###############################################################
+## Plot standard, pos:low, uninformative thresholds last resort ##
+###############################################################
+
+
+df.standardPosLowLastresort <-subset(results, Adjective=="big" & 
+                            DefArtMeaning=="standard" & 
+                            Model=="haddock_model.wppl"  & 
+                            ListenerLevel==1 & 
+                            posHighScopeConstrualProb==0 & 
+                            allowUninformativeThresholds=="lastresort")
+            
+plot.standardPosLowLastresort <- ggplot(df.standardPosLowLastresort, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Standard-the + big","Pragmatic L1, Pos scope: low, Uninformative thresholds last resort") +
+  facet_wrap(~Context)
+
+plot.standardPosLowLastresort
+
+@
+\caption{Simulation results for model using standard meaning (L1) and low scope for positive morpheme. Left: Allow uninformative thresholds. Middle: Disallow. Bottom: Last resort.}
+\label{model-output-standard-poslow}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+<<Plot-standard-poshigh, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+##############################################################
+## Plot standard, pos:high, allow uninformative thresholds ##
+##############################################################
+
+df.standardPosHighAllow <- subset(results, Adjective=="big" & 
+                               DefArtMeaning=="standard" & 
+                               Model=="haddock_model.wppl"  & 
+                               ListenerLevel==1 & 
+                               posHighScopeConstrualProb==1 &
+                               allowUninformativeThresholds=="allow")
+
+#View(df.standardPosHighAllow)
+
+plot.standardPosHighAllow <- ggplot(df.standardPosHighAllow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Standard-the + big","Pragmatic L1, High scope for pos, Allow uninformative thresholds") +
+  facet_wrap(~Context)
+
+plot.standardPosHighAllow
+
+#################################################################
+## Plot standard, pos:high, disallow uninformative thresholds ##
+#################################################################
+
+
+df.standardPosHighDisallow <- subset(results, Adjective=="big" & 
+                               DefArtMeaning=="standard" & 
+                               Model=="haddock_model.wppl"  & 
+                               ListenerLevel==1 & 
+                               posHighScopeConstrualProb==1 &
+                               allowUninformativeThresholds=="disallow")
+
+#View(df.standardPosHighDisallow)
+
+plot.standardPosHighDisallow <- ggplot(df.standardPosHighDisallow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Standard-the + big","Pragmatic L1, High scope for pos, Disallow uninformative thresholds") +
+  facet_wrap(~Context)
+
+plot.standardPosHighDisallow
+
+
+
+#################################################################
+## Plot standard, pos:high, uninformative thresholds last resort ##
+#################################################################
+
+
+df.standardPosHighLastresort <- subset(results, Adjective=="big" & 
+                               DefArtMeaning=="standard" & 
+                               Model=="haddock_model.wppl"  & 
+                               ListenerLevel==1 & 
+                               posHighScopeConstrualProb==1 &
+                               allowUninformativeThresholds=="lastresort")
+
+#View(df.standardPosHighLastresort)
+
+plot.standardPosHighLastresort <- ggplot(df.standardPosHighLastresort, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Standard-the + big","Pragmatic L1, High scope for pos, Uninformative thresholds last resort") +
+  facet_wrap(~Context)
+
+plot.standardPosHighLastresort
+
+
+@
+\caption{Simulation results for model using standard meaning (L1) and high scope for positive morpheme. Upper: Allow uninformative thresholds. Lower: Disallow.}
+\label{model-output-standard-poshigh}
+\end{figure}
+
+
+
+The results for the comparative with the standard meaning are shown in Figure \ref{model-output-standard-cmp}.
+
+\begin{figure}[h]
+\centering
+<<Plot-standard-cmp, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+#################################################################
+## Plot standard, cmp:low 
+#################################################################
+
+
+df.standardCmpLow<-subset(results, Adjective=="bigger" & 
+                            DefArtMeaning=="standard" & 
+                            Model=="haddock_model.wppl"  & 
+                            ListenerLevel==1 & 
+                            allowUninformativeThresholds=="allow" & #arbitrary
+                            cmpHighScopeConstrualProb==0
+)
+
+
+plot.standardCmpLow <- ggplot(df.standardCmpLow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Standard-the + bigger","Pragmatic L1, Low scope for cmp") +
+  facet_wrap(~Context)
+
+plot.standardCmpLow
+
+
+#################################################################
+## Plot standard, cmp:low 
+#################################################################
+
+
+df.standardCmpHigh<-subset(results, Adjective=="bigger" & 
+                            DefArtMeaning=="standard" & 
+                            Model=="haddock_model.wppl"  & 
+                            ListenerLevel==1 & 
+                            allowUninformativeThresholds=="allow" & #arbitrary
+                            cmpHighScopeConstrualProb==1
+)
+
+
+plot.standardCmpHigh <- ggplot(df.standardCmpHigh, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Standard-the + bigger","Pragmatic L1, High scope for cmp") +
+  facet_wrap(~Context)
+
+plot.standardCmpHigh
+
+@
+\caption{Simulation results for comparative using standard meaning (L1).}
+\label{model-output-standard-cmp}
+\end{figure}
+
+%Figure \ref{model-output-standard} lower panel shows that for both the positive form and the comparative 0\% probability for the bag resolution. 
+%The uniqueness requirement in these two contexts is never met because there there are more than two bags in the display. Furthermore, since both definites are interpreted in situ for both the positive and the comparative. 
+%Figure \ref{model-output-standard} upper panel shows that standard with CCo treats both the positive form and the comparative as context-sensitive. This is due to . It's an unwanted result. context-coordination causes the comparative to also behave as a context-sensitive predicate.
+
+
+%Improves positive form, but turns bigger into a context sensitive predicate as well. No difference between the both of them so this won't work.
+
+Turning to Bumford's meaning, Figure \ref{model-output-bumford-lowpos} shows the results when the positive form takes low scope, both with and without the assumption that thresholds may be uninformative. Figure \ref{model-output-bumford-highpos} shows what is predicted when the positive form takes high scope, in conjunction with Bumford's theory, again under both assumptions.
+
+%shows that both models with and without Context Coordination can derive our behavioral results.
+
+\begin{figure}[!htbp]
+\centering
+<<Plot-bumford-lowpos, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+############################################################
+## Plot Bumford, pos:low, allow uninformative thresholds ##
+############################################################
+
+df.bumfordLowPosAllow <- subset(results, Adjective=="big" & 
+                             DefArtMeaning=="bumford" & 
+                             Model=="haddock_model.wppl" & 
+                             ListenerLevel==1 & 
+                             posHighScopeConstrualProb==0 &
+                             allowUninformativeThresholds=="allow")
+
+plot.bumfordLowPosAllow<-ggplot(df.bumfordLowPosAllow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Bumford-the + big","Pragmatic Listener 1, Pos scope: low, Allow uninformative thresholds") +
+  facet_wrap(~Context)
+
+plot.bumfordLowPosAllow
+
+
+
+###############################################################
+## Plot Bumford, pos:low, disallow uninformative thresholds ##
+###############################################################
+
+df.bumfordLowPosDisallow <- subset(results, Adjective=="big" & 
+                             DefArtMeaning=="bumford" & 
+                             Model=="haddock_model.wppl" & 
+                             ListenerLevel==1 & 
+                             posHighScopeConstrualProb==0 &
+                             allowUninformativeThresholds=="disallow")
+
+plot.bumfordLowPosDisallow <- ggplot(df.bumfordLowPosAllow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Bumford-the + big","Pragmatic Listener 1, Pos scope: low, Disallow uninformative thresholds") +
+  facet_wrap(~Context)
+
+plot.bumfordLowPosDisallow
+
+
+
+###############################################################
+## Plot Bumford, pos:low, uninformative thresholds last resort ##
+###############################################################
+
+df.bumfordLowPosLastresort <- subset(results, Adjective=="big" & 
+                             DefArtMeaning=="bumford" & 
+                             Model=="haddock_model.wppl" & 
+                             ListenerLevel==1 & 
+                             posHighScopeConstrualProb==0 &
+                             allowUninformativeThresholds=="lastresort")
+
+plot.bumfordLowPosLastresort <- ggplot(df.bumfordLowPosLastresort, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Bumford-the + big","Pragmatic Listener 1, Pos scope: low, Uninformative thresholds last resort") +
+  facet_wrap(~Context)
+
+plot.bumfordLowPosLastresort
+
+@
+\caption{Simulation results for positive using Bumford meaning (L1). Low scope for pos. Upper: Allow uninformative thresholds. Lower: Disallow.}
+\label{model-output-bumford-lowpos}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+<<Plot-bumford-highpos, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+############################################################
+## Plot Bumford, pos:high, allow uninformative thresholds ##
+############################################################
+
+df.bumfordHighPosAllow <- subset(results, Adjective=="big" & 
+                                   DefArtMeaning=="bumford" & 
+                                   Model=="haddock_model.wppl" & 
+                                   ListenerLevel==1 & 
+                                   posHighScopeConstrualProb==1 &
+                                   allowUninformativeThresholds=="allow")
+
+plot.bumfordHighPosAllow <-ggplot(df.bumfordHighPosAllow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Bumford-the + big","Pragmatic L1, High scope for pos, Allow uninformative thresholds") +
+    facet_wrap(~Context)
+
+plot.bumfordHighPosAllow
+
+
+
+############################################################
+## Plot Bumford, pos:high, allow uninformative thresholds ##
+############################################################
+
+df.bumfordHighPosDisallow <- subset(results, Adjective=="big" & 
+                                   DefArtMeaning=="bumford" & 
+                                   Model=="haddock_model.wppl" & 
+                                   ListenerLevel==1 & 
+                                   posHighScopeConstrualProb==1 &
+                                   allowUninformativeThresholds=="disallow")
+
+plot.bumfordHighPosDisallow <-ggplot(df.bumfordHighPosDisallow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Bumford-the + big","Pragmatic L1, High scope for pos, Disallow uninformative thresholds") +
+    facet_wrap(~Context)
+
+plot.bumfordHighPosDisallow
+
+
+
+
+##################################################################
+## Plot Bumford, pos:high, uninformative thresholds last resort ##
+#################################################################
+
+df.bumfordHighPosLastresort <- subset(results, Adjective=="big" & 
+                                   DefArtMeaning=="bumford" & 
+                                   Model=="haddock_model.wppl" & 
+                                   ListenerLevel==1 & 
+                                   posHighScopeConstrualProb==1 &
+                                   allowUninformativeThresholds=="lastresort")
+
+plot.bumfordHighPosLastresort <-ggplot(df.bumfordHighPosLastresort, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Bumford-the + big","Pragmatic L1, High scope for pos, Uninformative thresholds last resort") +
+    facet_wrap(~Context)
+
+plot.bumfordHighPosLastresort
+
+@
+\caption{Simulation results for positive using Bumford meaning (L1). High scope for pos. Left: Disallow uninformative thresholds. Right: Disallow.}
+\label{model-output-bumford-highpos}
+\end{figure}
+
+Finally, \ref{model-output-bumford-cmp} shows the results for the comparative on Bumford's theory. The comparative can take either high or low scope; what is shown here is the predictions when there is a 50\% chance of high scope.
+
+\begin{figure}[!htbp]
+\centering
+<<Plot-bumford-cmp, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+##################################################################
+## Plot Bumford, cmp:low
+#################################################################
+
+df.bumfordCmpLow <- subset(results, 
+                           Adjective=="bigger" & 
+                             DefArtMeaning=="bumford" & 
+                             Model=="haddock_model.wppl" & 
+                             ListenerLevel==1 & 
+                             allowUninformativeThresholds=="lastresort" &
+                             cmpHighScopeConstrualProb==0  
+)
+
+plot.bumfordCmpLow <- ggplot(df.bumfordCmpLow, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Bumford-the + bigger","Pragmatic L1, low comparative scope") +
+    facet_wrap(~Context)
+  
+plot.bumfordCmpLow
+
+##################################################################
+## Plot Bumford, cmp:high
+#################################################################
+
+df.bumfordCmpHigh <- subset(results, 
+                            Adjective=="bigger" & 
+                              DefArtMeaning=="bumford" & 
+                              Model=="haddock_model.wppl" & 
+                              ListenerLevel==1 & 
+                              allowUninformativeThresholds=="lastresort" &
+                              cmpHighScopeConstrualProb==1  
+)
+
+plot.bumfordCmpHigh <- ggplot(df.bumfordCmpHigh, aes(x=Condition, y=Probability, fill=Container)) + 
+  geom_bar(position="fill", stat="identity") +
+  fillScale +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Probability of Referent Choice") +
+  ggtitle("Bumford-the + bigger","Pragmatic L1, high comparative scope") +
+    facet_wrap(~Context)
+  
+plot.bumfordCmpHigh
+
+@
+\caption{Simulation results for model using Bumford's meaning (L1). Top: Low scope for comparative. Bottom: High scope}
+\label{model-output-bumford-cmp}
+\end{figure}
+
+
+\pagebreak
+
+
+\subsection{Pragmatic Listener 2}
+
+\noindent
+Below we present a model that includes another level of recursion, i.e. Pragmatic Speaker 2. The details of the model below do not include the literal listener and level 1 speaker.\\
+
+\noindent
+\textbf{Pragmatic Listener}
+
+\begin{equation} 
+  L_1(r\given d) \propto \sum_C \sum_\theta S_1(d\given r,C,\theta) \cdot P(r\given C)\cdot P(\theta\given C,d)\cdot P(C)
+  \label{l1-full}
+\end{equation} 
+
+\noindent
+\textbf{Pragmatic Speaker}
+\begin{equation} 
+  S_2(u\given r) \propto    \text{exp}(\alpha \times \text{ln} (L_1(r\given d) ) -    \textsf{cost}(d)) 
+  \label{pragmatic-speaker}
+\end{equation} 
+
+\noindent
+\textbf{Second Level Pragmatic Listener (L2)}
+\begin{equation} 
+  L_2(r\given d=N_1\textnormal{ in the (Adj) }\textsf{[masked]}) \propto  \sum_{N_2}S_2(u\given r) \cdot P(r)
+  \label{s2-pragmatic-listener}
+\end{equation} 
+
+
+\subsection{Simulation Results for Pragmatic Listener 2 Models}
+
+\begin{figure}[h]
+\centering
+<<Plot-standard2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+
+prag.list2<-read.csv("model-outputs-Nov25.csv", header=TRUE)
+
+bags.standard2<-subset(prag.list2, Container=="bag" & DefArtMeaning=="standard" & Model=="haddock_model.wppl" & ListenerLevel==2)
+
+standard2<-ggplot(bags.standard2, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Standard Meaning (L2)") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+standard2
+@
+\caption{Simulation results for model using standard meaning (L2).}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+<<Plot-bumford2, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width = 6, fig.height=3.5>>=
+
+## Plots ##
+
+bags.bumford2<-subset(prag.list2, Container=="bag" & DefArtMeaning=="bumford" & Model=="haddock_model.wppl" & ListenerLevel==2)
+
+bumford2<-ggplot(bags.bumford2, aes(x=Condition, y=Probability, fill=Adjective)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_manual(values=cbPalette) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=15),  
+        axis.title.x = element_text(size=18),
+        axis.title.y = element_text(size=18),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=14)
+  ) +
+  ylim(0,1) +
+  xlab("Display Type") +
+  ylab("Bag Resolution") +
+  ggtitle("Bumford's Meaning (L2)") +
+  facet_grid(Context ~ Adjective) +
+  labs(fill="Adj. Type")
+
+bumford2
+#ggarrange(standard, bumford + rremove("x.text"), 
+#          heights = c(2, 2.5),
+ #         ncol = 1, nrow = 2)
+@
+\caption{Simulation results for model using Bumford's meaning (L2).}
+\end{figure}
+
+
+%\textbf{Questions to consider or to keep in mind:} No inference over thresholds or contexts at L2? I have used a flat prior over contexts here. Something is off with the comparative. These models take a really long time to run!
+

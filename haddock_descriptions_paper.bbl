@@ -1,5 +1,5 @@
 \newcommand{\SortNoop}[1]{}
-\begin{thebibliography}{14}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{}
@@ -31,14 +31,6 @@ Bumford, Dylan. 2017.
 \newblock \emph{Linguistics and Philosophy} 40(6). 549--593.
 \newblock \urlprefix\url{https://doi.org/10.1007/s10988-017-9210-2}.
 
-\bibitem[{Chambers et~al.(2002)Chambers, Tanenhaus, Eberhard, Filip \&
-  Carlson}]{chambers+al:2002}
-Chambers, Craig~G., Michael~K. Tanenhaus, Kathleen~M. Eberhard, Hana Filip \&
-  Greg Carlson. 2002.
-\newblock Circumscribing referential domains during real-time language
-  comprehension.
-\newblock \emph{Journal of Memory and Language} 47. 30--49.
-
 \bibitem[{Coppock \& Beaver(2014)}]{coppock+beaver:salt2014}
 Coppock, Elizabeth \& David Beaver. 2014.
 \newblock A superlative argument for a minimal theory of definiteness.
@@ -51,22 +43,10 @@ Coppock, Elizabeth \& David Beaver. 2014.
 \newblock Identificational focus versus information focus.
 \newblock \emph{Language} 245--273.
 
-\bibitem[{Haddock(1987)}]{haddock:1987}
-Haddock, Nicholas~J. 1987.
-\newblock Incremental interpretation and {Combinatory Categorial Grammar}.
-\newblock In \emph{Proceedings of the 10 {International Joint Conference on
-  Artificial Intelligence}}, vol.~2, 661--663. Morgan Kaufmann.
-
 \bibitem[{Heim(1999)}]{heim:1999}
 Heim, Irene. 1999.
 \newblock Notes on superlatives.
 \newblock {M}anuscript, {MIT}.
-
-\bibitem[{Muhlstein et~al.(2015)Muhlstein, Potts, Frank \&
-  Levy}]{muhlstein+al:2015}
-Muhlstein, Larry, Christopher Potts, Michael~C. Frank \& Roger Levy. 2015.
-\newblock Pragmatic coordination on context via definite reference.
-\newblock Poster presented at {XPRAG 2015}.
 
 \bibitem[{Sleeman(2010)}]{sleeman:2010}
 Sleeman, Petra. 2010.
@@ -76,21 +56,10 @@ Sleeman, Petra. 2010.
   \emph{Adjectives: Formal analyses in syntax and semantics}, 233--263. John
   Benjamins.
 
-\bibitem[{Stone \& Webber(1998)}]{stone+webber:1998}
-Stone, Matthew \& Bonnie Webber. 1998.
-\newblock Textual economy through close coupling of syntax and semantics.
-\newblock In \emph{Proceedings of the 9th international workshop on natural
-  language generation ({INLG})}, 178--187. Niagra-on-the-Lake, ON.
-
 \bibitem[{Szabolcsi(1986)}]{szabolcsi:1986}
 Szabolcsi, Anna. 1986.
 \newblock Comparative superlatives.
 \newblock In Naoki Fukui, Tova Rapoport \& Elizabeth Sagey (eds.), \emph{Papers
   in theoretical linguistics}, 245--265. Cambridge, MA: MITWPL.
-
-\bibitem[{{van Eijck}(1993)}]{vaneijck:1993}
-{van Eijck}, Jan. 1993.
-\newblock The dynamics of description.
-\newblock \emph{{Journal of Semantics}} 10(3). 239--267.
 
 \end{thebibliography}

@@ -1,0 +1,220 @@
+
+Suppose there are three bags, two rabbits, a frog, and a calculator on a table before you. 
+One of the rabbits is in one of the bags, 
+and the other two bags contain the frog and the calculator, respectively.
+You are instructed to point to {\em the bag}. 
+``Which bag?'' you might object in puzzlement; there are three.
+Asked to point to {\em the rabbit in the bag}, however, you would confidently pick out the rabbit in {\em the bag that has a rabbit in it}. 
+Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are known as {\em Haddock descriptions} \citep{haddock:1987}.
+
+As \citet{bumford:2017} points out, Haddock descriptions have much in common with so-called {\em relative readings} of superlatives. In \ref{superlative}, for example, {\em the biggest bag} can refer either to the biggest of all bags (absolute reading), or the biggest of the bags that contain rabbits (relative reading). 
+
+\begin{exe}
+\ex\label{superlative} the rabbit in the biggest bag
+\end{exe}
+
+Both Haddock readings of embedded definite descriptions and relative readings of superlatives involve an apparent enrichment of the content in the lower noun phrase. 
+
+
+%According to scope-based theories of superlatives \citep{szabolcsi:1978,heim:1999,bumford:2017}, 
+%an absolute reading obtains when the superlative adjective is interpreted in its base position. %Under this reading, sentence (\ref{superlative}) is true iff the context contains a unique rabbit that is in the unique biggest bag. 
+On the other hand, a relative reading arises when the superlative adjective scopes out above the higher NP. 
+In this case, the description can refer as long as there is a unique rabbit that is inside the biggest rabbit-containing bag, even if the context contains bigger rabbitless bags. 
+To put it differently, the scope of the superlative determines the comparison class (CC) against which the adjective is interpreted. 
+In a nutshell: low scope, CC of bags; high scope, CC of rabbit-containing bags.
+%Comparison class calculation tracks scope of the definite.
+%\footnote{This depends on the assumption that the scope of the definite marks the upper bound.}
+
+%According to \citet{bumford:2017}, the definite article can also take scope. In a case like {\em the rabbit in the bag}, the lower {\em the} can either be interpreted {\em in situ}, in which case it requires uniqueness (within the relevant situation) with respect to the predicate `bag', or with scope over {\em rabbit}, in which case it requires uniqueness with respect to the predicate `rabbit-containing bag'. The possibility of high scope for the definite article opens the door for high scope of the superlative in a case like {\em the rabbit in the biggest bag}. When both are interpreted with high scope, it is as if {\em hat} means `rabbit-containing bag'.
+
+Superlative adjectives are however not the only adjectives that are interpreted w.r.t.\ a CC. Positive and comparative form adjectives have this property as well.\footnote{Discussion will be restricted to relative adjectives, since among gradable adjectives this is the only class that is generally agreed to be interpreted w.r.t.\ a CC.}
+
+\begin{exe}
+\ex\label{poscmp}
+\begin{xlist}
+\ex\label{pos} the rabbit in the big bag
+\ex\label{cmp} the rabbit in the bigger bag
+\end{xlist}
+\end{exe}
+
+However, these three types of predicates also differ in fundamental ways. First, the threshold of a positive form adjective is not semantically bound. Interpreted w.r.t.\ context:\footnote{Here we use POS but could also be using typeshifting for this.} CC argument semantically provided?
+
+\begin{exe}
+%EEC: What is going on here? Super confused.
+\ex $\valueof{A}=\lambda \theta_A\lambda x[\mu_A(x) > \theta_A]$
+\end{exe}
+\begin{exe}
+%EEC changed s_A to x inside square brackets.
+\ex $\valueof{POS}= \lambda A\lambda x[A(x) > s_A]$
+\end{exe}
+
+This meaning is by Heim (1999). Liz? reasoning for having CC argument in the semantics?
+%For the positive form, the CC constrains but doesn't determine the threshold, and once you have the threshold, you don't need the CC.
+%Maybe the reason for having the CC argument in the semantics is that "tallest woman" can't mean "tallest individual, who also happens to be a woman"? Not 100% clear on how this question fits in to the argument.
+
+\begin{exe}
+\ex $\valueof{-est}=  \lambda C\lambda A\lambda x\exists d[A(d)(x) \wedge \forall y \in C[y \neq x \rightarrow \sim A(d)(y)]]$\\
+     Presupposes that x $\in$ C and that all other members in C have some degree of the adjectival property.
+\end{exe}
+
+\begin{exe}
+\ex \valueof{-er}=
+\end{exe}
+
+
+\begin{exe}
+\ex $\valueof{POS A}=\lambda x[\mu_A(x) > s_A]$
+\end{exe}
+
+\begin{exe}
+\ex $\valueof{A-[est C]}= \lambda x\exists d[\mu_A(x) > d \wedge \forall y \in C[y \neq x \rightarrow \sim \mu_A(y) > d]]$
+\end{exe}
+
+\begin{exe}
+\ex \valueof{A-er}=
+\end{exe}
+
+Because as see in XX, pos and rel do not have uniqueness, it could be the case that CC does not track definite (2b-c):
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex uniqueness(Adj(N1 N2)) \hfill Det: HIGH; Adj: HIGH [Allows Relative Reading]
+\ex uniqueness(N1 Adj N2) \hfill Det: HIGH; Adj: LOW [Allows Relative Reading]
+\ex uniqueness(N1 uniqueness(Adj N2)) \hfill Det: LOW; Adj: LOW [Does not Allow Relative Reading]
+\end{xlist}
+\end{exe}
+
+
+Here we ask the question of whether unmodified and comparative relative adjectives give rise to relative readings (\ref{poscmp}).
+Such relative readings could be detected if externally-imposed constraints on a referent constrain the interpretation of gradable adjectives characterizing that referent. 
+Put it differently, relative readings arise if both the comparative and the positve form adjectives can take high scope above the higher NP.
+For instance, on its relative reading (\ref{cmp}) is true iff the context contains exactly two rabbits in bags and exactly two rabbit-containing bags, as long as such bags differ in size.
+The case of positive form gradable adjectives is different, as these predicates have been argued to be context-sensitive such that their interpretation involves resolving an adjectival threshold with respect to a contextually salient Comparison Class determined by the head noun. 
+
+A relative reading for a positive form relative adjective like (\ref{pos}) arises if further external constraints beyond the meaning of the head-noun (e.g.\ containing a rabbit) constrain the comparison class used for the evaluation of the adjective.
+More specifically, the relative reading of (\ref{pos}) is true iff there is a unique rabbit that is in the unique rabbit-containing bag that is big in the context.
+
+
+%Haddock proposed that the problem posed by these nested definites disappears if  semantic interpretation proceeds incrementally, i.e., from left to right. 
+%In this view, identifying the referent of a definite description is conceived as a constraint satisfaction task, in which constraints are added incrementally as comprehension proceeds.
+%As new information about the referent comes in, the listener narrows down the set of potential referents to those individuals that are compatible with the linguistic information.  
+%The description is felicitous if there is only one individual who satisfies all the necessary constraints, including those imposed internally to the noun phrase (e.g.\ being a hat), and those imposed externally (e.g.\ containing a rabbit).
+
+%In the example we started with, this would be the case if there is only one $y$ such that (i) $x$ is a rabbit; (ii) $y$ is a bag; and (iii) $x$ is in $y$.
+%One can readily see that in our original example incremental interpretation ensures that these constraints are met; by the time the description is fully interpreted, the context is  circumscribed to rabbit-containing bags, thus satisfying the uniqueness requirement of the nested definite.
+
+
+%Solutions of the sort proposed by Haddock are compatible with psycholinguistic findings of online language comprehension during reference resolution tasks. In seminal work using the Visual World eye-tracking paradigm, Eberhard and colleagues (1995) found that listeners incrementally constrain the set of potential referents when interpreting descriptions of the form {\em the starred yellow square} as new linguistic input unfolds over time.
+%Other references that we might want to add eventially  Altmann \& Kamide (1999); Kako \& Trueswell (2000). 
+
+
+%Furthermore, it has also been shown that listeners rapidly integrate other sources of information above and beyond linguistic information. 
+%For instance, it has been noted that adjectivally modified definite descriptions such as {\em the tall glass} give rise to inferences about contrast such that the prenominal adjective is expected to disambiguate between two objects of the same category that differ only with respect to the degree to which they bear the adjectival property (e.g., a tall and a short glass). 
+%Put in Gricean terms, prenominal adjectives give rise to informativity expectations.
+%In a Visual World eye-tracking study, Sedivy et al. (1999) showed that listeners use contextual information about contrast predictively to guide reference resolution during the processing of adjectivally modified Noun Phrases. 
+%Their results demonstrated that listeners were faster at identifying the referent of an auditorily presented modified NP such as {\em the tall glass} when the visual context supported a contrastive interpretation of the adjective (i.e., when the visual context contained a contrast set formed by a tall and a short glass) compared to contexts where the adjective was used redundantly (i.e., contexts that only contained a tall glass). 
+%Importantly, participants were able to identify the referent of the definite description during the adjective window, before any information about the head-noun was available to them.
+%This was the case despite the fact that the visual context also contained a competitor object that could also be described by the prenominal adjective (e.g. a tall pitcher).
+%The fact that participants were able to use information about contrast to identify the referent of the description at a point where the linguistic input was still ambiguous between two objects (i.e. the tall glass and the tall pitcher) demonstrates that listeners rapidly integrate both linguistic and pragmatic information, thus supporting the view that language processing proceeds incrementally.
+
+
+%Without being fully explicit about the mechanisms, \citet{vaneijck:1993} offers a variation on Haddock's idea in terms of dynamic semantics: The inner noun phrase is associated with a discourse referent, upon which constraints are added sequentially in the manner that dynamic meanings update contexts. 
+%\citet{bumford:2017} offers a fully explicit dynamic semantic account. 
+%Bumford proposes that the uniqueness requirement of the inner definite of a Haddock definite can be satisfied through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above the higher noun (i.e. {\em rabbit} in our original example), thus ensuring that uniqueness is only checked with respect to rabbits that are inside bags. 
+%In that scope position, what the uniqueness requirement demands is that there be no more than one {\em bag containing a rabbit}, even if there is more than one {\em bag}. Bumford's dynamic semantic account does not rely on incremental processing, but it does implement Haddock's idea that uniqueness is checked relative to a conglomeration of internal constraints (being a bag) and external constraints (containing a rabbit).
+
+%A possible challenge to a scope-based account such as Bumford's can be found in facts pertaining to the interpretation of unembedded definites, which can also involve a flexible conception of uniqueness. 
+%In an eye-tracking study, \citeauthor{chambers+al:2002} find that given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question, even if there are multiple cans in the display.
+%This suggests that entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
+%These experimental findings also bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the bag} or {\em Bill put the rabbit in the bag}, where the PP containing the second definite is a syntactic argument of the verb.
+
+%Under all of these views, it is not only the descriptive content of the noun phrase that uniqueness is determined relative to; it is the sum of all of the constraints imposed on the referent, including those imposed externally. 
+
+%A view that is consistent with these kinds of uses is offered by \citet{muhlstein+al:2015}.
+%They propose that listeners reason probabilistically about the context relative to which a definite description should be interpreted. 
+%Under this proposal, the task of the listener, upon hearing a definite description, is to infer the referent of the description {\em and} the (partition of the) context that satisfies the uniqueness requirement of the definite article, relative to the descriptive content of the noun phrase.
+
+%Although uniqueness is only checked relative to the description-internal constraints, the description-external constraints play a role in restricting the context.
+
+
+%This solution differs from the semantic account of Haddock Descriptions put forth by Bumford in that uniqueness is independently checked for each definite article {\em in situ}. 
+%This account also differentiates itself from Haddock's proposal in that context-restriction effects are achieved without assuming incremental interpretation.
+
+%Putting this idea of context flexibility together with incremental processing, we might imagine a view on which context narrowing occurs incrementally, so that referents that are not compatible with the linguistic input are automatically eliminated from the context. For example, after hearing {\em the rabbit in the}, all referents that do not contain a rabbit are eliminated from the current context.\footnote{A question arises then as to how something like {\em the rabbit in the hat with the bow on top} would be interpreted. The bow would have been eliminated from the context, if it didn't contain a rabbit. To handle such things, it would seem necessary to assume a `resetting' of the context for every new noun phrase.}
+
+
+
+
+%The interpretation of gradable adjectives is usually assumed to depend on a contextually salient CC that is provided by the head noun. 
+%Split-scope theories of Haddock Descriptions predict that the positive form adjective, just like the comparative, could be interpreted low or high.
+%If prenominal adjectives are interpreted with respect to a Comparison Class that is determined by the material in the scope of the adjective.
+
+
+%In particular, the noun constrains the comparison class ({\em tall building} vs.\ {\em tall stack of paper}), so description-internal constraints on the discourse referent clearly restrict the comparison class for a gradable adjective. 
+
+%If the loosening of the uniqueness requirement is due to a tightening of the context in this fashion, then context-sensitive expressions other than the definite article should be affected. Let's call this the \textbf{incremental context-narrowing hypothesis}.
+
+%To address this question, we use relative adjectives (e.g., {\em big}), a class of context-sensitive adjectives whose interpretation is resolved with respect to a contextually salient Comparison Class (CC), and their comparative form (e.g., {\em bigger}).
+%More precisely, consider the adjectivally modified  Haddock Description {\em the rabbit in the big bag}. 
+%High Scope Interpretation: the inner DP is further restricted to rabbit-containing bags therefore resulting in the complex CC.
+%Low Scope Interprtation: the inner DP is not further restricted.
+
+
+
+
+
+%The incremental context-narrowing hypothesis predicts that the CC against which the adjective is evaluated should consist of bags that contain rabbits in them.
+%This is because the previously interpreted noun {\em rabbit} ensures that, to the extent that there are any bags left in the domain of reference, they will contain a rabbit in them.
+%The description will be semantically defined if and only if, upon semantic evaluation, the domain of reference contains a unique rabbit and a unique bag such that i) the bag's size is bigger than any other bag left in the domain; and ii) the bag contains the unique rabbit that's in a bag.
+%On the other hand, if the felicity of Haddock descriptions does not result from incremental semantic interpretation, the CC used to evaluate the relative adjective should consist of all the bags present in the maximal context, regardless of whether they contain a rabbit or not.
+
+We test this question experimentally by examining the interpretational preferences of positive and comparative modified Haddock descriptions where the nested noun has been masked (e.g., {the rabbit in the big/ger} [masked]).
+In our experiment, these truncated descriptions are evaluated against visual contexts that support two possible resolutions of the noun (e.g., a rabbit inside a big/ger bag and a rabbit inside a big/ger box).
+%Our visual displays are designed such that each of the two possible resolutions enforces a CC for the evaluation of the adjective that's compatible only with a local, i.e., non-incremental interpretation of the nested NP (e.g., a CC of bags), or allows both types of CCs (e.g., a CC of bags, and a CC of rabbit-containing bags).
+We use the choice of referent as the dependent measure that allows us to examine how our participants chose to resolve the meaning of the adjective before any linguistic information about the head-noun is available, thus ensuring that referent choice is guided by previous linguistic information, as well as the visual properties of our displays.
+
+Our results show that referent choice is modulated by referents that are incompatible with the available linguistic input (e.g., for the bag resolution, bags that do not contain rabbits in them) for positive but not for comparative form adjectives.
+These findings suggest that, while comparative adjectives display genuine relative readings, positive form adjectives do not give rise to such readings, despite surface appearances.
+%Are apparent relative readings for pos modified Haddock Descriptions the result of true high scope readings, or the result of threshold uncertainty, i.e., context-sensitivity.
+We present computational simulations showing that apparent relative readings for positive form adjectives result from a crucial difference in the lexical semantics of relative positive form adjectives and their comparative counterparts, namely that only the former involve resolving a contextual threshold variable. 
+In particular, our simulations show that the appearance of relative readings for positive form adjectives can be explained as the result of higher uncertainty about the adjectival threshold value in the relevant contexts.
+
+
+
+
+%If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. That's what we test. We test incremental semantic processing account through our experiments. Our results show that incremental interpretation is wrong. We use computer simulations to further explore which of the gramatical or pragmatic accounts that do not involve incremental context narrowing works best. Our results show that both split-scope definites and context-coordination are needed in order to account for all our experimental results. 
+
+%On this semantic approach, the loosening of the uniqueness requirement does not involve elimination of certain referents from consideration through incremental semantic interpretation and/or pragmatic reasoning.HaddockThese two solutions have in comon that the formulation if uniqueness is left untouched.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% FROM OLD INTRO %%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\citet{haddock:1987} characterized the task of the listener when presented with such descriptions as a {\em constraint satisfaction problem} of the kind studied in Artificial Intelligence: 
+%Find the unique $x$ such that (i) $x$ is a rabbit; (ii) $y$ is a hat; and (iii) $x$ is in $y$. \citet{vaneijck:1993} cast the same idea in dynamic semantics. 
+%The description is felicitous if a unique such $x$ can be found. 
+%But neither \citeauthor{haddock:1987} nor \citeauthor{vaneijck:1993} specified the process by which a listener can determine that this is the problem before her, and in principle, these constraints could be derived either semantically or pragmatically.
+
+%According to \citet{bumford:2017}, the uniqueness requirement of the inner definite in {\em the rabbit in a hat} can be loosened through a scope-taking mechanism that lets the uniqueness requirement of the definite article take scope above {\em rabbit}. 
+%In that scope position, what the uniqueness requirement demands is that there be no more than one {\em hat containing a rabbit}, even if there is more than one {\em hat} simpliciter.
+%On this semantic approach, the loosening of the uniqueness requirement does not involve elimination of certain referents from consideration through pragmatic reasoning.
+
+%But it is known that the process of identifying a referent for {\em unembedded} definite descriptions involves a flexible conception of uniqueness, on which entities that meet the description but cannot possibly serve as the intended referent are excluded from the count. 
+%Given the instruction {\em Put the cube inside the can}, listeners easily identify the referent of {\em the can} as the one that is large enough to hold the cube in question \citep{chambers+al:2002}, even if there are multiple cans in the display. 
+%These experimental findings bolster the observation by \citet{stone+webber:1998} that in the kind of scenario we began with, it would be felicitous to utter either {\em Remove the rabbit from the hat} or {\em Bill put the rabbit in the hat}.
+%Given this, the disappearance of the uniqueness requirement for the inner definite of a Haddock description might reasonably be seen as an instance of the same phenomenon, involving commonsense reasoning to exclude certain potential referents from consideration. One particular way of caching this out, suggested by \citet{muhlstein+al:2015}, is that the listener reasons probabilistically about the context relative to which a definite description should be interpreted.%
+
+%If the loosening of the uniqueness requirement for a definite description is due to tightening of the context, then we might expect other context-sensitive expressions in the embedded noun phrase to change their interpretation accordinngly. The question that this paper aims to address is whether or not such a phenomenon occurs, specifically with gradable adjectives.
+
+%To that end, the present paper investigates the interpretation of gradable adjectives embedded inside Haddock descriptions, as in {\em the rabbit in the big hat}.
+%Given that the relevant set of hats for the purpose of the definite description contains only ones with rabbits in them, does that restrict what hats are included in the comparison class for {\em big}?
+%{\em Ceteris paribus,} the semantic approach predicts that the comparison class for {\em big} should not be restricted to rabbit-containing hats, as there is no context narrowing on this view.
+%On the other hand, if Haddock descriptions involve context narrowing, then, depending on how this idea is implemented, we might expect that the comparison class for {\em big} should be restricted to rabbit-containing hats.
+
+%Our experiments show that the comparison class for {\em big} includes all hats, not just the ones containing rabbits. 
+%This is straightforwardly predicted under the semantic approach to Haddock descriptions, and places some constraints on how the pragmatic approach should work. 
+%If the loosening of the uniqueness requirement for definite articles is due to context-narrowing, this narrowing is not so powerful and all-encompassing that it affects comparison classes for gradable adjectives.\\
+
