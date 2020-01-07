@@ -1,5 +1,5 @@
 \newcommand{\SortNoop}[1]{}
-\begin{thebibliography}{9}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{}
@@ -31,30 +31,16 @@ Bumford, Dylan. 2017.
 \newblock \emph{Linguistics and Philosophy} 40(6). 549--593.
 \newblock \urlprefix\url{https://doi.org/10.1007/s10988-017-9210-2}.
 
-\bibitem[{Coppock \& Beaver(2014)}]{coppock+beaver:salt2014}
-Coppock, Elizabeth \& David Beaver. 2014.
-\newblock A superlative argument for a minimal theory of definiteness.
-\newblock In Todd Snider (ed.), \emph{{Semantics and Linguistic Theory (SALT)}
-  24}, 177--196. Ithaca, NY: CLC Publications.
-\newblock \urlprefix\url{http://dx.doi.org/10.3765/salt.v24i0.2432}.
-
-\bibitem[{{\'E. Kiss}(1998)}]{kiss:1998a}
-{\'E. Kiss}, Katalin. 1998.
-\newblock Identificational focus versus information focus.
-\newblock \emph{Language} 245--273.
+\bibitem[{Haddock(1987)}]{haddock:1987}
+Haddock, Nicholas~J. 1987.
+\newblock Incremental interpretation and {Combinatory Categorial Grammar}.
+\newblock In \emph{Proceedings of the 10 {International Joint Conference on
+  Artificial Intelligence}}, vol.~2, 661--663. Morgan Kaufmann.
 
 \bibitem[{Heim(1999)}]{heim:1999}
 Heim, Irene. 1999.
 \newblock Notes on superlatives.
 \newblock {M}anuscript, {MIT}.
-
-\bibitem[{Sleeman(2010)}]{sleeman:2010}
-Sleeman, Petra. 2010.
-\newblock Superlative adjectives and the licensing of non-modal infinitival
-  subject relatives.
-\newblock In Patricia~Cabredo Hofherr \& Ora Matushansky (eds.),
-  \emph{Adjectives: Formal analyses in syntax and semantics}, 233--263. John
-  Benjamins.
 
 \bibitem[{Szabolcsi(1986)}]{szabolcsi:1986}
 Szabolcsi, Anna. 1986.

@@ -223,8 +223,7 @@ execute_model <- function(randomVariable, cond, model, context, defArt, package,
 conds <- c(1, 2, 3)
 contexts <- c("cco","no-cc")
 defArtMeanings <- c("bumford", "standard")
-#pragListenerLevels <- c(1,2)
-pragListenerLevels <- c(1)
+pragListenerLevels <- c(1,2)
 models <- c("haddock_model.wppl") #,"haddock_model_pragmaticListener2.wppl")
 #gamma is probability that any given referent will be included in the context
 gamma <- .5
@@ -232,8 +231,8 @@ gamma <- .5
 costCoefficient <- 1
 cmpHighScopeConstrualProb <- 0
 posHighScopeConstrualProb <- 1
-cmpHighScopeConstrualProbs <- c(0,1)
-posHighScopeConstrualProbs <- c(0,1)
+cmpHighScopeConstrualProbs <- c(0,0.5,0.9,1)
+posHighScopeConstrualProbs <- c(0,0.5,0.9,1)
 
 allowUninformativeThresholds <- "disallow"
 allowUninformativeThresholdLevels <- c("allow","disallow","lastresort")
@@ -257,9 +256,8 @@ test_result <- execute_model(pos,
 test_result 
 
 #Do we want to calculate the model results?
-#Or read them from a file?
-
 recalculate_model_results <- FALSE
+#Or read them from a file?
 read_model_results <- TRUE
 
 # Execute Model
@@ -359,37 +357,194 @@ if (read_model_results) {
 
 @
 
+\begin{abstract}
+Definite articles, superlative adjectives, and positive adjectives are all interpreted relative to a given class of objects---a `comparison class', broadly construed. 
+This article investigates whether restrictions on the comparison class for a definite article are always inherited by other comparison class-sensitive modifiers in the same noun phrase. For both definite descriptions and superlative adjectives, the comparison class can be restricted by surrounding lexical material; for example; {\em the rabbit in the hat} can mean {\em the rabbit in the hat \underline{containing a rabbit}}, and {\em the rabbit in the biggest hat} can mean {\em the rabbit in the biggest hat \underline{containing a rabbit}}. When there are multiple comparison class-sensitive items within a single noun phrase, are the comparison classes subject to the same restrictions? With superlative adjectives like {\em biggest}, a mismatch would not be truth-conditionally distinguishable from a match. But with positive adjectives like {\em big}, mismatches are possible in principle to detect. We argue on the basis of both distributional and experimental evidence that a positive adjectives do not inherit the restrictions on the definite article. We find furthermore that comparative adjectives not only have the kinds of relative readings that superlatives have, but that these types of readings are strongly preferred by listeners in our experiments.
+\end{abstract}
+
 \section{\label{intro}Introduction}
 
-STRATEGY: There is evidence to suggest that both definite descriptions and superlative adjectives can scope both high and low. Are ``mixed readings'' possible, where the definite scopes high and the adjective scopes low? With superlatives, it's not possible to tell. With positive adjectives, you can tell. We will show this by comparing positive adjectives to comparatives behave like superlatives in all relevant respects but are more amenable to use in Visual World experiments.
+
+%Are ``mixed readings'' possible, where the definite scopes high and the adjective scopes low? 
+%Research question: Does any modifier that uses a comparison class use the same comparison class that the definite article uses, or can there be mismatches?
+
+
+Suppose there are three bags, two rabbits, a frog, and a calculator on a table before you. 
+One of the rabbits is in one of the bags, and the other two bags contain the frog and the calculator, respectively.
+You are instructed to point to {\em the bag}. 
+``Which bag?'' you might object in puzzlement; there are three.
+Asked to point to {\em the rabbit in the bag}, however, you would confidently pick out the rabbit in {\em the bag that contains a rabbit}. 
+Such nested definite descriptions, in which the inner definite seems to lose its uniqueness requirement, are known as {\em Haddock descriptions} \citep{haddock:1987}.
+
+As \citet{bumford:2017} points out, Haddock descriptions have much in common with so-called {\em relative readings} of superlatives. In \ref{superlative}, for example, {\em the biggest bag} can refer either to the biggest of all bags (absolute reading), or the biggest of the bags that contain rabbits (relative reading). 
+
+\begin{exe}
+\ex\label{superlative} the rabbit in the biggest bag
+\end{exe}
+
+Both Haddock readings of embedded definite descriptions and relative readings of superlatives involve an apparent enrichment of the content in the lower noun phrase. And in both cases, the enrichment of the content can be viewed as a scope-based phenomenon.
+
+According to scope-based theories of superlatives \citep{szabolcsi:1978,heim:1999,bumford:2017}, an absolute reading obtains when the superlative adjective is interpreted in its base position,  
+while a relative reading arises when the superlative adjective scopes out above the higher NP. 
+In this case, the description can refer as long as there is a unique rabbit that is inside the biggest rabbit-containing bag, even if the context contains bigger rabbitless bags. 
+To put it differently, the scope of the superlative determines the comparison class (CC) against which the adjective is interpreted. 
+In a nutshell: low scope, CC of bags; high scope, CC of rabbit-containing bags.
+
+According to \citet{bumford:2017}, the definite article can also take scope. In a case like {\em the rabbit in the bag}, the lower {\em the} can either be interpreted (i) {\em in situ}, in which case it requires uniqueness (within the relevant situation) with respect to the predicate `bag', or (ii) with scope over {\em rabbit}, in which case it requires uniqueness with respect to the predicate `rabbit-containing bag'. For the sake of discussion, let us stretch the term `comparison class' to describe this class relative to which the uniqueness is determined, for the definite article.
+
+For a case like {\em the rabbit in the biggest bag}, Bumford's system allows a reading on which both the definite article and the superlative take scope over {\em rabbit}. When both are interpreted with high scope, it is as if {\em bag} means `rabbit-containing bag'. Would it be possible for one to take high scope while the other remains {\em in situ}? In principle, nothing in Bumford's theory prevents this, but such a situation would be difficult if not impossible to detect. If the definite article took high scope while the superlative remained {\em in situ}, then uniqueness with respect to the embedded NP would be implied by the superlative description, so the definite article might as well be in the lower position. A reading on which the superlative took high scope while the definite remained {\em in situ} would yield a uniqueness requirement that is much stricter than the one imposed by other readings, so it would remain hidden.
+
+With positive-form gradable adjectives, on the other hand, it would be possible to detect a mismatch in scope between the definite article and the modifier.
+Positive-form adjectives are thought to involve a contextually-given threshold, whose value is constrained by a contextually salient comparison class. The comparison class is typically represented by the head noun; thus a {\em big bag} is big {\em for a bag}. But in principle, {\em the rabbit in the big bag} could be interpreted as {\em the rabbit in the big \underline{rabbit-containing} bag}, by analogy to definite descriptions and superlatives. This is the kind of reading that would arise if the adjective took high scope in the way that superlatives do. On a high-scope reading, the range of viable thresholds would be constrained more tightly by the smaller comparison class (bags that contain rabbits).
+
+This paper investigates the degree to which high scope readings are available for positive adjectives, using both traditional distributional evidence (Section \ref{sec:armchair}) and experimental evidence (Section \ref{sec:exp}). Both sources of evidence suggest that positive form adjectives do not have high scope readings. Or, to put it in terms that do not depend on a scope-based analysis of Haddock descriptions or relative readings of superlatives, constraints on the comparison class for definite articles are not inherited as constraints on the comparison class for gradable adjectives in the same noun phrase.
+
+\section{Distributional evidence}
+\label{sec:armchair}
+
+Superlatives are known to exhibit an ambiguity between so-called `absolute' and `relative' readings. In this section, we argue that comparatives have the same kinds of relative readings that superlatives have, and that positive adjectives do not. 
+
+\citet{szabolcsi:1986} pointed ou that superlatives obviate definiteness effects on focus-sensitive readings. Thus while \ref{def-effect} is degraded, \ref{sup-def-effect} is much less so. Example \ref{cmp-def-effect} shows that comparatives obviate definiteness effects as well. However, positive form adjectives do not, as shown in \ref{pos-def-effect}.
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex *Bernie has the campaign chairman.\label{def-effect}
+\ex Bernie has the most enthusiastic campaign chairman.\label{sup-def-effect}
+\ex Bernie has the more enthusiastic campaign chairman.\label{cmp-def-effect}
+\ex Pointing at two campaign chairmans having a conversation. \\*Bernie has the enthusiastic campaign chairman.\label{pos-def-effect}
+\end{xlist}
+\end{exe}
+
+So comparatives pattern like superlatives on relative readings with respect to this diagnostic, and positive form adjectives do not.
+
+As \citet{bumford:2017} discusses, relative readings of superlatives are blocked by possessives, and similar effect can be observed with comparatives, but not positive form adjectives. \ref{noposs-sup} is asking for the person who has read a longer play by Shakespeare than anyone else under consideration, while \ref{poss-sup} is asking who has read the play by Shakespeare that is longer than any other play by Shakespeare, namely Hamlet.
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex Who has read the longest play by Shakespeare?
+$\not\equiv$ Who has read Hamlet?\label{noposs-sup}
+\ex Who has read Shakespeare's longest play?\\
+$\equiv$ Who has read Hamlet?\label{poss-sup}
+\end{xlist}
+\end{exe}
+
+Similarly, in \ref{noposs-cmp}, without a possessive, the question concerns which of two individuals read a longer play by Shakespeare than the other; the comparison is among readers. On the other hand, in \ref{poss-cmp}, {\em Shakespeare's longer play} acts as a referring expression, presuming that Shakespeare only wrote two plays. Again, we see that possessives prevent relative readings visible elsewhere from arising.
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex Who has read the longer play by Shakespeare?\label{noposs-cmp}
+\ex Who has read Shakespeare's longer play?\\
+$\leadsto$ Shakespeare wrote two plays\label{poss-cmp}
+\end{xlist}
+\end{exe}
+
+In contrast, according to the native speaker intuitions of the English speakers we have consulted, we do not see a parallel effect with positive adjectives. Both \ref{noposs-pos} and \ref{poss-pos} imply that there was exactly one long play written by Shakespeare. 
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex\label{noposs-pos} Who has read the long play by Shakespeare?
+\ex\label{poss-pos} Who has read Shakespeare's long play?
+\end{xlist}
+\end{exe}
+
+If there were a relative (high-scope) reading for \ref{noposs-pos}, it would be much like the relative reading of \ref{noposs-sup}: Of the plays by Shakespeare that have been read by someone in the context, who has read the long one? But \ref{noposs-pos} does not seem to have such a reading.
+
+\citet{bhatt:1999,bhatt:2006} also points out that superlatives are among a restricted set of modifiers that license non-modal infinitival relative clauses, along with ordinals and exclusives. As it turns out, comparatives are like superlatives in this respect, but positive-form adjectives are not.
+
+\begin{exe}
+\ex
+\begin{xlist}
+\ex John gave Mary the most expensive telescope\label{sup-infin}
+\ex ... to be built in the 9th century.\label{sup-infin-cont}
+\end{xlist}
+\ex
+\begin{xlist}
+\ex John gave Mary the more expensive telescope\label{cmp-infin}
+\ex ... to be built in the 9th century.\label{cmp-infin-cont}
+\end{xlist}
+\ex
+\begin{xlist}
+\ex John gave Mary the long telescope
+\ex ... *to be built in the 9th century.
+\end{xlist}
+\end{exe}
+
+Interestingly, the continuation in \ref{sup-infin-cont} restricts the range of available readings for \ref{sup-infin}. In its absence, but only then, \ref{sup-infin} can mean that John gave Mary a more expensive telescope than he gave anyone else. Comparatives are subject to the same effect: The continuation in \ref{cmp-infin-cont} eliminates a reading for \ref{cmp-infin} where Mary is compared to an alterantive.
+
+Further evidence comes from ambiguities involving finite relative clauses.  \citet{bhatt:2002} observed that
+\ref{tolstoy:longest} is ambiguous betweeen what he calls `high' and `low' readings.
+
+\begin{exe}
+\ex the longest book that John said Tolstoy had written\label{tolstoy:longest}\\
+High reading: of the books John said Tolstoy wrote, the longest\\
+Low reading: the book John said was longest among the ones written by Tolstoy.
+%\begin{xlist}
+%\ex the first book that John said Tolstoy had written\label{tolstoy:first}
+%%\b. the only book that John said Tolstoy had written
+%\ex 
+%\end{xlist}
+\end{exe}
+
+Bhatt takes `low' readings as evidence in favor of a view of relative clauses on which the head noun (here: {\em book}) originates within the relative clause. This issue is not of concern here; we note only that the comparative version \ref{tolstoy:longer} is ambiguous in an analogous way, but the version with the positive adjective \ref{tolstoy:long} is not:
+
+\begin{exe}
+\ex the longer book that John said Tolstoy had written\label{tolstoy:longer}\\
+High reading: of the books John said Tolstoy wrote, the longer\\
+Low reading: the book John said was longer among the ones written by Tolstoy.
+\ex the long book that John said Tolstoy had written\\
+High reading: of the books John said Tolstoy wrote, the long one\\
+*Low reading: the book John said was long among the ones written by Tolstoy.\label{tolstoy:long}
+\end{exe}
+
+%Here is a random citation that somebody must have written down
+%hoping that they would remember it.
+%May someone one day remember what this was for.
+%\citet{sleeman:2010}: `identificational focus' \citep{kiss:1998a}
+
+Taken together, this distributional evidence suggests that positive adjectives are unlike comparative and superlative adjectives in that they lack so-called `relative readings'. In the following section, we present experimental evidence in further support of this conclusion.
 
 \section{Experiment}
+\label{sec:exp}
 
 \subsection{Design}
 
 Participants heard auditory instructions while looking at visual displays consisting of five images arranged in a circle. In experimental trials, the auditory instruction consisted of a request of the form `{\em Click on the rabbit in the big} [{\em masked}]', where the second NP had been masked with quite static noise. 
-Each display contained two possible referents compatible with the truncated description (e.g., a rabbit in a medium bag and a rabbit in a medium box in Figure \ref{displays}). 
-Given this ambiguity, participants were instructed to click on the referent that best matched the available linguistic content of the utterance given the visual display.
-By eliciting responses before the semantic integration of the noun takes place, we can tap into the participants' preferences for the CC used for the interpretation of the adjective as a function of the properties of the visual context.
+Each display contained two possible referents compatible with the truncated description (e.g., the rabbit in the medium-sized bag and the rabbit in the medium-sized box in Figure \ref{displays}). 
+Given this ambiguity, participants were instructed to click on the referent representing their best guess as to which of the referents in the visual display the speaker intended.
+
+By eliciting responses before the semantic integration of the noun takes place, we can tap into how listeners' expectations are affected by the adjective alone, given the visual context.
+A fully disambiguated instruction would have settled once and for all what the referent is; the ambiguous instruction gives a window into the information conveyed to the listener by the modifying adjective.
+%We need to explain how this works
 
 \begin{figure}[h]
 \centering
-    \includegraphics[width=11cm]{images/contexts.png}
-  \caption{Visual Displays tested in Experiment 1.}
+\begin{tabular}{ccc}
+Context 1 & Context 2 & Context 3 \\[.2em]
+    \includegraphics[width=2in]{images/Context1.png} & 
+    \includegraphics[width=2in]{images/Context2.png} &
+    \includegraphics[width=2in]{images/Context3.png}
+\end{tabular}    
+  \caption{Visual Displays tested in Experiment 1. Clicking on the audio button would launch an auditory instruction of the form, ``Click on the rabbit in the \textbf{big}/\textbf{bigger} [masked]''}
 \label{displays}
 \end{figure}
 
 The experimental manipulations targeted the content of the auditory instructions, as well as the features of the visual displays. 
-The first manipulated factor was the adjective type used to modify the masked NP in the auditory instruction.
-This modifier always consisted of the relative adjective {\em big} in either its positive ({\em big}) or comparative form ({\em bigger}). 
-Second, we manipulated the visual properties of the displays with respect to whether they contained a competitor object that was in the same container-type as one of the potential referents of the truncated description (i.e., a bag or a box). However, this competitor was not a possible referent of the global description, since it consisted of an animal that could not be described by the first NP in the description (e.g., a frog inside a bag). 
+The first manipulated factor was the type of adjective used to modify the masked NP in the auditory instruction.
+This modifier always consisted of {\em big} in either its positive ({\em big}) or comparative form ({\em bigger}). 
+
+Second, we manipulated two visual properties of the displays. The experimental manipulations described above were tested through the three visual contexts exemplified in Figure \ref{displays}. 
+One dimension along which the displays varied was whether they contained a competitor involving the same container-type as one of the potential referents of the truncated description (i.e., a big bag or a big box).
+This competitor was not a possible referent of the global description, because it did not fit the first NP in the description (e.g., a frog inside a bag). 
 Despite not being compatible with the global instruction, this referent acted as a competitor because the size of its container was always greater than the biggest rabbit-containing bag/box in the display.
-Thus, the competitor's container was the most appropriate referent of the nested definite description if interpreted in isolation (see Context 1, or leftmost panel, in Figure \ref{displays}). 
-The second visual manipulation determined whether the smallest box/bag in the display also contained a rabbit in it (e.g., a rabbit vs. a frog in the smallest box. See Contexts 1-2 vs. 3 respectively in Figure \ref{displays}). 
+Thus, the competitor's container was the most appropriate referent of the embedded definite description if interpreted in isolation (see Context 1, or leftmost panel, in Figure \ref{displays}). 
+
+The second visual manipulation was whether the smallest box/bag in the display also contained a rabbit in it (e.g., a rabbit vs. a frog in the smallest box. See Contexts 1-2 vs. 3 respectively in Figure \ref{displays}). 
 This manipulation determined whether the use of the adjective in the auditory instruction was informative, i.e., whether the mention of the adjective was required for successful reference resolution. 
 For instance, given Context 1 in Figure \ref{displays}, where the smallest box in the display contains a frog and the smallest bag contains a rabbit, the adjective in the instruction `{\em Click on the rabbit in the big} [masked]' is informative on the bag resolution, but superfluous on the box resolution, since in the latter case the shorter adjectiveless description `{\em Click on the rabbit in the} [masked]' would have sufficed to properly identify the referent in the medium box, but not the referent in the medium bag.
-The experimental manipulations described above were tested through the three visual contexts exemplified in Figure \ref{displays}. 
-
 
 \noindent
 \textbf{Todo:} Change labels Figure 1
@@ -398,45 +553,103 @@ The experimental manipulations described above were tested through the three vis
 
 \subsubsection{Visual Stimuli}
 
-Include targets and filler descriptions.
+Our experiments involved 12 targets and 24 fillers. The target items consisted of two animate objects, such as a rabbit and a frog, paired in some way (in or with) three possible inanimate objects beginning with the same letter, such as a box, a bag, and a basket. These are listed in Table \ref{table:target}.
+
+\begin{table}
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+itemnum & anim1       & anim2  & prep & inan1   & inan2      & inan3    \\ \midrule
+1       & rabbit      & frog   & in   & box     & bag        & basket   \\
+2       & frog        & bird   & in   & bathtub & bucket     & boat     \\
+3       & cat         & bird   & in   & truck   & tree       & tower    \\
+4       & boy         & girl   & with & pillow  & paintbrush & pen      \\
+5       & lady        & man    & with & fan     & fish       & flower   \\
+6       & girl        & man    & with & dog     & duck       & doll     \\
+7       & man         & girl   & with & sock    & scarf      & sandwich \\
+8       & bird        & rabbit & in   & can     & cup        & car      \\
+9       & monkey      & frog   & with & glue    & grapes     & glasses  \\
+10      & farmer      & lady   & with & cheese  & chair      & cherries \\
+11      & policewoman & boy    & with & carrot  & cookie     & cake     \\
+12      & horse       & cat    & with & ladder  & lizard     & lamp     \\ \bottomrule
+\end{tabular}
+\caption{Target items.}
+\label{table:targets}
+\end{table}
+
+The filler items determined a series of five images along with an accompanying instruction. More than half of the fillers involved a word that was masked, but not all. The phrases used were the following:
+
+\begin{quote}
+the glasses\\
+the green [masked]\\
+the blue fish in the [masked]\\
+the yellow [masked]\\
+the gray [masked] in the car\\
+the cheese\\
+the tall [masked]\\
+the tall tower with the [masked]\\
+the cat with the tall [masked]\\
+the tall [masked] with the man\\
+the girl\\
+the short [masked]\\
+the short pencil with the [masked]\\
+the dog with the short [masked]\\
+the short [masked] with the glass\\
+the car\\
+the taller [masked]\\
+the taller building with the [masked]\\
+the car with the tall [masked]\\
+the tall [masked] with the dog\\
+the shorter [masked]\\
+the short glass with the [masked]\\
+the cat with the shorter [masked]\\
+the shorter [masked] with the horse
+\end{quote}
+The visual displays contained appropriately contrasting and varied items, such as a cat with a big ladder, a cat with a small ladder, a cat with a big ladder, a girl with a big dog, a girl with a medium-sized dog, a man with a vase.
 
 \subsubsection{Auditory Stimuli}
 
+The auditory stimuli were recorded by a male speaker. Care was taken to ensure that speech rate, volume, and pitch were as consistent as possible both within and between targets and fillers.
+
 
 \subsection{Participants}
+
 We collected data from 242 native speakers of English through the crowd-sourcing platforms Amazon Mechanical Turk and Prolific.
-Data from 11 participants was removed from data analysis due to a lack of participants to pass attention checks, i.e., they did more than 5 mistakes in the filler trials.
-Finally, we removed data from three participants who took the experiment twice, resulting on a total of 225 participants.
+Data from 11 participants was removed from data analysis due to a failure to pass attention checks, i.e., they did more than 5 mistakes in the filler trials.
+Finally, we removed data from three participants who took the experiment twice, resulting in a total of 225 participants.
 
 \subsection{Predictions}
 
-We start with the predictions for Contexts 1 and 2, which differ only in the presence (Context 1) or absence (Context 2) of a competitor object (\emph{e.g.}, the frog in the bag).
-The goal of our experiment was to determine whether positive and comparative form adjectives give rise to relative readings when these predicates appear in the nested NP of a Haddock Description.
-A positive answer to this question would predict no difference between Contexts 1 and 2, whereas a negative answer would predict a dispreference for the bag resolution in Context 1 compared to Context 2 driven by the presence of a bag that does not contain a rabbit in it, and whose size is greater than any of the rabbit-containing bags in the display.
+The goal of our experiment was to assess listeners' expectations as to whether positive and comparative form adjectives would give rise to high-scope readings when these modifiers appear in the embedded NP of a Haddock description. In this section, we outline the qualitative effects predicted depending on whether the adjectives in question take high or low scope. (In Section \ref{sec:modelling} below, we will show exactly how these predictions are derived and specify models that make quantitative predictions.)
+
+%A positive answer to this question would predict no difference between Contexts 1 and 2, whereas a negative answer would predict a dispreference for the bag resolution in Context 1 compared to Context 2 driven by the presence of a bag that does not contain a rabbit in it, and whose size is greater than any of the rabbit-containing bags in the display.
 %These predictions are derived from the different nature of the Comparison Classes available to our participants for the evaluation of the relative adjective {\em big}.  
 
 We start with the predictions for the positive form adjective.
-If relative readings are available for the positive form adjective, we predict that participants should consider Comparison Classes of rabbit-containing bags to the exclusion of any rabbitless bags.
+To the extent that high-scope readings are available for the positive form adjective, participants should consider comparison classes of rabbit-containing bags, excluding any rabbitless bags.
 %consider Comparison Classes that are compatible with the available linguistic information up to and including the adjective. Based on this, the Comparison Class should consist of bags or boxes that crucially contain rabbits in them.
-However, if the high-scope reading of the adjective is not available, participants should only consider Comparison Classes that consist of all the bags in the context, regardless of whether they have a rabbit in them or not.
+However, if the high-scope reading of the adjective is not available, participants should only consider comparison classes that consist of all the bags in the context, regardless of whether they have a rabbit in them or not.
 
-In the context of our experiment, the latter situation would translate into a lower target selection rate of the rabbit in the medium bag in Context 1 compared to Context 2. This is due to the fact that no competitor effects are expected to arise, since the biggest bag in the display---which does not contain a rabbit---is not factored into the evaluation of the adjective.
-If, on the other hand, the relative reading is not available, the Comparison Class constructed by our participants should consist of all the bags in the display, regardless of whether they contain a rabbit or not in them. 
-Finally, in Context 3 we predict that the positive form should display competitor effects, with the bag resolution being below chance only if relative readings are not available.
+In the context of our experiment, the latter situation (low-scope for the positive form) would translate into a lower target selection rate of the rabbit in the medium bag in Context 1 compared to Context 2. This is due to the fact that the biggest bag in the display---which does not contain a rabbit---is not factored into the evaluation of the adjective when it takes high scope.
+If, on the other hand, a high-scope reading is not available, the comparison class  should consist of all the bags in the display, regardless of whether they contain a rabbit or not in them. 
+Finally, in Context 3 we predict that the positive form should exhibit an effect of the competing object in the display to the extent that it is interpreted with low scope. If the positive adjective is interpreted with high scope, then the bag resolution should be statistically on par with the box resolution, because the competing bag would be ignored.
 %Regarding the comparative conditions, neither of the two views under evaluation predict differences between Contexts 1 and 2, since comparative adjectives are not interpreted with respect to a Comparison Class, and should therefore not display any context-sensitive effects (See $\S$ \ref{cmp-semantics} for further details).%The predictions for the cmp need to be better spelled out.
 
-Regarding the comparative, the existence of a high-scope or relative reading should result in comparable target selection rates for the bag resolution in Contexts 1 and 2, whereas in Context 3, participants should be at chance. If relative readings are not available, the bag resolution should be undefined in Contexts 1 and 3, due to the fact that the cardinality of two presupposition associated with comparatives would not be satisfied (i.e., there would be three bags in the display).
+Regarding the comparative, we would expect comparable target selection rates for the bag resolution in Contexts 1 and 2 to the extent that a high-scope reading is preferred over a low-scope reading. 
+In Context 3, participants should be closer to chance, the more likely a high-scope reading is.
+
+If high-scope readings are not available for the comparative, the bag resolution should be undefined in Contexts 1 and 3, due to the fact that the cardinality-of-two presupposition associated with comparatives would not be satisfied (as there would be three bags in the display). 
 Furthermore, participants should be at chance in Context 2, since both resolutions satisfy the low scope reading of the comparative.
+
 
 \subsection{Results}
 
-Experimental results are shown in Figure \ref{results}, which plots the probability of bag resolution (\emph{i.e.}, proportion of clicks to the rabbit in the medium bag \emph{vs.} clicks on the the rabbit in the medium box)\footnote{this is not completely accurate. this plot still contains the few clicks the non-target objects. If we want to plot clicks to medium bag vs. everything else, the chance line needs to be changed accordingly.} in each of the three contexts tested. 
+Experimental results are shown in Figure \ref{results}, which plots the probability of bag resolution (\emph{i.e.} proportion of clicks to the rabbit in the medium bag \emph{vs.} clicks on the the rabbit in the medium box)\footnote{this is not completely accurate. this plot still contains the few clicks the non-target objects. If we want to plot clicks to medium bag vs. everything else, the chance line needs to be changed accordingly.} in each of the three contexts tested. 
 %The yellow line corresponds to chance after correcting for responses that did not correspond to any of these two objects (a total of X). 
 
 To analyze Contexts 1 and 2, we constructed a Bayesian hierarchical mixed logistic regression model using the \verb!brm()! function of the \verb!R! package \verb!brms! (B\"urkner, 2017).
 The model predicts clicks to the target referent corresponding to the bag resolution (\emph{i.e.}, the rabbit in the medium bag) using {\sc Adjective Type}, {\sc Display Type} and their interaction as main effect predictors, as well as {\sc Subjects} and {\sc Items} as random effects (see Table \ref{stats-interaction} for the full model specification). 
 The model was fit using 4 chains with 1000 warm-up samples and 1000 posterior samples, for a total of 4000 posterior samples, using uninformative priors and the Bernoulli family. 
-The chains mixed well (\emph{e.g.}, all R-hats were 1.01 or closer to 1) and there were no divergent transitions after warm-up.\footnote{Unless otherwise noted, the same settings were used for all the remaining analyses reported below.} 
+The chains mixed well (\emph{e.g.} all R-hats were 1.01 or closer to 1) and there were no divergent transitions after warm-up.\footnote{Unless otherwise noted, the same settings were used for all the remaining analyses reported below.} 
 For each of the models described below, we report the mean posterior estimates and 95\% credible condifence intervals, as well as tables containing the full model specification and main effects coefficients.
 
 Our results reveal that participants were less likely to choose the bag resolution in Context 1 compared to Context 2, as shown by the marginally significant interaction of {\sc Adjective Type} x {\sc Context Type} ($\beta$ = $-0.64[-1.32, 0.04]$, see Table \ref{stats-interaction}). 
@@ -768,22 +981,22 @@ These findings suggest that relative readings are available for comparative form
 %Sedivy and others after her found that pragmatic reasoning reasoning of context that leads to 
 %Point out that that other interactions between semantic meaning and context result in pragmatic strengthening, whereas in this case we have weakening.
 
-While our results rule out the high-scope interpretation of postive form adjectives, they leave open the question of what precise mechanisms underlie the observed patterns of results. 
-We suggest that our results regarding positive form adjectives receive a straightforward interpretation if we take into consideration the higher uncertainty about the value of the adjectival threshold involved in Contexts 1 and 3 if the bag resolution is adopted. 
-We use computer simulations to test this hypothesis.
 
-%the pragmatic and semantic accounts introduced in $\S$\ref{intro} with the goal of determining which of these models best fits our experimental findings.
-
-\section{\label{semantic-assumptions}Semantic Assumptions}
+Our results suggest that positive form adjectives tend to be interpreted with low scope, while comparative form adjectives are interpreted with high scope. However, they also suggest that the scope preferences of the two adjectives under consideration may not be categorical. In the following section, we develop precise computational models that allow for mixtures of high and low scope, in order to determine precisely what the underlying scope probabilities are.
 
 
-\subsection{Positive (\ol{big})}
+\section{Modelling}
+
+\subsection{Semantic Assumptions}
+\label{semantic-assumptions}
+
+\subsubsection{Positive (\ol{big})}
 
 Let us begin by discussing our semantics for positive form gradable adjectives like \ol{big}. 
 We assume that such expressions are evaluated relative to a given threshold $\theta$, which must be exceeded in order for the gradable adjective to hold of a given referent. 
-We assume furthermore that what counts as `big' differs depending on the type of object whose size is in question. 
-We therefore have different thresholds for different types of objects, or Comparison Classes. 
-$\theta(\ol{bag})$ is the threshold for bags, for example.
+%We assume furthermore that what counts as `big' differs depending on the type of object whose size is in question. 
+%Within a context, we have different thresholds for different types of objects, or comparison classes. 
+%$\theta(\ol{bag})$ is the threshold for bags, for example, in a given context.
 
 Writing `the denotation of $\alpha$ relative to context $C$ and threshold $\theta$' as $\valueof{\alpha}^{\theta,C}$, we will say that $\valueof{\alpha}^{\theta,C}(r) = \true$ if referent $r$ falls under description $\alpha$, relative to $\theta$ and $C$.
 What it takes for $b$ to count as a \ol{big bag}, relative to threshold $\theta$ and context $C$, is the following:
@@ -796,7 +1009,10 @@ What it takes for $b$ to count as a \ol{big bag}, relative to threshold $\theta$
 \end{enumerate}
 Thus if all of the above conditions are met, then $\valueof{\ol{big bag}}^{\theta,C}(b)=\true$.
 
-\subsection{Definite article}
+\textcolor{red}{We have to define high scope for the positive! Under the hood it's all done with the threshold; the comparison class just constrains the prior over thresholds.}
+
+
+\subsubsection{Definite article}
 
 Now let us consider how to analyze {\em the big bag}.
 We entertain two alternative analyses of the definite article {\em the}. 
@@ -828,7 +1044,7 @@ are the following:
 %
 Thus uniqueness is enforced at both the inner and outer layers of the description, relative to a given context.
 
-Another analysis of definite descriptions that we will entertain is what we will call \textbf{Bumford's}. \citet{bumford:2017} offers a semantic analysis of Haddock descriptions that builds on Coppock and Beaver's (201X) analysis of the definite article in which the existence and uniqueness components may enter the composition at different stages, with other material intervening. 
+Another analysis of definite descriptions that we will entertain is what we will call \textbf{Bumford's}. \citet{bumford:2017} offers a semantic analysis of Haddock descriptions in which the existence and uniqueness components may enter the composition at different stages, with other material intervening. 
 The existence component ensures that a discourse referent is associated with the nominal. 
 The uniqueness component ensures that the discourse referent cannot be mapped to more than one entity, in light of the restrictions that have been put on it. The restrictions put on the discourse referent may not be limited to the descriptive material within the definite description; 
 surrounding descriptive material may accumulate before uniqueness is checked. In particular, the uniqueness component of the inner definite in an expression of the form \ol{the rabbit in the big bag} may take scope above \ol{rabbit}. 
@@ -836,10 +1052,9 @@ Interpreted with such high scope, the definite article serves merely to ensure t
 As far as the definite article is concerned, there may well be another big bag, as long as it doesn't contain a rabbit. 
 In other words, this definite article does not require uniqueness with respect to the property `big bag'. 
 
-Under a high-scope construal of the uniqueness component of the definite article,
-is \ol{rabbit in the big bag} synonymous with \ol{rabbit in a big bag}? Almost, but not entirely. The difference in meaning would only be visible in a scenario in which a rabbit was in multiple bags -- something very hard to imagine. But consider an example like \ol{the singer with the gold bracelet}. Even on a high scope construal, this description could only be true if a singer is wearing a single bracelet, whereas \ol{the singer with a gold bracelet} could truthfully hold of a singer that has multiple bracelets (although pragmatics would suggest that he or she was only wearing one). As this kind of situation (e.g.\ one rabbit - multiple bags) does not occur in our experimental stimuli, the difference effectively disappears in our setting. 
+Under a high-scope construal of the uniqueness component of the definite article, \ol{rabbit in the big bag} is almost synonymous with \ol{rabbit in a big bag}, then, but not entirely. The difference in meaning would only be visible in a scenario in which a rabbit was in multiple bags -- something very hard to imagine. The distinction is easier to fathom using an example like \ol{the singer with the gold bracelet}. Even on a high scope construal, this description could only be true if a singer is wearing a single bracelet, whereas \ol{the singer with a gold bracelet} could truthfully hold of a singer that has multiple bracelets (although pragmatics would suggest that he or she was only wearing one). As this kind of situation (e.g.\ one rabbit - multiple bags) does not occur in our experimental stimuli, the difference between {\em a} and high-scope {\em the} effectively disappears in our setting. 
 
-Thus, under this construal, the non-trivial conditions that a given referent $r$ must satisfy in order to fall under the description \ol{the rabbit in the NP}, 
+Thus, under the high-scope construal, the non-trivial conditions that a given referent $r$ must satisfy in order to fall under the description \ol{the rabbit in the NP}, 
 relative to context $C$ and threshold $\theta$, 
 are just the following:
 \begin{enumerate}
@@ -855,7 +1070,8 @@ are just the following:
 The last condition is the contribution of the outer definite article, which we assume is interpreted without any scope-taking placing additional constraints on the rabbit. 
 When these conditions are met, $\valueof{\ol{the rabbit in the NP}}^{\theta,C}(r) =\true$, on Bumford's analysis. The main difference between Bumford's analysis and the standard analysis is what constraints are put on $b$, whether it just has to satisfy the descriptive content of the inner NP (as on Bumford's analysis), or whether it must furthermore be the only entity in $C$ that does so.
 
-\subsection{\label{cmp-semantics}Comparative}
+\subsubsection{Comparative}
+\label{cmp-semantics}
 
 We will consider two alternative analyses of the comparative \ol{bigger} corresponding to the he well-known distinction between {\em relative} and {\em absolute} readings of superlatives \citep{szabolcsi:1986,heim:1999}.
 Although the distinction has mainly been discussed in regards to superlatives, it also applies to comparatives, as argued in the appendix.
@@ -903,7 +1119,7 @@ On a high interpretation of the superlative, combined with a high interpretation
 \item No referent distinct from $r$ in $C$ meets conditions 1-2.
 \end{enumerate}
 
-We assume that the same two possibilities are available for comparatives, and  furthermore that comparatives are only defined when the comparison class contains exactly two elements.%
+The same two possibilities are available in principle for comparatives. The only difference is that comparatives are only defined when the comparison class contains exactly two elements. \textcolor{red}{(Where/how to justify this?)}%
 \footnote{%
 It is possible to find attestations of {\em the bigger of the three}, but there are very few attestations of {\em the bigger of the $n$} for larger $n$s, and it appears that {\em the larger of the three} is licensed only in contexts where there are two sizes, one larger than the other, and the referent of {\em the larger of the three} bears the larger of the two sizes, while the other two bear the smaller of the two sizes. 
 To account for such cases, we could modify our assumptions so that {\em larger N} means something like {\em larger of the Ns}, where the comparison class consists of two pluralities of Ns, each with their own aggregate size. 
@@ -959,14 +1175,16 @@ On the high interpretation of the comparative, then, the comparison class consis
 
 
 
-\section{\label{computational-model}Computational Model}
+\subsection{Computational Models}
+\label{computational-model}
 
-We implement an RSA model where the pragmatic listener jointly infers a referent, a threshold and a context. Our model includes Context Coordination (CC), which allows the context to be narrowed down in order to accommodate the semantic requirements of the speaker's utterance.
+We implement a series of RSA models where the pragmatic listener infers a referent for an incomplete description. This process also involves reasoning under uncertainty about the threshold for the positive form adjective. In this section, we restrict our attention to models with a Bumfordian treatment of the definite article, but we consider alternatives in Section \ref{sec:cco}.
 
+%We also allow models to consider subsets of the visual context, and reason under uncertainty about what context the speaker has in mind.
 
-\subsection{Literal Listener}
+\subsubsection{Literal Listener}
 
-The Literal Listener infers a referent $r$ given a description $d$, a context $C$ and a threshold $\theta$ proportionally to 1) whether the description is true of $r$ in $C$ given the threshold value; and 2) the prior probability of $r$.
+The literal listener infers a referent $r$ given a description $d$, a context $C$ and a threshold $\theta$ proportionally to 1) whether the description is true of $r$ in $C$ given the threshold value; and 2) the prior probability of $r$.
 %The threshold $\theta$ is used in the interpretation of the relative adjective {\em big} and its comparative form {\em bigger} (see semantics in the previous section). 
 In other words, the literal listener discards referents that do not satisfy the semantic requirements of the description, and assigns a posterior probability to any remaining referent as a function of the referent's prior probability (\ref{literal-listener}).
 
@@ -976,11 +1194,10 @@ In other words, the literal listener discards referents that do not satisfy the 
 \end{equation}
 
 
-In this model, both $\theta$ and $C$ are treated as lifted variables, i.e., their value is not resolved at the level of the model where they are first called (i.e., at the Literal Listener level).
-Rather these variables are `lifted' all the way up to the Pragmatic Listener, where its value is resolved.
-%I don't understand this paragraph --Liz
+In this model, both $\theta$ and $C$ are treated as lifted variables, which means that their value is not resolved at the level of the model where they are first called (i.e., at the literal listener level).
+Rather, these variables are `lifted' all the way up to the pragmatic listener, where its value is resolved.
 
-The posterior distribution in (\ref{literal-listener}) is undefinable if the existence and/or uniqueness presuppositions associated with the definite determiner are not satisfied, i.e., if $C$ does not contain exactly one referent $r$ that satisfies the description $d$ for the adjectival threshold $\theta$.
+The posterior distribution in (\ref{literal-listener}) is undefinable if the existence and/or uniqueness presuppositions associated with the outer definite determiner are not satisfied, i.e., if $C$ does not contain exactly one referent $r$ that satisfies the description $d$ for the adjectival threshold $\theta$.
 Presupposition failure is technically implemented by positing a special \textsf{fail} referent, with prior probability $\epsilon$. 
 Otherwise, we assume an uninformative prior over referents, as shown in (\ref{undefined}).
 
@@ -995,49 +1212,52 @@ Otherwise, we assume an uninformative prior over referents, as shown in (\ref{un
 \end{equation}
 
 
-\subsubsection{Implementation of Reference Failure}
+\paragraph{Implementation of Reference Failure}
 
-Reference failure is implemented by adding a sixth referent (rU) that is inferred by the Literal Listener when none of the five referents in the visual context satisfies the semantic requirements of the description, i.e., in cases where there is reference failure. 
+Reference failure is implemented by adding a sixth referent (rU) that is assigned by the literal listener when none of the five referents in the visual context satisfies the semantic requirements of the description, i.e., in cases where there is reference failure. 
 For this to be possible, the meaning function is stated such that all descriptions are true of rU (see $\S$\ref{semantic-assumptions}). 
 In order for rU to be dispreferred when any of the five referents in the display support the utterance, rU receives a signifantly smaller amount of probability in the prior, compared to any of the five referents in the maximal context (see quation (\ref{undefined})). 
 In the model predictions reported below, the failure referent rU receives a prior probability of $\sim 0.04$, with the remaining referents receiving slightly less than $20\%$ respectively. 
-This entails that the Literal Listener always assigns some amount of posterior probability to rU, as can be appreciated in Figures \ref{litlist-standard} and \ref{litlist-bumford}.
-The figures also show that despite its low prior probability, the Literal Listener assigns probability of 1 to rU when no other referent is compatible with the utterance and there is therefore reference failure (e.g., when the utterance is {\em the rabbit in the bag}. This is due to the fact that there are always to possible referents compatible with this utterance in all the contexts tested).
+This entails that the literal listener always assigns some amount of posterior probability to rU, as can be appreciated in Figures \ref{litlist-standard} and \ref{litlist-bumford}.
+The figures also show that despite its low prior probability, the literal listener assigns probability of 1 to rU when no other referent is compatible with the utterance and there is therefore reference failure (e.g., when the utterance is {\em the rabbit in the bag}. This is due to the fact that there are always to possible referents compatible with this utterance in all the contexts tested).
 Furthermore, this assymetry in the prior probabilities of the referents also ensures that, to the extent that some other referent is compatible with the utterance, rU will always receive less posterior probability than any other referent.
 
 
 
-\subsubsection{Implementation of Scopal Ambiguities}
+\paragraph{Implementation of Scopal Ambiguities}
 
 As discussed above, the same string can be assigned two different underlying structures (Logical Forms, as it were). 
-For the comparative, in particular, Bumford's theory allows either a high or low scope construal.
-The choice of construal is determined by a free parameter in the model (highScopeConstrualProb), that ranges from 0 to 1, that determines the mixture.
-The higher the value of this parameter, the more likely the `bag' construal.
-In the simulations reported here, this parameter is set to .5 such that none of the two scopal configurtions is favored over the other.
-When the Standard meaning is adopted, the model makes no reference to this parameter, since the core assumption of the standard meaning theory is that the definite does not take scope and is always interpreted {\em in situ}.
-This means that under this semantics, there's only one possible reading for the determiner, namely the low scope construal. 
+For both the positive and the comparative, Bumford's theory allows either a high or low scope construal.
+The choice of construal is determined by free parameters in the model (posHighScopeConstrualProb and cmpHighScopeConstrualProb), ranging from 0 to 1, specifying the mixture.
+
+%The higher the value of this parameter, the more likely the `bag' construal.
+%In the simulations reported here, this parameter is set to .5 such that none of the two scopal configurtions is favored over the other.
+%When the standard meaning for the definite determiner is adopted, the model makes no reference to this parameter, since the core assumption of the standard meaning theory is that the definite does not take scope and is always interpreted {\em in situ}.
+%This means that under this semantics, there's only one possible reading for the determiner, namely the low scope construal. 
 This can be observed in Figures \ref{litlist-standard} and \ref{litlist-bumford}, where the description {\em the rabbit in the bigger bag} given threshold 1 and the maximal context 1 is undefined for the rabbit in the medium bag when the standard meaning is considered (upper leftmost pannel of Figure \ref{litlist-standard}), but it's defined for that very same referent when Bumford's meaning is considered (upper leftmost pannel of Figure \ref{litlist-bumford}). 
 This is due to the fact that the cardinality of two requirement of the comparative and the uniqueness requirement of the determiner are checked against only bags for the standard meaning, whereas depending on the scope, these two meaning requirements are checked against bags and/or bag-containing rabbits in Bumford's meaning.
 
 \begin{figure}
 \includegraphics[width=\linewidth]{litlist-standard.pdf}
-\caption{Literal Listener model predictions for standard meaning and no-cc}
+\caption{Literal listener model predictions for standard meaning and no-cc}
 \label{litlist-standard}
 \end{figure}
 
 \begin{figure}
 \includegraphics[width=\linewidth]{litlist-bumford.pdf}
-\caption{Literal Listener model predictions for Bumford's meaning and no-cc}
+\caption{Literal listener model predictions for Bumford's meaning and no-cc}
 \label{litlist-bumford}
 \end{figure}
 
 
 \textbf{TODO:} The heatmaps for lit-listener model are missing 'rabbit none box' utterance. Not sure why that is... This plot probably needs to be regenerated.
+\textcolor{red}{The heat maps should be regenerated with either 0 or 1 probability for both pos and cmp high scope, rather than 0.5. Also can the labels be improved? I find them a bit confusing. --EEC}
 
 
-\subsection{Speaker}
+\subsubsection{Speaker}
+
 The speaker is modeled as a {\em softMax} agent that chooses a description $d$, given that she wants to convey the referent $r$ in context $C$ for the adjectival threshold $\theta$.
-In choosing utterances, the speaker balances out two constraints: maximizing the likelihood that the Literal Listener will infer the intended referent by choosing informative utterances, while minimizing production cost. 
+In choosing utterances, the speaker balances out two constraints: maximizing the likelihood that the literal listener will correctly identify the intended referent through the use of informative descriptions, while minimizing production cost. 
 Informativity is modeled as negative surprisal (or positive log probability) of the referent in the posterior, whereas utterance cost $C(u)$, is directly proportional to the utterance length. Currently, the costs are set as follows: comparative 1.5; positive 1; 0.5 if the utterance does not contain an adjective; and 0 for the silence utterance. 
 Finally, we assume a rationality parameter $\alpha$ of 1. 
 
@@ -1056,7 +1276,7 @@ Finally, we assume a rationality parameter $\alpha$ of 1.
 
 \begin{figure}
 \includegraphics[width=\linewidth]{speaker-bumford.pdf}
-\caption{Speaker model model outputs for Bumford's meaning and no-cc}
+\caption{Speaker model outputs for Bumford's meaning and no-cc}
 \label{speaker-bumford}
 \end{figure}
 
@@ -1073,9 +1293,9 @@ Discussion about assumed costs?
 %\noindent
 %speaker model outputs cost coefficient is set to 1, because higher values create a lazy speaker that always prefers silence (wrong result). The lit.listener model outputs was set to 3, but it should not matter because no cost is involved at that level. Things need to be rerun for dinal model outputs though
 
-\subsection{Pragmatic Listener}
+\subsubsection{Pragmatic Listener}
 
-The Pragmatic Listener is modeled as a Bayesian agent that assigns posterior probabilities to referents $r$ given a masked description $d$, proportionally to the probability of the speaker using (any possible resolution of) $d$ to describe $r$ given context $C$ and assuming threshold $\theta$ (i.e., the likelihood), times the prior over referents given the context, the prior over thresholds given the context and a full description, and the prior over contexts (see equation \ref{pragmatic-listener}).
+The pragmatic listener is modeled as a Bayesian agent that assigns posterior probabilities to referents $r$ given a masked description $d$, proportionally to the probability of the speaker using (any possible resolution of) $d$ to describe $r$ given context $C$ and assuming threshold $\theta$ (i.e., the likelihood), times the prior over referents given the context, the prior over thresholds given the context and a full description, and the prior over contexts (see equation \ref{pragmatic-listener}).
 
 
 \begin{equation}
@@ -1155,127 +1375,134 @@ this ensures that the probability distribution over referents is well-defined.
 %   \label{context-prior}
 % \end{equation}
 
-\textbf{The model results currently (November25th) are derived using the assumption that the threshold categorically cannot be below the smallest. We are doing this because it seems to be the only way to get a preference for the bag overall; otherwise too much probability mass gets eaten up by non-targets (the smaller bag in particular, which has a rabbit in it)}
+\textbf{The model results currently (November 25th) are derived using the assumption that the threshold categorically cannot be below the smallest. We are doing this because it seems to be the only way to get a preference for the bag overall; otherwise too much probability mass gets eaten up by non-targets (the smaller bag in particular, which has a rabbit in it). Update: As of January 6th, the same is still true.}
+
+
+\section{Conclusion}
+
+We have argued based on both distributional and experimental evidence that the comparison classes for gradable adjectives operate independently of the comparison classes for definite articles in the same noun phrase. Or, to put it in terms of scope: Gradable adjectives take low scope, even when the definite article takes high scope. These comparison classes do not march in lock step.
+
+%From the perspective of Bumford's analysis this is not surprising.
+%It might be surprising on a view where the CC for def and adj comes from context restriction?
+
+
+Furthermore, we have argued that comparatives not only have the kinds of relative readings that superlatives have, but actually prefer them.
+
 
 
 \bibliography{master}
 \bibliographystyle{sp}
 
-\appendix
- 
-
-\section{Why comparatives have both absolute and relative readings}
-
-
-As with superlatives \citep[i.a.]{szabolcsi:1986,coppock+beaver:salt2014}, 
-relative readings of comparatives obviate definiteness effects:
-
-\begin{exe}
-\ex
-\begin{xlist}
-\ex *Bernie has the campaign chairman.
-\ex Bernie has the most enthusiastic campaign chairman.
-\ex Bernie has the more enthusiastic campaign chairman.
-\ex Pointing at two campaign chairmans having a conversation. \\*Bernie has the enthusiastic campaign chairman.
-\end{xlist}
-\end{exe}
-
-
-As \citet{bumford:2017} discusses, 
-relative readings are blocked by possessives, 
-both for superlatives and for comparatives:
-
-\begin{exe}
-\ex
-\begin{xlist}
-\ex Who has read the longest play by Shakespeare?
-\ex Who has read Shakespeare's longest play?
-\end{xlist}
-$\equiv$ Who has read Hamlet?
-\end{exe}
-
-\begin{exe}
-\ex
-\begin{xlist}
-\ex Who has read the longer play by Shakespeare?
-\ex Who has read Shakespeare's longer play?\\
-$\leadsto$ Shakespeare wrote two plays?
-\ex\label{test3a} Who has read Shakespeare's long play?
-\ex\label{test3b} Who has read the long play by Shakespeare?\\
-$\leadsto$ All other plays were short.\\
-Note: Liz's intuitions is that the last two sentences mean the same
-\end{xlist}
-\end{exe}
-
-
-Further evidence comes from ambiguities of the following type,
-observed by \citet{bhatt:2002} for \ref{tolstoy:first} and
-\ref{tolstoy:longest}.
-\ref{tolstoy:longer} is ambiguous in an analogous way.
-
-\begin{exe}
-\ex
-\begin{xlist}
-\ex the first book that John said Tolstoy had written\label{tolstoy:first}
-%\b. the only book that John said Tolstoy had written
-\ex the longest book that John said Tolstoy had written\label{tolstoy:longest}
-\ex the longer book that John said Tolstoy had written\label{tolstoy:longer}\\
-High reading: of the books John said Tolstoy
-wrote, the longer\\
-Low reading: the book John said was longer among the ones written by Tolstoy.
-\ex the long book that John said Tolstoy had written\\
-High reading: of the books John said Tolstoy
-wrote, the long one\\
-Low reading: the book John said was long among the ones written by Tolstoy.
-\end{xlist}
-\end{exe}
-
-
-\citet{sleeman:2010}: `identificational focus' \citep{kiss:1998a}
-
-As with superlatives \citep{bhatt:1999,bhatt:2006},
-relative readings of comparatives are blocked by non-modal infinitival relative clauses:
-
-\begin{exe}
-\ex
-\begin{xlist}
-\ex John gave Mary the most expensive telescope
-\ex ... to be built in the
-9th century.
-\end{xlist}
-\end{exe}
-
-
-\begin{exe}
-\ex
-\begin{xlist}
-\ex John gave Mary the more expensive telescope
-\ex ... to be built in the
-9th century.
-\end{xlist}
-\end{exe}
-
-\begin{exe}
-\ex
-\begin{xlist}
-\ex John gave Mary the long telescope
-\ex ... *to be built in the
-9th century.
-\end{xlist}
-\end{exe}
 
 \appendix
-
-
 
 \section{Simulations}
 
 %In what follows, we present simulation results for the model described in $\S$\ref{computational-model}. 
 
+\subsection{Best results}
+
+\setlength\parindent{0em}
+<<Plot-bestresults, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+#color blind palette
+#cbPalette <- c("#009E73", "#CC79A7","#E69F00", "#56B4E9",  "#F0E442", "#0072B2", "#D55E00",  "#999999")
+
+# "#009E73" is a nice green
+# "#CC79A7" is dark pink
+# "#E69F00" is gold
+# "#56B4E9" is sky blue
+# "#F0E442" is yellow
+# "#0072B2" is a darker blue
+# "#D55E00" is a burnt orange
+# "#999999" is grey
+
+#pink and blue
+#myColors <- c("#56B4E9","lightblue","pink","#CC79A7")
+
+#pink and teal
+#myColors <- c("#009AA3","#00CFC6","pink","#CC79A7")
+
+#orange/yellow and blue
+myColors <- c("#2392E9","lightblue","#F0E442","#C44D00")
+
+results$Container <- factor(results$Container,levels=c("box2","box1","bag1","bag2"))
+
+#Create a custom fill scale 
+#so that colors will be consistent even if not all levels are always present
+names(myColors) <- levels(results$Container)
+fillScale <- scale_fill_manual(name = "Container",values = myColors)
+
+plot_result <- function (pragListenerLevel,
+                         defArtMeaning,
+                         adj,
+                         cmpHighScopeConstrualProbValue,
+                         posHighScopeConstrualProbValue,
+                         allowUninformativeThresholdsValue) {
+  gg_df <- subset(results, Adjective==adj & 
+                    DefArtMeaning==defArtMeaning & 
+                    Model=="haddock_model.wppl"  & 
+                    ListenerLevel==pragListenerLevel & 
+                    posHighScopeConstrualProb==posHighScopeConstrualProbValue & 
+                    cmpHighScopeConstrualProb==cmpHighScopeConstrualProbValue &
+                    allowUninformativeThresholds==allowUninformativeThresholdsValue)
+  
+  ggplot(gg_df, aes(x=Condition, y=Probability, fill=Container)) + 
+    geom_bar(position="fill", stat="identity") +
+    fillScale +
+    theme_bw() +
+    theme(axis.text.x = element_text(size=8),
+          axis.text.y = element_text(size=10),  
+          axis.title.x = element_text(size=10),
+          axis.title.y = element_text(size=10),
+          legend.title=element_text(size=10), 
+          legend.text=element_text(size=10)
+    ) +
+    ylim(0,1) +
+    xlab("Display Type") +
+    ylab("Probability of Referent Choice") +
+    ggtitle(paste("Model predictions for", adj),paste(defArtMeaning,paste0("L",pragListenerLevel),paste0("posHiScope:", posHighScopeConstrualProbValue),paste0("cmpHiScope:", cmpHighScopeConstrualProbValue),allowUninformativeThresholdsValue,sep=", ")) +
+    facet_wrap(~Context)
+
+}
+
+##now start plotting
+
+pragListenerLevel <- 1
+defArtMeaning <- "bumford"
+adj <- "big"
+cmpHighScopeConstrualProbValue <- 1
+posHighScopeConstrualProbValue <- 0
+allowUninformativeThresholdsValue <- "disallow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+allowUninformativeThresholdsValue <- "disallow"
+
+adj <- "bigger"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
+For comparison:
+
+<<Plot-bumford-poshigh-cmphigh-justdisallow, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
+
+pragListenerLevel <- 1
+defArtMeaning <- "bumford"
+adj <- "big"
+cmpHighScopeConstrualProbValue <- 1
+posHighScopeConstrualProbValue <- 1
+allowUninformativeThresholdsValue <- "disallow"
+
+plot_result(pragListenerLevel,defArtMeaning,adj,cmpHighScopeConstrualProbValue,posHighScopeConstrualProbValue,allowUninformativeThresholdsValue)
+
+@
+
 \pagebreak
 \subsection{Standard / low scope for pos}
 
-\setlength\parindent{0em}
 <<Plot-standard-poslow, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE, fig.width = 4.5, fig.height=2.7>>=
 
 #color blind palette
