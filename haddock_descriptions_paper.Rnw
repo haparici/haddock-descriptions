@@ -244,7 +244,7 @@ test_result <- execute_model(pos,
                              1, #cond
                              "haddock_model.wppl",
                              "no-cc",
-                             "standard",
+                             "bumford",
                              ".", #package
                              gamma,
                              costCoefficient,
@@ -252,6 +252,7 @@ test_result <- execute_model(pos,
                              posHighScopeConstrualProb,
                              allowUninformativeThresholds,
                              1) #pragListenerLevel
+
 
 test_result 
 
@@ -349,10 +350,18 @@ if (recalculate_model_results) {
 #today <- Sys.Date()
 #write.csv(results, paste0("model-outputs-",today,".csv"))
 
+#Hello, future!
+#The following   lines added the cond4 results to model-outputs.csv once upon a time
+#Love, the past
+#cond4 <- read.csv("model-outputs-context4.csv")
+#merged <- rbind(results,cond4)
+#results <- merged
+#write.csv(results, "model-outputs.csv")  
 
 if (read_model_results) {
   results <- read.csv("model-outputs.csv")
 }
+
 
 
 @
